@@ -75,7 +75,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
             <?= $this->fetch('content') ?>
             <div class="row">
                 <div class="footer-wrap pd-20 mb-20 card-box">
-                    DeskApp - Bootstrap 4 Admin Template By <a href="https://github.com/dropways" target="_blank">Ankit Hingarajiya</a>
+                    HRM TGS <a href="/" target="_blank">Colombia</a>
                 </div>
             </div>
         </div>
