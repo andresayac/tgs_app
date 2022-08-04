@@ -39,7 +39,8 @@
                     echo $this->Form->control('dep_id', ['options' => $departaments, 'empty' => true]);
                     echo $this->Form->control('branch_id', ['options' => $branchs, 'empty' => true]);
                     echo $this->Form->control('designation_id', ['options' => $designations, 'empty' => true]);
-                    echo $this->Form->control('fingerprint');
+                    echo $this->Form->control('indexfinger');
+                    echo $this->Form->control('middlefinger');
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>

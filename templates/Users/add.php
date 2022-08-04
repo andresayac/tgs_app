@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\User $user
@@ -8,37 +9,141 @@
  * @var \Cake\Collection\CollectionInterface|string[] $designations
  */
 ?>
-<div class="row">
-    <aside class="column">
-        <div class="side-nav">
-            <h4 class="heading"><?= __('Actions') ?></h4>
-            <?= $this->Html->link(__('List Users'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
-        </div>
-    </aside>
-    <div class="column-responsive column-80">
-        <div class="users form content">
-            <?= $this->Form->create($user) ?>
-            <fieldset>
-                <legend><?= __('Add User') ?></legend>
-                <?php
-                    echo $this->Form->control('rol_id', ['options' => $roles, 'empty' => true]);
-                    echo $this->Form->control('username');
-                    echo $this->Form->control('password');
-                    echo $this->Form->control('name');
-                    echo $this->Form->control('lastname');
-                    echo $this->Form->control('document_type');
-                    echo $this->Form->control('document');
-                    echo $this->Form->control('date_birthday', ['empty' => true]);
-                    echo $this->Form->control('telephone');
-                    echo $this->Form->control('active');
-                    echo $this->Form->control('dep_id', ['options' => $departaments, 'empty' => true]);
-                    echo $this->Form->control('branch_id', ['options' => $branchs, 'empty' => true]);
-                    echo $this->Form->control('designation_id', ['options' => $designations, 'empty' => true]);
-                    echo $this->Form->control('fingerprint');
-                ?>
-            </fieldset>
-            <?= $this->Form->button(__('Submit')) ?>
-            <?= $this->Form->end() ?>
+
+
+<div class="page-header">
+    <div class="row">
+        <div class="col-md-6 col-sm-12">
+            <div class="title">
+                <h4>Usuarios</h4>
+            </div>
+            <nav aria-label="breadcrumb" role="navigation">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/users">Usuarios</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Nuevo Usuario</li>
+                </ol>
+            </nav>
         </div>
     </div>
 </div>
+
+<div class="card-box mb-30">
+    <div class="pd-20">
+        <h4 class="text-blue h4">Lista de Usuarios</h4>
+        <p class="mb-0"></p>
+    </div>
+    <?= $this->Form->create($user) ?>
+    <div class="pd-20 card-box mb-30">
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label style="display: block;">Estado</label>
+                            <?= $this->Form->checkbox('active', ['hiddenField' => false, 'checked' => true, 'class' => 'switch-btn form-control', 'data-color' => '#0099ff']) ?>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <?= $this->Form->control('rol_id', ['options' => $roles, 'empty' => false, 'label' => ['text' => 'Rol'], 'class' => 'selectpicker form-control']); ?>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <?= $this->Form->control('username', ['label' => 'Usuario', 'class' => 'form-control']); ?>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <?= $this->Form->control('lastname', ['label' => 'Contraseña', 'class' => 'form-control', 'type' => 'password']); ?>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <?= $this->Form->control('name', ['label' => 'Nombre', 'class' => 'form-control']); ?>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <?= $this->Form->control('lastname', ['label' => 'Apellido', 'class' => 'form-control']); ?>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <label>Tipo y número de identificación</label>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <?= $this->Form->select('document_type', [
+                                'CC' => 'CC',
+                                'CE' => 'CE',
+                                'Otro' => 'Otro',
+                            ], ['empty' => '...', 'class' => 'selectpicker form-control', 'label' => false, 'required' => true]) ?>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <?= $this->Form->control('document', ['type' => 'number', 'label' => false, 'required' => true, 'error' => false, 'class' => 'form-control']) ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <?= $this->Form->control('date_birthday', ['empty' => true, 'label' => ['text' => 'Fecha de Nacimiento'], 'class' => "form-control date-picker", 'placeholder' => 'Selecione Fecha']); ?>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <?= $this->Form->control('telephone', ['label' => 'Teléfono', 'class' => 'form-control']); ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="pd-20 card-box mb-30">
+        <div class="row">
+            <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                    <?= $this->Form->control('branch_id', ['options' => $branchs, 'empty' => '...', 'label' => ['text' => 'Sucursal'], 'class' => 'selectpicker form-control']); ?>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                    <?= $this->Form->control('dep_id', ['options' => $departaments, 'empty' => '...', 'label' => ['text' => 'Area'], 'class' => 'selectpicker form-control']); ?>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                    <?= $this->Form->control('designation_id', ['options' => $designations, 'empty' => '...', 'label' => ['text' => 'Cargo'], 'class' => 'selectpicker form-control']); ?>
+                </div>
+            </div>
+
+            <div class="col-md-12 col-sm-12 pd-20 mb-15">
+                <div class="form-group">
+                    <?= $this->Form->button('Crear Usuario', ['class' => 'btn btn-outline-primary']) ?>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <?= $this->Form->end() ?>
+</div>
+
+<?php echo $this->Html->css("/src/plugins/switchery/switchery.min.css"); ?>
+<?php echo $this->Html->script("/src/plugins/switchery/switchery.min.js"); ?>
+
+<script>
+    var elems = Array.prototype.slice.call(document.querySelectorAll('.switch-btn'));
+    $('.switch-btn').each(function() {
+        new Switchery($(this)[0], $(this).data());
+    });
+</script>

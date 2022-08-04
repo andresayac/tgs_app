@@ -132,8 +132,12 @@ class UsersTable extends Table
             ->allowEmptyString('designation_id');
 
         $validator
-            ->scalar('fingerprint')
-            ->allowEmptyString('fingerprint');
+            ->scalar('indexfinger')
+            ->allowEmptyString('indexfinger');
+
+        $validator
+            ->scalar('middlefinger')
+            ->allowEmptyString('middlefinger');
 
         return $validator;
     }

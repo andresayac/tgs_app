@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Routes configuration.
  *
@@ -42,7 +43,11 @@ return static function (RouteBuilder $routes) {
      * inconsistently cased URLs when used with `{plugin}`, `{controller}` and
      * `{action}` markers.
      */
+
+
     $routes->setRouteClass(DashedRoute::class);
+
+
 
     $routes->scope('/', function (RouteBuilder $builder) {
         /*
@@ -70,6 +75,13 @@ return static function (RouteBuilder $routes) {
          * You can remove these routes once you've connected the
          * routes you want in your application.
          */
+
+        $builder->prefix('api', function ($routes) {
+            // $routes->connect('/:controller');
+            $routes->setExtensions(['json']);
+            $routes->connect('/', ['controller' => 'Services', 'action' => 'index']);
+            //$routes->fallbacks('InflectedRoute');
+        });
         $builder->fallbacks();
     });
 
