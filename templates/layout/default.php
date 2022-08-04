@@ -34,6 +34,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?php echo $this->Html->css("/src/plugins/datatables/css/dataTables.bootstrap4.min.css"); ?>
     <?php echo $this->Html->css("/src/plugins/datatables/css/responsive.bootstrap4.min.css"); ?>
     <?php echo $this->Html->css("/vendors/styles/style.css"); ?>
+    <?php echo $this->Html->css("/css/iziToast.min.css"); ?>
 
 
     <!-- pace js -->
@@ -46,6 +47,8 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?php echo $this->Html->script("/src/plugins/datatables/js/dataTables.responsive.min.js"); ?>
     <?php echo $this->Html->script("/src/plugins/datatables/js/responsive.bootstrap4.min.js"); ?>
     <?php echo $this->Html->script("/vendors/scripts/dashboard.js"); ?>
+    <?php echo $this->Html->script("/src/scripts/iziToast.min.js"); ?>
+
 
 
     <?= $this->Html->meta('icon') ?>

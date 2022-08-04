@@ -8,4 +8,13 @@ if (!isset($params['escape']) || $params['escape'] !== false) {
     $message = h($message);
 }
 ?>
-<div class="message warning" onclick="this.classList.add('hidden');"><?= $message ?></div>
+<!-- <div class="message error" onclick="this.classList.add('hidden');"><?php //echo $message ?></div> -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        iziToast.warning({
+            // title: 'Hey',
+            position: 'bottomRight', 
+            message: "<?php echo $message ?>"
+        });
+    });
+</script>

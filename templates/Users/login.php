@@ -95,6 +95,8 @@
         </div>
     </div>
 
+    <?php echo $this->Html->css("/css/iziToast.min.css"); ?>
+    <?php echo $this->Html->script("/src/scripts/iziToast.min.js"); ?>
 </body>
 
 </html>
