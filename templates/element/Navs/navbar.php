@@ -117,7 +117,12 @@
                     <a class="dropdown-item" href="profile"><i class="dw dw-user1"></i> Perfil</a>
                     <a class="dropdown-item" href="setting"><i class="dw dw-settings2"></i> Configuracción</a>
                     <a class="dropdown-item" href="help"><i class="dw dw-help"></i> Ayuda</a>
-                    <a class="dropdown-item" href="logout"><i class="dw dw-logout"></i> Log Out</a>
+                    <?php echo $this->Html->link('<i class="dw dw-logout"></i> Cerrar Sesion', ['controller' => 'Users', 'action' => 'logout'], ['class' => 'dropdown-item', 'escape' => false]) ?>
+            </div>
+        </li>
+    </ul>
+</nav>
+
                 </div>
             </div>
         </div>
