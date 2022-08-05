@@ -23,7 +23,7 @@
                 <legend><?= __('Edit Role') ?></legend>
                 <?php
                     echo $this->Form->control('name');
-                    echo $this->Form->control('descripcion');
+                    echo $this->Form->control('description');
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>

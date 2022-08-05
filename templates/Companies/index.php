@@ -12,11 +12,11 @@
     <div class="row">
         <div class="col-md-6 col-sm-12">
             <div class="title">
-                <h4>Compañias</h4>
+                <h4>Empresas</h4>
             </div>
             <nav aria-label="breadcrumb" role="navigation">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/companies">Compañias</a></li>
+                    <li class="breadcrumb-item"><a href="/companies">Empresas</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Lista</li>
                 </ol>
             </nav>
@@ -24,7 +24,7 @@
         <div class="col-md-6 col-sm-12 text-right">
             <div class="dropdown">
                 <a class="btn btn-primary dropdown-toggle" href="/companies/add">
-                    Nuevo Compañias
+                    Nueva Empresa
                 </a>
             </div>
         </div>
@@ -33,7 +33,7 @@
 
 <div class="card-box mb-30">
     <div class="pd-20">
-        <h4 class="text-blue h4">Lista de Compañias</h4>
+        <h4 class="text-blue h4">Lista de Empresas</h4>
         <p class="mb-0"></p>
     </div>
     <div class="dataTables_wrapper dt-bootstrap4 no-footer">
@@ -41,14 +41,12 @@
             <thead>
                 <tr>
                     <th><?= $this->Paginator->sort('id') ?></th>
-                    <th><?= $this->Paginator->sort('name') ?></th>
-                    <th><?= $this->Paginator->sort('address') ?></th>
-                    <th><?= $this->Paginator->sort('city') ?></th>
-                    <th><?= $this->Paginator->sort('state') ?></th>
-                    <th><?= $this->Paginator->sort('zipcode') ?></th>
-                    <th><?= $this->Paginator->sort('country') ?></th>
-                    <th><?= $this->Paginator->sort('logo') ?></th>
-                    <th><?= $this->Paginator->sort('active') ?></th>
+                    <th><?= $this->Paginator->sort('name', 'Empresa') ?></th>
+                    <th><?= $this->Paginator->sort('address', 'Dirección') ?></th>
+                    <th><?= $this->Paginator->sort('city', 'Ciudad') ?></th>
+                    <th><?= $this->Paginator->sort('state','Estado') ?></th>
+                    <th><?= $this->Paginator->sort('country', 'País') ?></th>
+                    <th><?= $this->Paginator->sort('active', 'Estado') ?></th>
                     <th class="actions"><?= __('Acciones') ?></th>
                 </tr>
             </thead>
@@ -60,9 +58,7 @@
                         <td><?= h($company->address) ?></td>
                         <td><?= h($company->city) ?></td>
                         <td><?= h($company->state) ?></td>
-                        <td><?= $company->zipcode === null ? '' : $this->Number->format($company->zipcode) ?></td>
                         <td><?= h($company->country) ?></td>
-                        <td><?= h($company->logo) ?></td>
                         <td><span class="badge badge-<?= ((bool) $company->active) ? 'primary' : 'danger' ?>"><?= ((bool) $company->active) ? 'Activo' : 'Inactivo' ?></span></td>
                         <td>
                             <div class="dropdown">

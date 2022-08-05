@@ -10,7 +10,7 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property string|null $name
- * @property string|null $descripcion
+ * @property string|null $description
  */
 class Role extends Entity
 {
@@ -25,6 +25,6 @@ class Role extends Entity
      */
     protected $_accessible = [
         'name' => true,
-        'descripcion' => true,
+        'description' => true,
     ];
 }

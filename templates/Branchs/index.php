@@ -1,52 +1,123 @@
 <?php
+
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Branch[]|\Cake\Collection\CollectionInterface $branchs
  */
 ?>
-<div class="branchs index content">
-    <?= $this->Html->link(__('New Branch'), ['action' => 'add'], ['class' => 'button float-right']) ?>
-    <h3><?= __('Branchs') ?></h3>
-    <div class="table-responsive">
-        <table>
+
+<div class="page-header">
+    <div class="row">
+        <div class="col-md-6 col-sm-12">
+            <div class="title">
+                <h4>Sucursales</h4>
+            </div>
+            <nav aria-label="breadcrumb" role="navigation">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/branchs">Sucursales</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Lista</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="col-md-6 col-sm-12 text-right">
+            <div class="dropdown">
+                <a class="btn btn-primary dropdown-toggle" href="/branchs/add">
+                    Nueva Sucursal
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card-box mb-30">
+    <div class="pd-20">
+        <h4 class="text-blue h4">Lista de Sucursales</h4>
+        <p class="mb-0"></p>
+    </div>
+    <div class="dataTables_wrapper dt-bootstrap4 no-footer">
+        <table id="datatable-branchs" class="data-table table stripe hover nowrap dataTable no-footer dtr-inline">
             <thead>
                 <tr>
                     <th><?= $this->Paginator->sort('id') ?></th>
-                    <th><?= $this->Paginator->sort('name') ?></th>
-                    <th><?= $this->Paginator->sort('active') ?></th>
-                    <th><?= $this->Paginator->sort('com_id') ?></th>
-                    <th><?= $this->Paginator->sort('created') ?></th>
-                    <th><?= $this->Paginator->sort('modified') ?></th>
-                    <th class="actions"><?= __('Actions') ?></th>
+                    <th><?= $this->Paginator->sort('name', 'Nombre') ?></th>
+                    <th><?= $this->Paginator->sort('active', 'Estado') ?></th>
+                    <th><?= $this->Paginator->sort('com_id','Empresa') ?></th>
+                    <th class="actions"><?= __('Acciones') ?></th>
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($branchs as $branch): ?>
-                <tr>
+            <?php foreach ($branchs as $branch) : ?>
+                    <tr>
                     <td><?= $this->Number->format($branch->id) ?></td>
-                    <td><?= h($branch->name) ?></td>
-                    <td><?= $branch->active === null ? '' : $this->Number->format($branch->active) ?></td>
-                    <td><?= $branch->has('company') ? $this->Html->link($branch->company->name, ['controller' => 'Companies', 'action' => 'view', $branch->company->id]) : '' ?></td>
-                    <td><?= h($branch->created) ?></td>
-                    <td><?= h($branch->modified) ?></td>
-                    <td class="actions">
-                        <?= $this->Html->link(__('View'), ['action' => 'view', $branch->id]) ?>
-                        <?= $this->Html->link(__('Edit'), ['action' => 'edit', $branch->id]) ?>
-                        <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $branch->id], ['confirm' => __('Are you sure you want to delete # {0}?', $branch->id)]) ?>
-                    </td>
-                </tr>
+                        <td><?= h($branch->name) ?></td>
+                        <td><span class="badge badge-<?= ((bool) $branch->active) ? 'primary' : 'danger' ?>"><?= ((bool) $branch->active) ? 'Activo' : 'Inactivo' ?></span></td>
+                        <td><?= $branch->has('company') ? $this->Html->link($branch->company->name, ['controller' => 'Companies', 'action' => 'view', $branch->company->id]) : '' ?></td>
+                        <td>
+                            <div class="dropdown">
+                                <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                                    <i class="dw dw-more"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                                    <?= $this->Html->link(__('Ver'), ['action' => 'view', $branch->id], [
+                                        'escape' => false,
+                                        'class' => 'dropdown-item'
+                                    ]) ?>
+                                    <?= $this->Html->link(__('Editar'), ['action' => 'edit', $branch->id], [
+                                        'escape' => false,
+                                        'class' => 'dropdown-item'
+                                    ]) ?>
+                                    <?= $this->Form->postLink(__('Eliminar'), ['action' => 'delete', $branch->id], ['class' => 'dropdown-item', 'confirm' => __('Esta seguro que quiere eliminar la capacitación # {0}?', $branch->id)]) ?>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
     </div>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
-        </ul>
-        <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></p>
-    </div>
+
 </div>
+<script>
+    $(document).ready(function() {
+
+        $('.data-table').DataTable({
+            scrollCollapse: true,
+            autoWidth: false,
+            responsive: true,
+            columnDefs: [{
+                targets: "datatable-nosort",
+                orderable: false,
+            }],
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+            "language": {
+                "info": "_START_-_END_ de _TOTAL_ registros",
+                searchPlaceholder: "Buscar",
+                paginate: {
+                    next: '<i class="ion-chevron-right"></i>',
+                    previous: '<i class="ion-chevron-left"></i>'
+                },
+                "sProcessing": "Procesando...",
+                "sLengthMenu": "Mostrar _MENU_ registros",
+                "sZeroRecords": "No se encontraron resultados",
+                "sEmptyTable": "Ningún dato disponible en esta tabla",
+                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                "sInfoPostFix": "",
+                "sSearch": "Buscar:",
+                "sUrl": "",
+                "sInfoThousands": ",",
+                "sLoadingRecords": "Cargando...",
+                "oAria": {
+                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                }
+            },
+        });
+    });
+</script>
+
+
+

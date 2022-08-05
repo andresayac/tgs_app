@@ -28,9 +28,9 @@
                 </tr>
             </table>
             <div class="text">
-                <strong><?= __('Descripcion') ?></strong>
+                <strong><?= __('Description') ?></strong>
                 <blockquote>
-                    <?= $this->Text->autoParagraph(h($role->descripcion)); ?>
+                    <?= $this->Text->autoParagraph(h($role->description)); ?>
                 </blockquote>
             </div>
         </div>

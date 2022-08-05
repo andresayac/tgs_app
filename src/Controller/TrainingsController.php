@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -101,5 +102,51 @@ class TrainingsController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+
+    public function calendar()
+    {
+        $trainings = $this->paginate($this->Trainings);
+        $this->set(compact('trainings'));
+    }
+
+
+    public function getCalendarioEvents()
+    {
+        $this->request->allowMethod(['post']);
+
+        $request = $this->request->getData();
+
+
+
+        $capacitaciones_data = $this->Trainings->find('all');
+        $capacitaciones_data->where(['start_date >=' => $request["start"]]);
+        $capacitaciones_data->where(['end_date <=' => $request["end"]]);
+
+
+        // construyo arreglo para fullcalendar
+        $capacitaciones = [];
+        foreach ($capacitaciones_data as $capacitacion) {
+
+            $nombre_evento = $capacitacion->name;
+
+            $capacitaciones[] = [
+                'title' => $nombre_evento,
+                'start' => $capacitacion->start_date->format('Y-m-d') . 'T' . $capacitacion->start_date->format('H:i:s'),
+                'end' => $capacitacion->end_date->format('Y-m-d') . 'T' . $capacitacion->end_date->format('H:i:s'),
+                'backgroundColor' => boolval($capacitacion->start_date->format('Y-m-d') <  date('Y-m-d')) ? "#fc544b" : "#6777ef",
+                'borderColor' => boolval($capacitacion->start_date->format('Y-m-d') <  date('Y-m-d')) ? "#fc544b" : "#6777ef",
+                'textColor' => '#fff',
+                'data_id' => $capacitacion->id,
+                'data_fecha' => $capacitacion->start_date->format('Y-m-d'),
+                'data_horario' => $capacitacion->end_date->format('H:i') . '-' . $capacitacion->end_date->format('H:i'),
+            ];
+        }
+
+        $response = $this->response->withType('application/json')
+            ->withStringBody(json_encode($capacitaciones));
+
+        return $response;
     }
 }

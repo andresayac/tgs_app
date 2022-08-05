@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -102,4 +103,6 @@ class CompaniesController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
+    
 }

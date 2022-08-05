@@ -88,7 +88,6 @@
 </div>
 <script>
     $(document).ready(function() {
-
         $('.data-table').DataTable({
             scrollCollapse: true,
             autoWidth: false,

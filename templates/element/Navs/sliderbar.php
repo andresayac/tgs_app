@@ -2,6 +2,7 @@
 $c = $this->request->getParam('controller');
 $a = $this->request->getParam('action');
 
+
 $active = ["class" => "active"];
 
 ?>
@@ -28,12 +29,17 @@ $active = ["class" => "active"];
                     </ul>
                 </li>
 
+                <li>
+                    <a href="/trainings/calendar" class="dropdown-toggle no-arrow <?= ($c === 'Trainings' && $a === 'calendar') ?  'active' : ''; ?>">
+                        <span class="micon bi bi-calendar4-week"></span><span class="mtext">Calendario</span>
+                    </a>
+                </li>
                 <li class="dropdown">
                     <a href="javascript:;" class="dropdown-toggle">
                         <span class="micon dw dw-presentation-2"></span><span class="mtext">Capacitación</span>
                     </a>
                     <ul class="submenu">
-                        <li><?= $this->Html->link('Capacitaciónes', ['controller' => 'Trainings', 'action' => 'index'], ($c === 'Trainings') ? ["class" => "active"] : []) ?></li>
+                        <li><?= $this->Html->link('Capacitaciónes', ['controller' => 'Trainings', 'action' => 'index'], ($c === 'Trainings' && $a === 'index') ? ["class" => "active"] : []) ?></li>
                         <li><?= $this->Html->link('Asistencia Capacitación', ['controller' => 'TrainingsAssistances', 'action' => 'index'], ($c === 'TrainingsAssistances') ? ["class" => "active"] : []) ?></li>
                     </ul>
                 </li>
@@ -53,7 +59,7 @@ $active = ["class" => "active"];
                         <span class="micon dw dw-building1"></span><span class="mtext">Empresa</span>
                     </a>
                     <ul class="submenu">
-                        <li><?= $this->Html->link('Compañia', ['controller' => 'Companies', 'action' => 'index'], ($c === 'Companies') ? ["class" => "active"] : []) ?></li>
+                        <li><?= $this->Html->link('Empresa', ['controller' => 'Companies', 'action' => 'index'], ($c === 'Companies') ? ["class" => "active"] : []) ?></li>
                         <li><?= $this->Html->link('Sucursal', ['controller' => 'Branchs', 'action' => 'index'], ($c === 'Branchs') ? ["class" => "active"] : []) ?></li>
                         <li><?= $this->Html->link('Areas', ['controller' => 'Departaments', 'action' => 'index'], ($c === 'Departaments') ? ["class" => "active"] : []) ?></li>
                         <li><?= $this->Html->link('Cargos', ['controller' => 'Designations', 'action' => 'index'], ($c === 'Designations') ? ["class" => "active"] : []) ?></li>

@@ -39,8 +39,8 @@
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group">
-                            <label style="display: block;">Estado</label>
-                            <?= $this->Form->checkbox('active', ['hiddenField' => false, 'checked' => true, 'class' => 'switch-btn form-control', 'data-color' => '#0099ff']) ?>
+                            <label>Activo</label>
+                            <?= $this->Form->select('active', ['0' => 'NO', '1' => 'SI'], ['empty' => false, 'class' => 'selectpicker form-control', 'label' => false, 'required' => true]) ?>
                         </div>
                     </div>
                     <div class="col-md-6 col-sm-12">
@@ -137,13 +137,3 @@
     </div>
     <?= $this->Form->end() ?>
 </div>
-
-<?php echo $this->Html->css("/src/plugins/switchery/switchery.min.css"); ?>
-<?php echo $this->Html->script("/src/plugins/switchery/switchery.min.js"); ?>
-
-<script>
-    var elems = Array.prototype.slice.call(document.querySelectorAll('.switch-btn'));
-    $('.switch-btn').each(function() {
-        new Switchery($(this)[0], $(this).data());
-    });
-</script>
