@@ -38,7 +38,8 @@
         <div class="container-fluid d-flex justify-content-between align-items-center">
             <div class="brand-logo">
                 <a href="/">
-                    <?= $this->Html->image('/img/tgs-logo-dark.png'); ?>
+                    <?php //$this->Html->image('/img/tgs-logo-dark.png'); ?>
+                    <?= $this->Html->image('/vendors/images/deskapp-logo.svg'); ?>
                 </a>
             </div>
         </div>

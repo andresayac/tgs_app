@@ -58,7 +58,7 @@
                         <?= h($company->address) ?>
                     </li>
                     <li>
-                        <span>Codigo Postar:</span>
+                        <span>Código Postal:</span>
                         <?= $company->zipcode === null ? '' : $company->zipcode ?>
                     </li>
                 </ul>

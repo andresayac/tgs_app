@@ -142,7 +142,7 @@ class ApiController extends AppController
 
     private function enroll_fingerprint($pre_registered_fmd_array)
     {
-        $enrollment_url = "http://localhost:5555/coreComponents/enroll.php";
+        $enrollment_url = "http://67.205.172.232:5555/coreComponents/enroll.php";
         $data = ["data" => json_encode($pre_registered_fmd_array)];
         $response = $this->make_request($enrollment_url, $data);
 
@@ -152,7 +152,7 @@ class ApiController extends AppController
 
     private function verify_fingerprint($pre_registered_fmd_string, $enrolled_fingers_array)
     {
-        $verify_url = "http://localhost:5555/coreComponents/verify.php";
+        $verify_url = "http://67.205.172.232:5555/coreComponents/verify.php";
 
         $data = [
             "data" => json_encode([
@@ -170,7 +170,7 @@ class ApiController extends AppController
 
     private  function is_duplicate_fingerprint($pre_registered_fmd_string, $enrolled_hands_array)
     {
-        $is_duplicate_url = "http://localhost:5555/coreComponents/is_duplicate.php";
+        $is_duplicate_url = "http://67.205.172.232:5555/coreComponents/is_duplicate.php";
 
         $data = [
             "data" => json_encode(
