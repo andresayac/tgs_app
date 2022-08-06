@@ -66,8 +66,8 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 
 <body>
 
-    <?php echo $this->element('Navs\navbar');  ?>
-    <?php echo $this->element('Navs\sliderbar');  ?>
+    <?php echo $this->element('Navs/navbar');  ?>
+    <?php echo $this->element('Navs/sliderbar');  ?>
 
 
     <div class="mobile-menu-overlay"></div>
