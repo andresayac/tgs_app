@@ -5,15 +5,7 @@
  * @var \App\Model\Entity\Company $company
  */
 
-$_imagen_url = empty($user->imagen) ? "" : $this->Url->image('users/' . $company->logo, ['fullBase' => true]);
 ?>
-
-
-<script>
-    // se usa en custom-file-input.js
-    var default_preview_from_controller = '<?= $this->Html->image('users/default.jpg', ['width' => 200]) ?>';
-    var initial_preview_from_controller = '<?= $_imagen_url ?>';
-</script>
 
 <div class="page-header">
     <div class="row">
@@ -89,7 +81,7 @@ $_imagen_url = empty($user->imagen) ? "" : $this->Url->image('users/' . $company
                 </div>
                 <div class="col-md-12 col-sm-12 pd-20 mb-15">
                     <div class="form-group">
-                        <?= $this->Form->button('Crear Usuario', ['class' => 'btn btn-outline-primary']) ?>
+                        <?= $this->Form->button('Crear Empresa', ['class' => 'btn btn-outline-primary']) ?>
                     </div>
                 </div>
 
