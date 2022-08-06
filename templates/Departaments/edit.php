@@ -9,12 +9,12 @@
     <div class="row">
         <div class="col-md-6 col-sm-12">
             <div class="title">
-                <h4>Nueva Area</h4>
+                <h4>Editar Area</h4>
             </div>
             <nav aria-label="breadcrumb" role="navigation">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/departaments">Areas</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Nueva</li>
+                    <li class="breadcrumb-item active" aria-current="page">Editar</li>
                 </ol>
             </nav>
         </div>
@@ -51,7 +51,7 @@
                 </div>
                 <div class="col-md-12 col-sm-12 pd-20 mb-15">
                     <div class="form-group">
-                        <?= $this->Form->button('Crear Area', ['class' => 'btn btn-outline-primary']) ?>
+                        <?= $this->Form->button('Editar Area', ['class' => 'btn btn-outline-primary']) ?>
                     </div>
                 </div>
             </div>
