@@ -1,109 +1,140 @@
 <?php
+
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Branch $branch
  */
 ?>
-<div class="row">
-    <aside class="column">
-        <div class="side-nav">
-            <h4 class="heading"><?= __('Actions') ?></h4>
-            <?= $this->Html->link(__('Edit Branch'), ['action' => 'edit', $branch->id], ['class' => 'side-nav-item']) ?>
-            <?= $this->Form->postLink(__('Delete Branch'), ['action' => 'delete', $branch->id], ['confirm' => __('Are you sure you want to delete # {0}?', $branch->id), 'class' => 'side-nav-item']) ?>
-            <?= $this->Html->link(__('List Branchs'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
-            <?= $this->Html->link(__('New Branch'), ['action' => 'add'], ['class' => 'side-nav-item']) ?>
-        </div>
-    </aside>
-    <div class="column-responsive column-80">
-        <div class="branchs view content">
-            <h3><?= h($branch->name) ?></h3>
-            <table>
-                <tr>
-                    <th><?= __('Name') ?></th>
-                    <td><?= h($branch->name) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Company') ?></th>
-                    <td><?= $branch->has('company') ? $this->Html->link($branch->company->name, ['controller' => 'Companies', 'action' => 'view', $branch->company->id]) : '' ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Id') ?></th>
-                    <td><?= $this->Number->format($branch->id) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Active') ?></th>
-                    <td><?= $branch->active === null ? '' : $this->Number->format($branch->active) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Created') ?></th>
-                    <td><?= h($branch->created) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Modified') ?></th>
-                    <td><?= h($branch->modified) ?></td>
-                </tr>
-            </table>
-            <div class="text">
-                <strong><?= __('Note') ?></strong>
-                <blockquote>
-                    <?= $this->Text->autoParagraph(h($branch->note)); ?>
-                </blockquote>
+
+
+<div class="page-header">
+    <div class="row">
+        <div class="col-md-6 col-sm-12">
+            <div class="title">
+                <h4>Sucursal</h4>
             </div>
-            <div class="related">
-                <h4><?= __('Related Users') ?></h4>
-                <?php if (!empty($branch->users)) : ?>
-                <div class="table-responsive">
-                    <table>
-                        <tr>
-                            <th><?= __('Id') ?></th>
-                            <th><?= __('Rol Id') ?></th>
-                            <th><?= __('Username') ?></th>
-                            <th><?= __('Password') ?></th>
-                            <th><?= __('Name') ?></th>
-                            <th><?= __('Lastname') ?></th>
-                            <th><?= __('Document Type') ?></th>
-                            <th><?= __('Document') ?></th>
-                            <th><?= __('Date Birthday') ?></th>
-                            <th><?= __('Telephone') ?></th>
-                            <th><?= __('Active') ?></th>
-                            <th><?= __('Dep Id') ?></th>
-                            <th><?= __('Branch Id') ?></th>
-                            <th><?= __('Designation Id') ?></th>
-                            <th><?= __('Fingerprint') ?></th>
-                            <th><?= __('Created') ?></th>
-                            <th><?= __('Modified') ?></th>
-                            <th class="actions"><?= __('Actions') ?></th>
-                        </tr>
-                        <?php foreach ($branch->users as $users) : ?>
-                        <tr>
-                            <td><?= h($users->id) ?></td>
-                            <td><?= h($users->rol_id) ?></td>
-                            <td><?= h($users->username) ?></td>
-                            <td><?= h($users->password) ?></td>
-                            <td><?= h($users->name) ?></td>
-                            <td><?= h($users->lastname) ?></td>
-                            <td><?= h($users->document_type) ?></td>
-                            <td><?= h($users->document) ?></td>
-                            <td><?= h($users->date_birthday) ?></td>
-                            <td><?= h($users->telephone) ?></td>
-                            <td><?= h($users->active) ?></td>
-                            <td><?= h($users->dep_id) ?></td>
-                            <td><?= h($users->branch_id) ?></td>
-                            <td><?= h($users->designation_id) ?></td>
-                            <td><?= h($users->fingerprint) ?></td>
-                            <td><?= h($users->created) ?></td>
-                            <td><?= h($users->modified) ?></td>
-                            <td class="actions">
-                                <?= $this->Html->link(__('View'), ['controller' => 'Users', 'action' => 'view', $users->id]) ?>
-                                <?= $this->Html->link(__('Edit'), ['controller' => 'Users', 'action' => 'edit', $users->id]) ?>
-                                <?= $this->Form->postLink(__('Delete'), ['controller' => 'Users', 'action' => 'delete', $users->id], ['confirm' => __('Are you sure you want to delete # {0}?', $users->id)]) ?>
-                            </td>
-                        </tr>
-                        <?php endforeach; ?>
+            <nav aria-label="breadcrumb" role="navigation">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/branchs">Sucursales</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Ver</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+
+
+<div class="card-box mb-30">
+    <div class="pd-20">
+        <h4 class="text-blue h4">Datos de la Sucursal</h4>
+        <p class="mb-0"></p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-30">
+        <div class="pd-20 card-box height-100-p">
+
+            <h5 class="text-center h5 mb-0"></h5>
+            <p class="text-center text-muted font-14">
+                <strong><?= h($branch->name) ?></strong>
+            </p>
+            <div class="profile-info">
+                <h5 class="mb-20 h5 text-blue">Información de la Sucursal</h5>
+                <ul>
+                    <li>
+                        <span>Empresa:</span>
+                        <?= $branch->has('company') ? $this->Html->link($branch->company->name, ['controller' => 'Companies', 'action' => 'view', $branch->company->id]) : '' ?>
+                    </li>
+                    <li>
+                        <span>Notas:</span>
+                        <blockquote>
+                            <?= $this->Text->autoParagraph(h($branch->note)); ?>
+                        </blockquote>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 mb-30">
+        <div class="pd-20 card-box height-100-p overflow-hidden">
+
+            <h5 class="text-center h5 mb-0"></h5>
+            <p class="text-center text-muted font-14">
+                <strong>Usuarios relacionados en la sucursal</strong>
+            </p>
+            <div class="profile-info">
+                <div class="dataTables_wrapper dt-bootstrap4 no-footer">
+                    <table id="datatable-companies" class="data-table table stripe hover nowrap dataTable no-footer dtr-inline">
+                        <thead>
+                            <tr>
+                                <th><?= $this->Paginator->sort('id') ?></th>
+                                <th><?= $this->Paginator->sort('username', 'Usuario') ?></th>
+                                <th><?= $this->Paginator->sort('name', 'Nombres') ?></th>
+                                <th><?= $this->Paginator->sort('lastname', 'Apellidos') ?></th>
+                                <th><?= $this->Paginator->sort('document', 'Documento') ?></th>
+                                <th><?= $this->Paginator->sort('active', 'Estado') ?></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($branch->users as $users) : ?>
+                                <tr>
+                                    <td><?= $users->has('id') ? $this->Html->link($users->id, ['controller' => 'Branchs', 'action' => 'view', $users->id]) : '' ?></td>
+                                    <td><?= h($users->username) ?></td>
+                                    <td><?= h($users->name) ?></td>
+                                    <td><?= h($users->lastname) ?></td>
+                                    <td><?= h($users->date_birthday) ?></td>
+                                    <td><span class="badge badge-<?= ((bool) $users->active) ? 'primary' : 'danger' ?>"><?= ((bool) $users->active) ? 'Activo' : 'Inactivo' ?></span></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
                     </table>
                 </div>
-                <?php endif; ?>
             </div>
         </div>
     </div>
 </div>
+
+
+<script>
+    $(document).ready(function() {
+
+        $('.data-table').DataTable({
+            scrollCollapse: true,
+            autoWidth: false,
+            responsive: true,
+            columnDefs: [{
+                targets: "datatable-nosort",
+                orderable: false,
+            }],
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+            "language": {
+                "info": "_START_-_END_ de _TOTAL_ registros",
+                searchPlaceholder: "Buscar",
+                paginate: {
+                    next: '<i class="ion-chevron-right"></i>',
+                    previous: '<i class="ion-chevron-left"></i>'
+                },
+                "sProcessing": "Procesando...",
+                "sLengthMenu": "Mostrar _MENU_ registros",
+                "sZeroRecords": "No se encontraron resultados",
+                "sEmptyTable": "Ningún dato disponible en esta tabla",
+                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                "sInfoPostFix": "",
+                "sSearch": "Buscar:",
+                "sUrl": "",
+                "sInfoThousands": ",",
+                "sLoadingRecords": "Cargando...",
+                "oAria": {
+                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                }
+            },
+        });
+    });
+</script>
