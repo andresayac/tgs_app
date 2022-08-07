@@ -2,8 +2,30 @@
 
 /**
  * @var \App\View\AppView $this
- * @var \App\Model\Entity\Training $training
+ * @var \App\Model\Entity\Training $training $departaments $designations
  */
+
+$assistants = [
+    "Departamentos" => [],
+    "Cargos" => []
+];
+
+
+foreach ($departaments as $departament) {
+    $assistants['Departamentos']["departament_{$departament['id']}"] = $departament['name'];
+}
+
+foreach ($designations as $designation) {
+    $assistants['Cargos']["designation_{$designation['id']}"] = $designation['name'];
+}
+
+$fecha_selected = $this->request->getQuery('d') ?? false;
+$hora_selected = $this->request->getQuery('t') ?? false;
+
+if ($this->request->getQuery('d')) {
+    $training->set('fecha_inicio', $this->request->getQuery('d'));
+    $training->set('fecha_fin', $this->request->getQuery('d'));
+}
 ?>
 
 
@@ -43,8 +65,8 @@
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group">
                             <div class="input text">
-                                <label>Fecha de Inicio</label>
-                                <input class="form-control datetimepicker" placeholder="Selecionar Fecha" type="text" name="start_date" id="start-date" />
+                                <label>Fecha de realización</label>
+                                <?= $this->Form->input('start_date', ['type' => 'text', 'label' => false, 'class' => 'form-control datetimepickertraining']) ?>
                             </div>
                         </div>
                     </div>
@@ -52,7 +74,7 @@
                         <div class="form-group">
                             <div class="input text">
                                 <label>Fecha de terminación</label>
-                                <input class="form-control datetimepicker" placeholder="Selecionar Fecha" type="text" name="end_date" id="end_date" />
+                                <?= $this->Form->input('end_date', ['type' => 'text', 'label' => false, 'class' => 'form-control datetimepickertraining']) ?>
                             </div>
                         </div>
                     </div>
@@ -60,27 +82,14 @@
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group">
-                        <label>Areas o Cargos a Capacitar</label>
-										<select
-											class="selectpicker form-control"
-											multiple
-											data-actions-box="true"
-                                            data-live-search="true"
-											data-selected-text-format="count"
-                                            name="designations" id="designations"
-										>
-											<optgroup label="Areas">
-												<option>Almacenamiento</option>
-												<option>Calidad</option>
-												<option>Nomina</option>
-											</optgroup>
-											<optgroup label="Cargos">
-												<option>T.I</option>
-												<option>Calidad</option>
-												<option>Bodega</option>
-											</optgroup>
-										</select>
-                            <?php //$this->Form->control('designations', ['label' => 'Areas para Capacitación', 'class' => 'form-control']); ?>
+                            <label>Areas a Capacitar</label>
+                            <?= $this->Form->select('departaments', $assistants['Departamentos'], ['empty' => false, 'class' => 'selectpicker form-control select2', 'label' => false, 'required' => true, "multiple" => true, "data-actions-box" => true, "data-live-search" => true]) ?>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label>Cargos a Capacitar</label>
+                            <?= $this->Form->select('designations', $assistants['Cargos'], ['empty' => false, 'class' => 'selectpicker form-control select2', 'label' => false, 'required' => true, "multiple" => true, "data-actions-box" => true, "data-live-search" => true]) ?>
                         </div>
                     </div>
                 </div>
@@ -105,10 +114,11 @@
 
 
 <script>
-    $(".datetimepicker").datepicker({
+    $(".datetimepickertraining").datepicker({
         timepicker: true,
-        language: "en",
+        language: "es",
         autoClose: false,
-        dateFormat: "dd MM yyyy",
+        dateFormat: 'yyyy-mm-dd',
+        timeFormat: 'hh:ii',
     });
 </script>

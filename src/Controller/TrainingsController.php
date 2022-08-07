@@ -47,9 +47,20 @@ class TrainingsController extends AppController
      */
     public function add()
     {
+        $Departaments = $this->getTableLocator()->get('Departaments');
+        $Designations = $this->getTableLocator()->get('Designations');
+
+        $departaments =  json_decode(json_encode($Departaments->find()->select(['id', 'name'])->toArray()), true);
+        $designations =  json_decode(json_encode($Designations->find()->select(['id', 'name'])->toArray()), true);
+
         $training = $this->Trainings->newEmptyEntity();
         if ($this->request->is('post')) {
-            $training = $this->Trainings->patchEntity($training, $this->request->getData());
+            $data = $this->request->getData();
+            $data['designations'] = implode(',', $data['designations']);
+            $data['departaments'] = implode(',', $data['departaments']);
+            $training = $this->Trainings->patchEntity($training, $data);
+            $this->Flash->error(__('The training could not be saved. Please, try again.'));
+
             if ($this->Trainings->save($training)) {
                 $this->Flash->success(__('The training has been saved.'));
 
@@ -57,7 +68,7 @@ class TrainingsController extends AppController
             }
             $this->Flash->error(__('The training could not be saved. Please, try again.'));
         }
-        $this->set(compact('training'));
+        $this->set(compact('training', 'designations', 'departaments'));
     }
 
     /**
@@ -117,8 +128,6 @@ class TrainingsController extends AppController
         $this->request->allowMethod(['post']);
 
         $request = $this->request->getData();
-
-
 
         $capacitaciones_data = $this->Trainings->find('all');
         $capacitaciones_data->where(['start_date >=' => $request["start"]]);
