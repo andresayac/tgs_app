@@ -46,7 +46,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?php echo $this->Html->script("/src/plugins/datatables/js/dataTables.bootstrap4.min.js"); ?>
     <?php echo $this->Html->script("/src/plugins/datatables/js/dataTables.responsive.min.js"); ?>
     <?php echo $this->Html->script("/src/plugins/datatables/js/responsive.bootstrap4.min.js"); ?>
-    <?php echo $this->Html->script("/vendors/scripts/dashboard.js"); ?>
+    <?php //echo $this->Html->script("/vendors/scripts/dashboard.js"); ?>
     <?php echo $this->Html->script("/src/scripts/iziToast.min.js"); ?>
 
 

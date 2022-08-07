@@ -14,6 +14,7 @@ use Cake\ORM\Entity;
  * @property string|null $name
  * @property string|null $note
  * @property string|null $designations
+ * @property string|null $departaments
  * @property \Cake\I18n\FrozenTime|null $created
  * @property \Cake\I18n\FrozenTime|null $modified
  *
@@ -36,6 +37,7 @@ class Training extends Entity
         'name' => true,
         'note' => true,
         'designations' => true,
+        'departaments' => true,
         'created' => true,
         'modified' => true,
         'trainings_assistances' => true,

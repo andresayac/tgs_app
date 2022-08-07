@@ -80,8 +80,13 @@ class TrainingsTable extends Table
 
         $validator
             ->scalar('designations')
-            ->maxLength('designations', 255)
+            ->maxLength('designations', 16777215)
             ->allowEmptyString('designations');
+        
+        $validator
+            ->scalar('departaments')
+            ->maxLength('departaments', 16777215)
+            ->allowEmptyString('departaments');
 
         return $validator;
     }
