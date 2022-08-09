@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -79,14 +80,9 @@ class TrainingsTable extends Table
             ->allowEmptyString('note');
 
         $validator
-            ->scalar('designations')
-            ->maxLength('designations', 16777215)
-            ->allowEmptyString('designations');
-        
-        $validator
-            ->scalar('departaments')
-            ->maxLength('departaments', 16777215)
-            ->allowEmptyString('departaments');
+            ->scalar('trainer')
+            ->maxLength('trainer', 16777215)
+            ->allowEmptyString('trainer');
 
         return $validator;
     }

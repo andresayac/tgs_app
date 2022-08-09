@@ -19,7 +19,7 @@ class TrainingsAssistancesController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Trainings'],
+            'contain' => ['Trainings', 'Users'],
         ];
         $trainingsAssistances = $this->paginate($this->TrainingsAssistances);
 
@@ -36,7 +36,7 @@ class TrainingsAssistancesController extends AppController
     public function view($id = null)
     {
         $trainingsAssistance = $this->TrainingsAssistances->get($id, [
-            'contain' => ['Trainings'],
+            'contain' => ['Trainings', 'Users'],
         ]);
 
         $this->set(compact('trainingsAssistance'));
@@ -60,7 +60,8 @@ class TrainingsAssistancesController extends AppController
             $this->Flash->error(__('The trainings assistance could not be saved. Please, try again.'));
         }
         $trainings = $this->TrainingsAssistances->Trainings->find('list', ['limit' => 200])->all();
-        $this->set(compact('trainingsAssistance', 'trainings'));
+        $users = $this->TrainingsAssistances->Users->find('list', ['limit' => 200])->all();
+        $this->set(compact('trainingsAssistance', 'trainings', 'users'));
     }
 
     /**
@@ -85,7 +86,8 @@ class TrainingsAssistancesController extends AppController
             $this->Flash->error(__('The trainings assistance could not be saved. Please, try again.'));
         }
         $trainings = $this->TrainingsAssistances->Trainings->find('list', ['limit' => 200])->all();
-        $this->set(compact('trainingsAssistance', 'trainings'));
+        $users = $this->TrainingsAssistances->Users->find('list', ['limit' => 200])->all();
+        $this->set(compact('trainingsAssistance', 'trainings', 'users'));
     }
 
     /**

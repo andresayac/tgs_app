@@ -10,9 +10,16 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property int|null $training_id
- * @property string|null $users
+ * @property int|null $user_id
+ * @property int|null $checked
+ * @property string|null $type_check
+ * @property int|null $created_by
+ * @property int|null $modified_by
+ * @property \Cake\I18n\FrozenTime|null $created
+ * @property \Cake\I18n\FrozenTime|null $modified
  *
  * @property \App\Model\Entity\Training $training
+ * @property \App\Model\Entity\User $user
  */
 class TrainingsAssistance extends Entity
 {
@@ -27,7 +34,12 @@ class TrainingsAssistance extends Entity
      */
     protected $_accessible = [
         'training_id' => true,
-        'users' => true,
-        'training' => true,
+        'user_id' => true,
+        'checked' => true,
+        'type_check' => true,
+        'created_by' => true,
+        'modified_by' => true,
+        'created' => true,
+        'modified' => true
     ];
 }

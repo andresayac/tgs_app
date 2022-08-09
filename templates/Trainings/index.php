@@ -4,6 +4,18 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Training[]|\Cake\Collection\CollectionInterface $trainings
  */
+$data = [
+    "Users" => []
+];
+
+foreach ($users as $user) {
+    $data['Users'][$user['document']] = [
+        "name" => $user['name'] . " " . $user['lastname']
+    ];
+}
+
+
+
 ?>
 
 
@@ -41,7 +53,7 @@
                 <tr>
                     <th><?= $this->Paginator->sort('id') ?></th>
                     <th><?= $this->Paginator->sort('name', 'Nombre') ?></th>
-                    <th><?= $this->Paginator->sort('designations','Cargos') ?></th>
+                    <th><?= $this->Paginator->sort('trainer', 'Capacitador') ?></th>
                     <th><?= $this->Paginator->sort('start_date', 'Fecha Inicio') ?></th>
                     <th><?= $this->Paginator->sort('end_date', 'Fecha Fin') ?></th>
                     <th class="actions"><?= __('Acciones') ?></th>
@@ -52,7 +64,19 @@
                     <tr>
                         <td><?= $this->Number->format($training->id) ?></td>
                         <td><?= h($training->name) ?></td>
-                        <td><?= h($training->designations) ?></td>
+                        <td>
+                            <?php
+                            $trainers = explode(',', $training->trainer);
+                            $count = 1;
+                            foreach ($trainers as $value) {
+                                if (empty($value)) break;
+                                if ($count === 3) {
+                                    echo "<span class='badge badge-primary'>...</span>";
+                                    break;
+                                }
+                                echo "<span class='badge badge-primary' style='margin: 1px;'>{$data['Users'][$value]['name']}</span>";
+                                $count++;
+                            } ?></td>
                         <td><?= h($training->start_date) ?></td>
                         <td><?= h($training->end_date) ?></td>
                         <td>
@@ -121,8 +145,3 @@
         });
     });
 </script>
-
-
-
-
-

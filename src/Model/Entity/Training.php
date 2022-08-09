@@ -13,8 +13,7 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime|null $end_date
  * @property string|null $name
  * @property string|null $note
- * @property string|null $designations
- * @property string|null $departaments
+ * @property string|null $trainer
  * @property \Cake\I18n\FrozenTime|null $created
  * @property \Cake\I18n\FrozenTime|null $modified
  *
@@ -36,8 +35,7 @@ class Training extends Entity
         'end_date' => true,
         'name' => true,
         'note' => true,
-        'designations' => true,
-        'departaments' => true,
+        'trainer' => true,
         'created' => true,
         'modified' => true,
         'trainings_assistances' => true,

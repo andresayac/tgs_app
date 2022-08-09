@@ -21,7 +21,13 @@ class TrainingsAssistancesFixture extends TestFixture
             [
                 'id' => 1,
                 'training_id' => 1,
-                'users' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
+                'user_id' => 1,
+                'checked' => 1,
+                'type_check' => 'Lorem ipsum dolor sit amet',
+                'created_by' => 1,
+                'modified_by' => 1,
+                'created' => '2022-08-08 18:39:38',
+                'modified' => '2022-08-08 18:39:38',
             ],
         ];
         parent::init();

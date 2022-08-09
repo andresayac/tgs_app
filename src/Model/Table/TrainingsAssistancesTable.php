@@ -12,6 +12,7 @@ use Cake\Validation\Validator;
  * TrainingsAssistances Model
  *
  * @property \App\Model\Table\TrainingsTable&\Cake\ORM\Association\BelongsTo $Trainings
+ * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Users
  *
  * @method \App\Model\Entity\TrainingsAssistance newEmptyEntity()
  * @method \App\Model\Entity\TrainingsAssistance newEntity(array $data, array $options = [])
@@ -26,6 +27,8 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\TrainingsAssistance[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
  * @method \App\Model\Entity\TrainingsAssistance[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
  * @method \App\Model\Entity\TrainingsAssistance[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ *
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class TrainingsAssistancesTable extends Table
 {
@@ -43,8 +46,13 @@ class TrainingsAssistancesTable extends Table
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
+        $this->addBehavior('Timestamp');
+
         $this->belongsTo('Trainings', [
             'foreignKey' => 'training_id',
+        ]);
+        $this->belongsTo('Users', [
+            'foreignKey' => 'user_id',
         ]);
     }
 
@@ -61,9 +69,25 @@ class TrainingsAssistancesTable extends Table
             ->allowEmptyString('training_id');
 
         $validator
-            ->scalar('users')
-            ->maxLength('users', 16777215)
-            ->allowEmptyString('users');
+            ->integer('user_id')
+            ->allowEmptyString('user_id');
+
+        $validator
+            ->integer('checked')
+            ->allowEmptyString('checked');
+
+        $validator
+            ->scalar('type_check')
+            ->maxLength('type_check', 65)
+            ->allowEmptyString('type_check');
+
+        $validator
+            ->integer('created_by')
+            ->allowEmptyString('created_by');
+
+        $validator
+            ->integer('modified_by')
+            ->allowEmptyString('modified_by');
 
         return $validator;
     }
@@ -78,6 +102,7 @@ class TrainingsAssistancesTable extends Table
     public function buildRules(RulesChecker $rules): RulesChecker
     {
         $rules->add($rules->existsIn('training_id', 'Trainings'), ['errorField' => 'training_id']);
+        $rules->add($rules->existsIn('user_id', 'Users'), ['errorField' => 'user_id']);
 
         return $rules;
     }

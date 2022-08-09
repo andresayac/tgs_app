@@ -3,6 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\TrainingsAssistance $trainingsAssistance
  * @var string[]|\Cake\Collection\CollectionInterface $trainings
+ * @var string[]|\Cake\Collection\CollectionInterface $users
  */
 ?>
 <div class="row">
@@ -24,7 +25,11 @@
                 <legend><?= __('Edit Trainings Assistance') ?></legend>
                 <?php
                     echo $this->Form->control('training_id', ['options' => $trainings, 'empty' => true]);
-                    echo $this->Form->control('users');
+                    echo $this->Form->control('user_id', ['options' => $users, 'empty' => true]);
+                    echo $this->Form->control('checked');
+                    echo $this->Form->control('type_check');
+                    echo $this->Form->control('created_by');
+                    echo $this->Form->control('modified_by');
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>

@@ -62,6 +62,9 @@ class UsersTable extends Table
         $this->belongsTo('Designations', [
             'foreignKey' => 'designation_id',
         ]);
+
+
+        
     }
 
     /**

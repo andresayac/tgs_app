@@ -23,8 +23,8 @@
                     <td><?= h($training->name) ?></td>
                 </tr>
                 <tr>
-                    <th><?= __('Designations') ?></th>
-                    <td><?= h($training->designations) ?></td>
+                    <th><?= __('trainer') ?></th>
+                    <td><?= h($training->trainer) ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Id') ?></th>

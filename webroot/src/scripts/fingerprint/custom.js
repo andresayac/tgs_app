@@ -190,7 +190,7 @@ function beginCapture(user_id){
 
 function captureForIdentify(user_id) {
     document.getElementById("userID").value = "";
-    document.getElementById("userIDVerify").value = user_id;
+    document.getElementById("userIDVerify").value =  document.getElementById("userIDVerifyTMP").value;
     if(!readyForIdentify()){
         return;
     }

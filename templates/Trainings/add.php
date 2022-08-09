@@ -2,32 +2,26 @@
 
 /**
  * @var \App\View\AppView $this
- * @var \App\Model\Entity\Training $training $departaments $designations
+ * @var \App\Model\Entity\Training $training $departaments $designations $users
  */
 
 $assistants = [
-    "Departamentos" => [],
-    "Cargos" => []
+    "Users" => []
 ];
 
-
-foreach ($departaments as $departament) {
-    $assistants['Departamentos']["departament_{$departament['id']}"] = $departament['name'];
-}
-
-foreach ($designations as $designation) {
-    $assistants['Cargos']["designation_{$designation['id']}"] = $designation['name'];
+foreach ($users as $user) {
+    $assistants['Users'][$user['document']] = $user['name'] . " " . $user['lastname'] . " - " . $user['document'];
 }
 
 $fecha_selected = $this->request->getQuery('d') ?? false;
 $hora_selected = $this->request->getQuery('t') ?? false;
 
 if ($this->request->getQuery('d')) {
-    $training->set('fecha_inicio', $this->request->getQuery('d'));
-    $training->set('fecha_fin', $this->request->getQuery('d'));
+    $training->set('start_date', $this->request->getQuery('d'));
+    $training->set('start_hour', $this->request->getQuery('t'));
+    $training->set('end_hour', $this->request->getQuery('t'));
 }
 ?>
-
 
 <div class="page-header">
     <div class="row">
@@ -66,30 +60,28 @@ if ($this->request->getQuery('d')) {
                         <div class="form-group">
                             <div class="input text">
                                 <label>Fecha de realización</label>
-                                <?= $this->Form->input('start_date', ['type' => 'text', 'label' => false, 'class' => 'form-control datetimepickertraining']) ?>
+                                <?= $this->Form->input('start_date', ['type' => 'text', 'label' => false, 'class' => 'form-control date-picker-training']) ?>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group">
-                            <div class="input text">
-                                <label>Fecha de terminación</label>
-                                <?= $this->Form->input('end_date', ['type' => 'text', 'label' => false, 'class' => 'form-control datetimepickertraining']) ?>
-                            </div>
+                            <label>Capacitador</label>
+                            <?= $this->Form->select('trainer', $assistants['Users'], ['empty' => false, 'class' => 'selectpicker form-control', 'label' => false, 'required' => true, "multiple" => true, "data-actions-box" => true, "data-live-search" => true]) ?>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group">
-                            <label>Areas a Capacitar</label>
-                            <?= $this->Form->select('departaments', $assistants['Departamentos'], ['empty' => false, 'class' => 'selectpicker form-control select2', 'label' => false, 'required' => true, "multiple" => true, "data-actions-box" => true, "data-live-search" => true]) ?>
+                            <label>Hora de Inicio</label>
+                            <?= $this->Form->input('start_hour', ['empty' => false, 'class' => 'form-control time-picker-training select2', 'label' => false, 'required' => true]) ?>
                         </div>
                     </div>
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group">
-                            <label>Cargos a Capacitar</label>
-                            <?= $this->Form->select('designations', $assistants['Cargos'], ['empty' => false, 'class' => 'selectpicker form-control select2', 'label' => false, 'required' => true, "multiple" => true, "data-actions-box" => true, "data-live-search" => true]) ?>
+                            <label>Hora estimada de finalización</label>
+                            <?= $this->Form->input('end_hour', ['empty' => false, 'class' => 'form-control time-picker-training select2', 'label' => false, 'required' => true]) ?>
                         </div>
                     </div>
                 </div>
@@ -114,11 +106,31 @@ if ($this->request->getQuery('d')) {
 
 
 <script>
-    $(".datetimepickertraining").datepicker({
+    $(".date-time-picker-training").datepicker({
         timepicker: true,
         language: "es",
         autoClose: false,
-        dateFormat: 'yyyy-mm-dd',
-        timeFormat: 'hh:ii',
+        dateFormat: 'yyyy-mm-dd'
+    });
+
+    // date picker
+    $(".date-picker-training").datepicker({
+        language: "en",
+        autoClose: true,
+        dateFormat: "yyyy-mm-dd",
+    });
+
+
+    $(".time-picker-training").timeDropper({
+        format: 'HH:mm',
+        autoswitch: false,
+        meridians: true,
+        mousewheel: false,
+        setCurrentTime: true,
+        init_animation: "fadein",
+        primaryColor: "#1977CC",
+        borderColor: "#1977CC",
+        backgroundColor: "#FFF",
+        textColor: '#555'
     });
 </script>

@@ -26,6 +26,7 @@ class TrainingsAssistancesTableTest extends TestCase
     protected $fixtures = [
         'app.TrainingsAssistances',
         'app.Trainings',
+        'app.Users',
     ];
 
     /**
