@@ -25,7 +25,6 @@ foreach ($assistances as $user) {
 $trainer = explode(",", $training->trainer);
 
 $training->set('start_hour', $training->start_date->format('H:i'));
-
 $training->set('end_hour', $training->end_date->format('H:i'));
 
 
@@ -109,7 +108,6 @@ $training->set('end_hour', $training->end_date->format('H:i'));
 </div>
 
 
-
 <div class="card-box mb-30">
     <div class="pd-20">
         <h4 class="text-blue h4">Asistentes</h4>
@@ -150,6 +148,7 @@ $training->set('end_hour', $training->end_date->format('H:i'));
                     </thead>
                     <tbody>
                         <?php foreach ($assistances as $training_data) : ?>
+                            <?php if(empty($training_data)) break;?>
                             <tr>
                                 <td><?= h($training_data->id) ?></td>
                                 <td><?= $training_data->has('user') ? $this->Html->link($training_data->user->name, ['controller' => 'Users', 'action' => 'view', $training_data->user->id]) : '' ?></td>
@@ -384,7 +383,7 @@ $training->set('end_hour', $training->end_date->format('H:i'));
 
 
 
-<?php if ($training->start_date->isToday()  && $training_data->checked) : ?>
+<?php if ($training->start_date->isToday()) : ?>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
 
