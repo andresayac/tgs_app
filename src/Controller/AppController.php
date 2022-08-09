@@ -65,7 +65,6 @@ class AppController extends Controller
             'authError' => 'No tiene autorización para esta acción.',
         ]);
 
-        $this->loadComponent('Security', ['blackHoleCallback' => 'forceSSL']); // SSL SECURITY
 
         /*
          * Enable the following component for recommended CakePHP form protection settings.
