@@ -57,11 +57,11 @@
                                     <i class="dw dw-more"></i>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                    <?= $this->Html->link(__('Ver'), ['action' => 'view', $departament->id], [
+                                    <?= $this->Html->link(__('<i class="dw dw-eye"></i>Ver'), ['action' => 'view', $departament->id], [
                                         'escape' => false,
                                         'class' => 'dropdown-item'
                                     ]) ?>
-                                    <?= $this->Html->link(__('Editar'), ['action' => 'edit', $departament->id], [
+                                    <?= $this->Html->link(__('<i class="dw dw-edit2"></i>Editar'), ['action' => 'edit', $departament->id], [
                                         'escape' => false,
                                         'class' => 'dropdown-item'
                                     ]) ?>

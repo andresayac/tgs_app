@@ -100,7 +100,7 @@
 <script>
     var targeturl = '<?= $this->Url->build(["controller" => "Trainings", "action" => "getCalendarioEvents"]) ?>';
     var token = "<?= $this->request->getParam('_csrfToken') ?>";
-    // var eventoAsistenciaUrl = '<?= $this->Url->build(["controller" => "Eventos", "action" => "asistencia"]) ?>';
+    var eventoAsistenciaUrl = '<?= $this->Url->build(["controller" => "Trainings", "action" => "attendance"]) ?>';
     var eventoAddUrl = '<?= $this->Url->build(["controller" => "Trainings", "action" => "add"]) ?>';
 
 
@@ -132,7 +132,7 @@
 
             eventClick: function(calEvent, jsEvent, view) {
                 // evento al hacer click sobre un evento
-                window.location.href =  '/' + calEvent.data_id;
+                window.location.href =  eventoAsistenciaUrl + '/' + calEvent.data_id;
             },
 
             eventRender: function(event, el) {

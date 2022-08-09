@@ -39,8 +39,8 @@ $active = ["class" => "active"];
                         <span class="micon dw dw-presentation-2"></span><span class="mtext">Capacitación</span>
                     </a>
                     <ul class="submenu">
-                        <li><?= $this->Html->link('Capacitaciónes', ['controller' => 'Trainings', 'action' => 'index'], ($c === 'Trainings' && $a === 'index') ? ["class" => "active"] : []) ?></li>
-                        <li><?= $this->Html->link('Asistencia Capacitación', ['controller' => 'TrainingsAssistances', 'action' => 'index'], ($c === 'TrainingsAssistances') ? ["class" => "active"] : []) ?></li>
+                        <li><?= $this->Html->link('Capacitaciones', ['controller' => 'Trainings', 'action' => 'index'], ($c === 'Trainings' && $a === 'index') ? ["class" => "active"] : []) ?></li>
+                
                     </ul>
                 </li>
                 <li>
