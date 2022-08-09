@@ -77,6 +77,11 @@ class AppController extends Controller
     {
         parent::beforeFilter($event);
 
+        $this->request->addDetector('ssl', array(
+            'env' => 'HTTP_X_FORWARDED_PROTO',
+            'value' => 'https'
+        ));
+
         // var for all views
         $this->set('_app_name_', Configure::read('app_name'));
 

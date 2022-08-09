@@ -35,7 +35,7 @@ foreach ($users as $user) {
         <div class="col-md-6 col-sm-12 text-right">
             <div class="dropdown">
                 <a class="btn btn-primary dropdown-toggle" href="/trainings/add">
-                    Nuevo Capacitación
+                    Nueva Capacitación
                 </a>
             </div>
         </div>
