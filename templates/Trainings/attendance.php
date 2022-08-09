@@ -28,6 +28,7 @@ $training->set('start_hour', $training->start_date->format('H:i'));
 
 $training->set('end_hour', $training->end_date->format('H:i'));
 
+
 ?>
 
 <div class="page-header">
@@ -148,19 +149,19 @@ $training->set('end_hour', $training->end_date->format('H:i'));
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($assistances as $training) : ?>
+                        <?php foreach ($assistances as $training_data) : ?>
                             <tr>
-                                <td><?= h($training->id) ?></td>
-                                <td><?= $training->has('user') ? $this->Html->link($training->user->name, ['controller' => 'Users', 'action' => 'view', $training->user->id]) : '' ?></td>
+                                <td><?= h($training_data->id) ?></td>
+                                <td><?= $training_data->has('user') ? $this->Html->link($training_data->user->name, ['controller' => 'Users', 'action' => 'view', $training_data->user->id]) : '' ?></td>
 
-                                <td><span class="badge badge-<?= ((bool) $training->checked) ? 'primary' : 'danger' ?>" id="badge-item-<?= $training->id ?>"><?= ((bool) $training->checked) ? 'Asistio' : 'No Asistio' ?></span></td>
+                                <td><span class="badge badge-<?= ((bool) $training_data->checked) ? 'primary' : 'danger' ?>" id="badge-item-<?= $training_data->id ?>"><?= ((bool) $training_data->checked) ? 'Asistio' : 'No Asistio' ?></span></td>
 
-                                <td><?= h($training->type_check) ?></td>
+                                <td><?= h($training_data->type_check) ?></td>
                                 <td>
                                     <div class="table-actions">
                                         <div class="custom-control custom-checkbox mb-5">
-                                            <input <?= $training->start_date->isToday() && !$training->checked ? "" :  "disabled" ?> <?= ($training->checked) ? 'checked' : '' ?> type="checkbox" data-assistant="<?= $training->id ?>" class="custom-control-input checks" id="checkbox-<?= $training->id ?>" data-user="<?= $training->user->id ?>">
-                                            <label for="checkbox-<?= $training->id ?>" class="custom-control-label"></label>
+                                            <input <?= $training_data->training->start_date->isToday() && !$training_data->checked ? "" :  "disabled" ?> <?= ($training_data->checked) ? 'checked' : '' ?> type="checkbox" data-assistant="<?= $training_data->id ?>" class="custom-control-input checks" id="checkbox-<?= $training_data->id ?>" data-user="<?= $training_data->user->id ?>">
+                                            <label for="checkbox-<?= $training_data->id ?>" class="custom-control-label"></label>
                                         </div>
 
 
@@ -170,23 +171,23 @@ $training->set('end_hour', $training->end_date->format('H:i'));
                                             "class" => "icon-copy bi bi-fingerprint",
                                             "data-toggle" => "modal",
                                             "data-target" => "#modal-1",
-                                            "data-user-id" => $training->user->id,
-                                            "data-training-id" => $training->id,
-                                            "data-name-id" => $training->user->name,
+                                            "data-user-id" => $training_data->user->id,
+                                            "data-training-id" => $training_data->id,
+                                            "data-name-id" => $training_data->user->name,
                                             "data-color" => "#265ed7",
                                             "id" => "btn-fingerprint",
                                             "name" => "btn-fingerprint",
-                                            "style" => "color: rgb(38, 94, 215); margin-right: 5px; border: none; font-size: 18px;",
-                                            "disabled" => ($training->start_date->isToday() && !$training->checked) ? false : true
+                                            "style" => "color: rgb(38, 94, 215); margin-right: 5px; border: none; font-size: 18px;background-color: #66339900;",
+                                            "disabled" => ($training_data->training->start_date->isToday() && !$training_data->checked) ? false : true
                                         ]) ?>
 
-                                        <?php if (!$training->checked) : ?>
-                                            <?= $this->Form->postLink('', ['action' => 'attendanceDelete', $training->id, $training->training_id], [
+                                        <?php if (!$training_data->checked) : ?>
+                                            <?= $this->Form->postLink('', ['action' => 'attendanceDelete', $training_data->id, $training->training_id], [
                                                 'class' => 'icon-copy dw dw-delete-3',
                                                 'style' => "color: rgb(233, 89, 89); margin-top: 3.1px;",
                                                 'confirm' => __(
                                                     'Esta seguro que quiere eliminar el  asistente ',
-                                                    $training->user->name . " " . $training->user->lastname
+                                                    $training_data->user->name . " " . $training_data->user->lastname
                                                 )
                                             ])
                                             ?>
@@ -212,7 +213,7 @@ $training->set('end_hour', $training->end_date->format('H:i'));
                 </button>
             </div>
             <div class="modal-body">
-                <?php if ($training->start_date->isToday() && !$training->checked) : ?>
+                <?php if ($training->start_date->isToday() && $training_data->checked) : ?>
                     <?= $this->Form->hidden('userID', ['type' => 'text', 'id' => 'userID']) ?>
                     <?= $this->Form->hidden('TrainingID', ['type' => 'text', 'id' => 'TrainingID']) ?>
                     <?= $this->Form->hidden('userIDVerifyTMP', ['type' => 'text', 'id' => 'userIDVerifyTMP']) ?>
@@ -270,6 +271,10 @@ $training->set('end_hour', $training->end_date->format('H:i'));
     </div>
 </div>
 
+
+<?php echo $this->Html->css("/src/plugins/sweetalert2/sweetalert2.css"); ?>
+<?php echo $this->Html->script("/src/plugins/sweetalert2/sweetalert2.all.js"); ?>
+<?php echo $this->Html->script("/src/plugins/sweetalert2/sweet-alert.init.js"); ?>
 
 
 <?php echo $this->Html->script("/src/scripts/fingerprint/es6-shim.js"); ?>
@@ -379,7 +384,7 @@ $training->set('end_hour', $training->end_date->format('H:i'));
 
 
 
-<?php if ($training->start_date->isToday()) : ?>
+<?php if ($training->start_date->isToday()  && $training_data->checked) : ?>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
 
@@ -424,36 +429,67 @@ $training->set('end_hour', $training->end_date->format('H:i'));
                 var targeturl = '<?= $this->Url->build(["controller" => "Trainings", "action" => "attendanceSave"]) ?>';
                 var token = "<?= $this->request->getParam('_csrfToken') ?>";
 
-                $('.cargando-' + data_user).show();
-                $(_check).prop("disabled", true);
-
-                $.ajax({
-                    type: 'post',
-                    beforeSend: function(request) {
-                        request.setRequestHeader("X-CSRF-Token", token);
-                    },
-                    url: targeturl,
-                    data: {
-                        user_id: data_user,
-                        assistant_id: data_assistant,
-                        accion: _action
-                    },
-                    success: function(result) {
-                        if (result !== "success") {
-                            location.reload();
-                        }
+                swal({
+                    title: 'Estas seguro',
+                    text: "El cambio de asistencía sera reflejado como manual, debe tener en cuenta que no se podra revertir",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Modificar Asistencia',
+                    cancelButtonText: 'No, cancelar!',
+                    confirmButtonClass: 'btn btn-success margin-5',
+                    cancelButtonClass: 'btn btn-danger margin-5',
+                    buttonsStyling: false
+                }).then(result => {
+                    if (result.dismiss === 'cancel') {
+                        $(_check).prop("checked", false);
                         $(_check).prop("disabled", false);
+                        swal(
+                            'Cancelado',
+                            'No se ha modificado la asistencia',
+                            'error'
+                        )
+                    } else {
+                        $(_check).prop("disabled", true);
+                        $.ajax({
+                            type: 'post',
+                            beforeSend: function(request) {
+                                request.setRequestHeader("X-CSRF-Token", token);
+                            },
+                            url: targeturl,
+                            data: {
+                                user_id: data_user,
+                                assistant_id: data_assistant,
+                                accion: _action
+                            },
+                            success: function(result) {
+                                if (result !== "success") {
+                                    location.reload();
+                                }
+                                $(_check).prop("disabled", false);
 
-                        const text = (_action === "asistir") ? 'Asistio' : 'No Asistio';
-                        const type = (_action === "asistir") ? 'badge badge-primary' : 'badge btn-danger';;
-                        const query = '#badge-item-' + data_assistant;
-                        $(query).removeAttr('class').attr('class', type).text(text);
+                                const text = (_action === "asistir") ? 'Asistio' : 'No Asistio';
+                                const type = (_action === "asistir") ? 'badge badge-primary' : 'badge btn-danger';;
+                                const query = '#badge-item-' + data_assistant;
+                                $(query).removeAttr('class').attr('class', type).text(text);
 
-                        (_action === "asistir") ? $("#btn-fingerprint").removeAttr('disable').attr('disabled', true): $("#btn-fingerprint").removeAttr('disable').attr('disabled', false);
+                                (_action === "asistir") ? $("#btn-fingerprint").removeAttr('disable').attr('disabled', true): $("#btn-fingerprint").removeAttr('disable').attr('disabled', false);
+                                location.reload();
 
 
+                            }
+                        });
+
+                        swal(
+                            'Todo correcto',
+                            'Se ha realizado el cambio de asistencia',
+                            'success'
+                        )
                     }
-                });
+
+                })
+
+
+
 
             }
 
