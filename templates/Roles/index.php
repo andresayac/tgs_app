@@ -65,7 +65,7 @@
                                         'escape' => false,
                                         'class' => 'dropdown-item'
                                     ]) ?>
-                                    <?= $this->Form->postLink(__('Eliminar'), ['action' => 'delete', $role->id], ['class' => 'dropdown-item', 'confirm' => __('Esta seguro que quiere eliminar la capacitación # {0}?', $role->id)]) ?>
+                                    <?= $this->Form->postLink('<i class="dw dw-delete-3"></i>Eliminar', ['action' => 'delete', $role->id], ['class' => 'dropdown-item',  'escape' => false,'confirm' => __('Esta seguro que quiere eliminar la capacitación # {0}?', $role->id)]) ?>
                                 </div>
                             </div>
                         </td>

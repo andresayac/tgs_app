@@ -75,7 +75,18 @@
                                         'escape' => false,
                                         'class' => 'dropdown-item'
                                     ]) ?>
-                                    <?= $this->Form->postLink(__('Eliminar'), ['action' => 'delete', $user->id], ['class' => 'dropdown-item', 'confirm' => __('Esta seguro que quiere eliminar el usuario # {0}?', $user->id)]) ?>
+
+                                    <?= $this->Form->postLink(
+                                        '<i class="dw dw-delete-3"></i>Eliminar',
+                                        [
+                                            'action' => 'delete', $user->id
+                                        ],
+                                        [
+                                            'escape' => false,
+                                            'class' => 'dropdown-item',
+                                            'confirm' => __('¿Eliminar: {0}?', $user->name)
+                                        ]
+                                    ) ?>
                                 </div>
                             </div>
                         </td>

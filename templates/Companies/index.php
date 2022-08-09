@@ -42,7 +42,7 @@
                     <th><?= $this->Paginator->sort('name', 'Empresa') ?></th>
                     <th><?= $this->Paginator->sort('address', 'Dirección') ?></th>
                     <th><?= $this->Paginator->sort('city', 'Ciudad') ?></th>
-                    <th><?= $this->Paginator->sort('state','Estado') ?></th>
+                    <th><?= $this->Paginator->sort('state', 'Estado') ?></th>
                     <th><?= $this->Paginator->sort('country', 'País') ?></th>
                     <th><?= $this->Paginator->sort('active', 'Estado') ?></th>
                     <th class="actions"><?= __('Acciones') ?></th>
@@ -72,7 +72,7 @@
                                         'escape' => false,
                                         'class' => 'dropdown-item'
                                     ]) ?>
-                                    <?= $this->Form->postLink(__('Eliminar'), ['action' => 'delete', $company->id], ['class' => 'dropdown-item', 'confirm' => __('Esta seguro que quiere eliminar la capacitación # {0}?', $company->id)]) ?>
+                                    <?= $this->Form->postLink('<i class="dw dw-delete-3"></i>Eliminar', ['action' => 'delete', $company->id], ['class' => 'dropdown-item', 'escape' => false, 'confirm' => __('Esta seguro que quiere eliminar la capacitación # {0}?', $company->id)]) ?>
                                 </div>
                             </div>
                         </td>
@@ -124,8 +124,3 @@
         });
     });
 </script>
-
-
-
-
-

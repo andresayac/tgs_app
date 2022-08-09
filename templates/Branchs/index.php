@@ -41,14 +41,14 @@
                     <th><?= $this->Paginator->sort('id') ?></th>
                     <th><?= $this->Paginator->sort('name', 'Nombre') ?></th>
                     <th><?= $this->Paginator->sort('active', 'Estado') ?></th>
-                    <th><?= $this->Paginator->sort('com_id','Empresa') ?></th>
+                    <th><?= $this->Paginator->sort('com_id', 'Empresa') ?></th>
                     <th class="actions"><?= __('Acciones') ?></th>
                 </tr>
             </thead>
             <tbody>
-            <?php foreach ($branchs as $branch) : ?>
+                <?php foreach ($branchs as $branch) : ?>
                     <tr>
-                    <td><?= $this->Number->format($branch->id) ?></td>
+                        <td><?= $this->Number->format($branch->id) ?></td>
                         <td><?= h($branch->name) ?></td>
                         <td><span class="badge badge-<?= ((bool) $branch->active) ? 'primary' : 'danger' ?>"><?= ((bool) $branch->active) ? 'Activo' : 'Inactivo' ?></span></td>
                         <td><?= $branch->has('company') ? $this->Html->link($branch->company->name, ['controller' => 'Companies', 'action' => 'view', $branch->company->id]) : '' ?></td>
@@ -66,7 +66,20 @@
                                         'escape' => false,
                                         'class' => 'dropdown-item'
                                     ]) ?>
-                                    <?= $this->Form->postLink(__('Eliminar'), ['action' => 'delete', $branch->id], ['class' => 'dropdown-item', 'confirm' => __('Esta seguro que quiere eliminar la capacitación # {0}?', $branch->id)]) ?>
+                                    <?= $this->Form->postLink(
+                                        '<i class="dw dw-delete-3"></i>Eliminar',
+                                        [
+                                            'action' => 'delete', $branch->id
+                                        ],
+                                        [
+                                            'class' => 'dropdown-item',
+                                            'escape' => false,
+                                            'confirm' => __(
+                                                'Esta seguro que quiere eliminar la capacitación # {0}?',
+                                                $branch->id
+                                            )
+                                        ]
+                                    ) ?>
                                 </div>
                             </div>
                         </td>
@@ -118,6 +131,3 @@
         });
     });
 </script>
-
-
-
