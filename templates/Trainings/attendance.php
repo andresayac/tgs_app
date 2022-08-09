@@ -12,7 +12,7 @@ $assistants = [
 
 
 foreach ($users as $user) {
-    $assistants['Users'][$user['document']] = $user['name'] . " " . $user['lastname'] . " - " . $user['document'];
+    $assistants['Users'][$user['document']] = $user['name'] . " " . $user['lastname'];
 }
 
 $assistants['NewUsersAssistances'] = $assistants['Users'];
@@ -24,6 +24,9 @@ foreach ($assistances as $user) {
 
 $trainer = explode(",", $training->trainer);
 
+$training->set('start_hour', $training->start_date->format('H:i'));
+
+$training->set('end_hour', $training->end_date->format('H:i'));
 
 ?>
 
@@ -117,7 +120,7 @@ $trainer = explode(",", $training->trainer);
                 <?= $this->Form->create($training) ?>
                 <div class="form-group">
                     <label>Usuarios disponibles </label>
-                    <?= $this->Form->select('new_assistances', $assistants['NewUsersAssistances'], ['empty' => false, 'class' => 'selectpicker form-control', 'label' => false, 'required' => true, "multiple" => true, "data-actions-box" => true, "data-live-search" => true, "value" => $trainer]) ?>
+                    <?= $this->Form->select('new_assistances', $assistants['NewUsersAssistances'], ['empty' => false, 'class' => 'selectpicker form-control', 'label' => false, 'required' => true, "multiple" => true, "data-actions-box" => true, "data-live-search" => true]) ?>
                 </div>
             </div>
         </div>
@@ -156,7 +159,7 @@ $trainer = explode(",", $training->trainer);
                                 <td>
                                     <div class="table-actions">
                                         <div class="custom-control custom-checkbox mb-5">
-                                            <input <?= $training->training->start_date->isToday() ? "" :  "disabled" ?> <?= ($training->checked) ? 'checked' : '' ?> type="checkbox" data-assistant="<?= $training->id ?>" class="custom-control-input checks" id="checkbox-<?= $training->id ?>" data-user="<?= $training->user->id ?>">
+                                            <input <?= $training->training->start_date->isToday() && !$training->checked ? "" :  "disabled" ?> <?= ($training->checked) ? 'checked' : '' ?> type="checkbox" data-assistant="<?= $training->id ?>" class="custom-control-input checks" id="checkbox-<?= $training->id ?>" data-user="<?= $training->user->id ?>">
                                             <label for="checkbox-<?= $training->id ?>" class="custom-control-label"></label>
                                         </div>
 
@@ -171,12 +174,23 @@ $trainer = explode(",", $training->trainer);
                                             "data-training-id" => $training->id,
                                             "data-name-id" => $training->user->name,
                                             "data-color" => "#265ed7",
-                                            "style" => "color: rgb(38, 94, 215); margin-right: 5px; border: none; font-size: 18px;"
+                                            "id" => "btn-fingerprint",
+                                            "name" => "btn-fingerprint",
+                                            "style" => "color: rgb(38, 94, 215); margin-right: 5px; border: none; font-size: 18px;",
+                                            "disabled" => ($training->training->start_date->isToday() && !$training->checked) ? false : true
                                         ]) ?>
 
-
-
-                                        <?= $this->Form->postLink('', ['action' => 'attendanceDelete', $training->id], ['class' => 'icon-copy dw dw-delete-3',  'style' => "color: rgb(233, 89, 89); margin-top: 3.1px;", 'confirm' => __('Esta seguro que quiere eliminar la capacitación # {0}?', $training->id)]) ?>
+                                        <?php if (!$training->checked) : ?>
+                                            <?= $this->Form->postLink('', ['action' => 'attendanceDelete', $training->id, $training->training_id], [
+                                                'class' => 'icon-copy dw dw-delete-3',
+                                                'style' => "color: rgb(233, 89, 89); margin-top: 3.1px;",
+                                                'confirm' => __(
+                                                    'Esta seguro que quiere eliminar el  asistente ',
+                                                    $training->user->name . " " . $training->user->lastname
+                                                )
+                                            ])
+                                            ?>
+                                        <?php endif ?>
                                     </div>
                                 </td>
                             </tr>
@@ -198,57 +212,59 @@ $trainer = explode(",", $training->trainer);
                 </button>
             </div>
             <div class="modal-body">
-                <?= $this->Form->hidden('userID', ['type' => 'text', 'id' => 'userID']) ?>
-                <?= $this->Form->hidden('userIDVerifyTMP', ['type' => 'text', 'id' => 'userIDVerifyTMP']) ?>
+                <?php if ($training->training->start_date->isToday() && !$training->checked) : ?>
+                    <?= $this->Form->hidden('userID', ['type' => 'text', 'id' => 'userID']) ?>
+                    <?= $this->Form->hidden('TrainingID', ['type' => 'text', 'id' => 'TrainingID']) ?>
+                    <?= $this->Form->hidden('userIDVerifyTMP', ['type' => 'text', 'id' => 'userIDVerifyTMP']) ?>
 
-                <div id="verifyIdentityStatusField" class="text-center">
+                    <div id="verifyIdentityStatusField" class="text-center">
 
-                </div>
-
-                <div class="col-md-12 col-sm-12">
-                    <div class="form-group">
-                        <label for="verifyReaderSelect" class="my-text7 my-pri-color">Elija el lector de huellas dactilares</label>
-                        <select name="readerSelect" id="verifyReaderSelect" class="form-control" onclick="beginIdentification()">
-                            <option selected>Selecionar...</option>
-                        </select>
                     </div>
-                </div>
 
-                <div class="col-md-12 col-sm-12">
-                    <div class="form-group">
-                        <input id="userIDVerify" type="hidden" class="form-control" required disabled>
+                    <div class="col-md-12 col-sm-12">
+                        <div class="form-group">
+                            <label for="verifyReaderSelect" class="my-text7 my-pri-color">Elija el lector de huellas dactilares</label>
+                            <select name="readerSelect" id="verifyReaderSelect" class="form-control" onclick="beginIdentification()">
+                                <option selected>Selecionar...</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
 
-                <div class="col-md-12 col-sm-12">
-                    <div class="form-group">
-                        <label class="my-text7 my-pri-color">Validar huella registrada</label>
-                        <div id="verificationFingers" class="form-row justify-content-center">
-                            <div id="verificationFinger" class="col mb-md-0 text-center">
-                                <span class="icon icon-indexfinger-not-enrolled" title="not_enrolled"></span>
+                    <div class="col-md-12 col-sm-12">
+                        <div class="form-group">
+                            <input id="userIDVerify" type="hidden" class="form-control" required disabled>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 col-sm-12">
+                        <div class="form-group">
+                            <label class="my-text7 my-pri-color">Validar huella registrada</label>
+                            <div id="verificationFingers" class="form-row justify-content-center">
+                                <div id="verificationFinger" class="col mb-md-0 text-center">
+                                    <span class="icon icon-indexfinger-not-enrolled" title="not_enrolled"></span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
 
-                <div class="form-row mt-3" id="userDetails">
-                    <!--this is where user details will be displayed-->
-                </div>
-
-
-                <div class="form-row m-3 mt-md-5 justify-content-center">
-                    <div class="col-4">
-                        <button class="btn btn-success" type="submit" onclick="captureForIdentify()">Capturar Huella</button>
+                    <div class="form-row mt-3" id="userDetails">
+                        <!--this is where user details will be displayed-->
                     </div>
-                    <div class="col-4">
-                        <button class="btn btn-primary" type="submit" onclick="serverIdentify()">Validar</button>
-                    </div>
-                    <div class="col-md-4 col-sm-3">
-                        <button class="btn btn-dark" type="submit" onclick="clearCapture()">Limpiar Huellas</button>
-                    </div>
-                </div>
 
+
+                    <div class="form-row m-3 mt-md-5 justify-content-center">
+                        <div class="col-4">
+                            <?= '<button class="btn btn-success" type="submit" onclick="captureForIdentify()">Capturar Huella</button>' ?>
+                        </div>
+                        <div class="col-4">
+                            <button class="btn btn-primary" type="submit" onclick="serverIdentifyAssistance()">Validar</button>
+                        </div>
+                        <div class="col-md-4 col-sm-3">
+                            <button class="btn btn-dark" type="submit" onclick="clearCapture()">Limpiar Huellas</button>
+                        </div>
+                    </div>
+                <?php endif ?>
             </div>
         </div>
     </div>
@@ -375,10 +391,12 @@ $trainer = explode(",", $training->trainer);
                 var modal = $(this)
 
                 var user_id = button.data('user-id')
+                var training_id = button.data('training-id')
 
 
                 modal.find('#userIDVerify').val(user_id);
                 modal.find('#userIDVerifyTMP').val(user_id);
+                modal.find('#TrainingID').val(training_id);
             })
 
             $('#modal-1').on('hide.bs.modal', function(event) {
@@ -427,10 +445,11 @@ $trainer = explode(",", $training->trainer);
                         $(_check).prop("disabled", false);
 
                         const text = (_action === "asistir") ? 'Asistio' : 'No Asistio';
-                        const type = (_action === "asistir") ? 'badge badge-primary' : 'badge btn-danger';
-
+                        const type = (_action === "asistir") ? 'badge badge-primary' : 'badge btn-danger';;
                         const query = '#badge-item-' + data_assistant;
-                        $(query).removeAttr('class').attr('class', type).text(text)
+                        $(query).removeAttr('class').attr('class', type).text(text);
+
+                        (_action === "asistir") ? $("#btn-fingerprint").removeAttr('disable').attr('disabled', true): $("#btn-fingerprint").removeAttr('disable').attr('disabled', false);
 
 
                     }

@@ -126,16 +126,18 @@ class TrainingsController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
-    public function attendanceDelete($id)
+    public function attendanceDelete($id,$training_id)
     {
         $this->request->allowMethod(['post', 'delete']);
         $TrainingAssistances = $this->getTableLocator()->get('TrainingsAssistances');
         $training = $TrainingAssistances->get($id);
-        if ($this->fetchTable('TrainingsAssistances')->delete($training)) {
+        if ($training) {
+            $TrainingAssistances->delete($training);
             $this->Flash->success(__('The training has been deleted.'));
         } else {
             $this->Flash->error(__('The training could not be deleted. Please, try again.'));
         }
+        return $this->redirect(['action' => 'attendance', $training_id]);
     }
 
     public function attendanceSave()
@@ -148,7 +150,7 @@ class TrainingsController extends AppController
         $trainingAssistance = $TrainingAssistances->get($data['assistant_id']);
 
         if ($data["accion"] == "asistir") {
-            $training = $this->Trainings->patchEntity($trainingAssistance, ['checked' => 1, 'type_check' => 'Confirma Asistencia', 'modified_by' => $this->Auth->user('id')]);
+            $training = $this->Trainings->patchEntity($trainingAssistance, ['checked' => 1, 'type_check' => 'Confirma Asistencia Manual', 'modified_by' => $this->Auth->user('id')]);
             $TrainingAssistances->save($training);
         }
 
@@ -189,7 +191,6 @@ class TrainingsController extends AppController
 
             return $this->redirect(['action' => 'attendance', $id]);
         }
-
 
         $training = $this->Trainings->get($id, [
             'contain' => [],

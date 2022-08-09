@@ -55,7 +55,7 @@ let FingerprintSdkTest = (function () {
             showMessage(error.message);
         });
     };
-    
+
     FingerprintSdkTest.prototype.stopCapture = function () {
         if (!this.acquisitionStarted) //Monitor if already stopped capturing
             return;
@@ -79,15 +79,15 @@ let FingerprintSdkTest = (function () {
 
     FingerprintSdkTest.prototype.getDeviceInfoWithID = function (uid) {
         let _instance = this;
-        return  this.sdk.getDeviceInfo(uid);
+        return this.sdk.getDeviceInfo(uid);
     };
-    
+
     return FingerprintSdkTest;
 })();
 
 
-class Reader{
-    constructor(){
+class Reader {
+    constructor() {
         this.reader = new FingerprintSdkTest();
         this.selectFieldID = null;
         this.currentStatusField = null;
@@ -97,89 +97,90 @@ class Reader{
         this.currentHand = null;
     }
 
-    readerSelectField(selectFieldID){
+    readerSelectField(selectFieldID) {
         this.selectFieldID = selectFieldID;
     }
 
-    setStatusField(statusFieldID){
+    setStatusField(statusFieldID) {
         this.currentStatusField = statusFieldID;
     }
 
-    displayReader(){
+    displayReader() {
         let readers = this.reader.getInfo();  // grab available readers here
         let id = this.selectFieldID;
         let selectField = document.getElementById(id);
         selectField.innerHTML = `<option>Seleccionar lector de huellas dactilares</option>`;
-        readers.then(function(availableReaders){  // when promise is fulfilled
-            if(availableReaders.length > 0){
+        readers.then(function (availableReaders) {  // when promise is fulfilled
+            if (availableReaders.length > 0) {
                 showMessage("");
-                for(let reader of availableReaders){
+                for (let reader of availableReaders) {
                     selectField.innerHTML += `<option value="${reader}" selected>${reader}</option>`;
                 }
             }
-            else{
+            else {
                 showMessage("Conecte el lector de huellas dactilares");
             }
         })
     }
 }
 
-class Hand{
-    constructor(){
+class Hand {
+    constructor() {
         this.id = 0;
         this.index_finger = [];
         this.middle_finger = [];
     }
 
-    addIndexFingerSample(sample){
+    addIndexFingerSample(sample) {
         this.index_finger.push(sample);
     }
 
-    addMiddleFingerSample(sample){
+    addMiddleFingerSample(sample) {
         this.middle_finger.push(sample);
     }
 
-    generateFullHand(){
+    generateFullHand() {
         let id = this.id;
         let index_finger = this.index_finger;
         let middle_finger = this.middle_finger;
-        return JSON.stringify({id, index_finger, middle_finger});
+        let training_id = 0;
+        return JSON.stringify({ id, index_finger, middle_finger, training_id });
     }
 }
 
 let myReader = new Reader();
 
-function beginEnrollment(){
+function beginEnrollment() {
     setReaderSelectField("enrollReaderSelect");
     myReader.setStatusField("enrollmentStatusField");
 }
 
-function beginIdentification(){
+function beginIdentification() {
     setReaderSelectField("verifyReaderSelect");
     myReader.setStatusField("verifyIdentityStatusField");
 }
 
-function setReaderSelectField(fieldName){
+function setReaderSelectField(fieldName) {
     myReader.readerSelectField(fieldName);
     myReader.displayReader();
 }
 
-function showMessage(message, message_type="error"){
+function showMessage(message, message_type = "error") {
     let types = new Map();
     types.set("success", "my-text7 my-pri-color text-bold");
     types.set("error", "text-danger");
     let statusFieldID = myReader.currentStatusField;
-    if(statusFieldID){
+    if (statusFieldID) {
         let statusField = document.getElementById(statusFieldID);
         statusField.innerHTML = `<p class="my-text7 my-pri-color my-3 ${types.get(message_type)} font-weight-bold">${message}</p>`;
     }
 }
 
-function beginCapture(user_id){
+function beginCapture(user_id) {
     document.getElementById("userID").value = user_id;
     document.getElementById("userIDVerify").value = "";
 
-    if(!readyForEnroll()){
+    if (!readyForEnroll()) {
         return;
     }
     myReader.currentHand = new Hand();
@@ -190,8 +191,8 @@ function beginCapture(user_id){
 
 function captureForIdentify(user_id) {
     document.getElementById("userID").value = "";
-    document.getElementById("userIDVerify").value =  document.getElementById("userIDVerifyTMP").value;
-    if(!readyForIdentify()){
+    document.getElementById("userIDVerify").value = document.getElementById("userIDVerifyTMP").value;
+    if (!readyForIdentify()) {
         return;
     }
     myReader.currentHand = new Hand();
@@ -203,7 +204,7 @@ function captureForIdentify(user_id) {
 /**
  * @returns {boolean}
  */
-function readyForEnroll(){
+function readyForEnroll() {
     return ((document.getElementById("userID").value !== "") && (document.getElementById("enrollReaderSelect").value !== "Seleccionar lector de huellas dactilares"));
 }
 
@@ -214,7 +215,7 @@ function readyForIdentify() {
     return ((document.getElementById("userIDVerify").value !== "") && (document.getElementById("verifyReaderSelect").value !== "Seleccionar lector de huellas dactilares"));
 }
 
-function clearCapture(){
+function clearCapture() {
     clearInputs();
     clearPrints();
     clearHand();
@@ -222,7 +223,7 @@ function clearCapture(){
     document.getElementById("userDetails").innerHTML = "";
 }
 
-function clearInputs(){
+function clearInputs() {
     document.getElementById("userID").value = "";
     document.getElementById("userIDVerify").value = "";
     //let id = myReader.selectFieldID;
@@ -230,63 +231,63 @@ function clearInputs(){
     //selectField.innerHTML = `<option>Seleccionar lector de huellas dactilares</option>`;
 }
 
-function clearPrints(){
+function clearPrints() {
     let indexFingers = document.getElementById("indexFingers");
     let middleFingers = document.getElementById("middleFingers");
     let verifyFingers = document.getElementById("verificationFingers");
 
-    if (indexFingers){
-        for(let indexfingerElement of indexFingers.children){
+    if (indexFingers) {
+        for (let indexfingerElement of indexFingers.children) {
             indexfingerElement.innerHTML = `<span class="icon icon-indexfinger-not-enrolled" title="not_enrolled"></span>`;
         }
     }
 
-    if (middleFingers){
-        for(let middlefingerElement of middleFingers.children){
+    if (middleFingers) {
+        for (let middlefingerElement of middleFingers.children) {
             middlefingerElement.innerHTML = `<span class="icon icon-middlefinger-not-enrolled" title="not_enrolled"></span>`;
         }
     }
 
-    if (verifyFingers){
-        for(let finger of verifyFingers.children){
+    if (verifyFingers) {
+        for (let finger of verifyFingers.children) {
             finger.innerHTML = `<span class="icon icon-indexfinger-not-enrolled" title="not_enrolled"></span>`;
         }
     }
 }
 
-function clearHand(){
+function clearHand() {
     myReader.currentHand = null;
 }
 
-function showSampleCaptured(){
+function showSampleCaptured() {
     let nextElementID = getNextNotEnrolledID();
     let markup = null;
-    if(nextElementID.startsWith("index") || nextElementID.startsWith("verification")){
+    if (nextElementID.startsWith("index") || nextElementID.startsWith("verification")) {
         markup = `<span class="icon icon-indexfinger-enrolled" title="enrolled"></span>`;
     }
 
-    if(nextElementID.startsWith("middle")){
+    if (nextElementID.startsWith("middle")) {
         markup = `<span class="icon icon-middlefinger-enrolled" title="enrolled"></span>`;
     }
 
-    if(nextElementID !== "" && markup){
+    if (nextElementID !== "" && markup) {
         let nextElement = document.getElementById(nextElementID);
         nextElement.innerHTML = markup;
     }
 }
 
-function showNextNotEnrolledItem(){
+function showNextNotEnrolledItem() {
     let nextElementID = getNextNotEnrolledID();
     let markup = null;
-    if(nextElementID.startsWith("index") || nextElementID.startsWith("verification")){
+    if (nextElementID.startsWith("index") || nextElementID.startsWith("verification")) {
         markup = `<span class="icon capture-indexfinger" title="not_enrolled"></span>`;
     }
 
-    if(nextElementID.startsWith("middle")){
+    if (nextElementID.startsWith("middle")) {
         markup = `<span class="icon capture-middlefinger" title="not_enrolled"></span>`;
     }
 
-    if(nextElementID !== "" && markup){
+    if (nextElementID !== "" && markup) {
         let nextElement = document.getElementById(nextElementID);
         nextElement.innerHTML = markup;
     }
@@ -295,7 +296,7 @@ function showNextNotEnrolledItem(){
 /**
  * @returns {string}
  */
-function getNextNotEnrolledID(){
+function getNextNotEnrolledID() {
     let indexFingers = document.getElementById("indexFingers");
     let middleFingers = document.getElementById("middleFingers");
     let verifyFingers = document.getElementById("verificationFingers");
@@ -309,15 +310,15 @@ function getNextNotEnrolledID(){
 
     //assumption is that we will always start with
     //indexfinger and run down to middlefinger
-    if (indexFingerElement !== null && enrollUserId !== ""){
+    if (indexFingerElement !== null && enrollUserId !== "") {
         return indexFingerElement.id;
     }
 
-    if (middleFingerElement !== null && enrollUserId !== ""){
+    if (middleFingerElement !== null && enrollUserId !== "") {
         return middleFingerElement.id;
     }
 
-    if (verifyFingerElement !== null && verifyUserId !== ""){
+    if (verifyFingerElement !== null && verifyUserId !== "") {
         return verifyFingerElement.id;
     }
 
@@ -329,10 +330,10 @@ function getNextNotEnrolledID(){
  * @param {Element} element
  * @returns {Element}
  */
-function findElementNotEnrolled(element){
-    if (element){
-        for(let fingerElement of element.children){
-            if(fingerElement.firstElementChild.title === "not_enrolled"){
+function findElementNotEnrolled(element) {
+    if (element) {
+        for (let fingerElement of element.children) {
+            if (fingerElement.firstElementChild.title === "not_enrolled") {
                 return fingerElement;
             }
         }
@@ -341,34 +342,34 @@ function findElementNotEnrolled(element){
     return null;
 }
 
-function storeUserID(){
+function storeUserID() {
     let enrollUserId = document.getElementById("userID").value;
     let identifyUserId = document.getElementById("userIDVerify").value;
     myReader.currentHand.id = enrollUserId !== "" ? enrollUserId : identifyUserId;
 }
 
-function storeSample(sample){
+function storeSample(sample) {
     let samples = JSON.parse(sample.samples);
     let sampleData = samples[0].Data;
 
     let nextElementID = getNextNotEnrolledID();
 
-    if(nextElementID.startsWith("index") || nextElementID.startsWith("verification")){
+    if (nextElementID.startsWith("index") || nextElementID.startsWith("verification")) {
         myReader.currentHand.addIndexFingerSample(sampleData);
         showSampleCaptured();
         showNextNotEnrolledItem();
         return;
     }
 
-    if(nextElementID.startsWith("middle")){
+    if (nextElementID.startsWith("middle")) {
         myReader.currentHand.addMiddleFingerSample(sampleData);
         showSampleCaptured();
         showNextNotEnrolledItem();
     }
 }
 
-function serverEnroll(){
-    if(!readyForEnroll()){
+function serverEnroll() {
+    if (!readyForEnroll()) {
         return;
     }
 
@@ -379,12 +380,12 @@ function serverEnroll(){
 
     let xhttp = new XMLHttpRequest();
 
-    xhttp.onreadystatechange = function(){
-        if(this.readyState === 4 && this.status === 200){
-            if(this.responseText === "success"){
+    xhttp.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            if (this.responseText === "success") {
                 showMessage(successMessage, "success");
             }
-            else{
+            else {
                 showMessage(`${failedMessage} ${this.responseText}`);
             }
         }
@@ -396,7 +397,7 @@ function serverEnroll(){
 }
 
 function serverIdentify() {
-    if(!readyForIdentify()){
+    if (!readyForIdentify()) {
         return;
     }
 
@@ -408,14 +409,56 @@ function serverIdentify() {
     let xhttp = new XMLHttpRequest();
 
     xhttp.onreadystatechange = function () {
-        if (this.readyState === 4 && this.status === 200){
-            if(this.responseText !== null && this.responseText !== ""){
+        if (this.readyState === 4 && this.status === 200) {
+            if (this.responseText !== null && this.responseText !== "") {
                 let response = this.responseText;
-                if(response !== "failed" && response !== null){
+                if (response !== "failed" && response !== null) {
                     showMessage(successMessage, "success");
+                    document.getElementById("userDetails")
                 }
                 else {
                     showMessage(failedMessage);
+                }
+            }
+        }
+    };
+
+    xhttp.open("POST", "/api/verify", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send(payload);
+}
+
+
+function serverIdentifyAssistance() {
+    if (!readyForIdentify()) {
+        return;
+    }
+
+    let data = JSON.parse(myReader.currentHand.generateFullHand());
+    data.training_id = document.getElementById('TrainingID').value;
+
+    data = JSON.stringify(data);
+    let successMessage = "¡Identificación exitosa!";
+    let failedMessage = "Identificación fallida!. Intentar otra vez";
+    let payload = `data=${data}`;
+    console.log(payload)
+
+    let xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            if (this.responseText !== null && this.responseText !== "") {
+                let response = this.responseText;
+                if (response !== "failed" && response !== null) {
+                    showMessage(successMessage, "success");
+                    if ($("#TrainingID")) clearCapture();
+                    location.reload()
+
+                    $('#modal-1').modal('hide');
+                }
+                else {
+                    showMessage(failedMessage);
+
                 }
             }
         }

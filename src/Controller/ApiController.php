@@ -30,7 +30,7 @@ class ApiController extends AppController
         ];
 
 
-        if(empty($index_finger_string_array) || empty($middle_finger_string_array)) return $this->response->withType('text/plain')->withStringBody('Valide que la huella se halla capturado');
+        if (empty($index_finger_string_array) || empty($middle_finger_string_array)) return $this->response->withType('text/plain')->withStringBody('Valide que la huella se halla capturado');
 
         if ($this->isDuplicate($index_finger_string_array[0]) || $this->isDuplicate($middle_finger_string_array[0])) {
             return $this->response->withType('text/plain')->withStringBody('No se permite el duplicado de huellas!');
@@ -62,7 +62,7 @@ class ApiController extends AppController
         //this is not necessarily index_finger it could be
         //any finger we wish to identify
 
-        if(empty($user_data->index_finger[0])) return $this->response->withType('text/plain')->withStringBody('failed');
+        if (empty($user_data->index_finger[0])) return $this->response->withType('text/plain')->withStringBody('failed');
 
         $pre_reg_fmd_string = $user_data->index_finger[0];
 
@@ -76,12 +76,23 @@ class ApiController extends AppController
         $json_response = $this->verify_fingerprint($pre_reg_fmd_string, $enrolled_fingers);
         $response = json_decode($json_response);
         if ($response === "match") {
+            if ($user_data->training_id > 0) $this->setAsistence($user_data->training_id);
             return $this->response->withType('text/plain')->withStringBody('success');
         } else {
             return $this->response->withType('text/plain')->withStringBody('failed');
         }
 
         return $this->response->withType('text/plain')->withStringBody('');
+    }
+
+    private function setAsistence($training_id)
+    {
+        $TrainingAssistances = $this->getTableLocator()->get('TrainingsAssistances');
+        $trainingAssistance = $TrainingAssistances->get($training_id);
+
+
+        $training = $TrainingAssistances->patchEntity($trainingAssistance, ['checked' => 1, 'type_check' => 'Confirma Asistencia Huella', 'modified_by' => $this->Auth->user('id')]);
+        $TrainingAssistances->save($training);
     }
 
     private function isduplicate($fmd_to_check_string)
