@@ -159,7 +159,7 @@ $training->set('end_hour', $training->end_date->format('H:i'));
                                 <td>
                                     <div class="table-actions">
                                         <div class="custom-control custom-checkbox mb-5">
-                                            <input <?= $training->training->start_date->isToday() && !$training->checked ? "" :  "disabled" ?> <?= ($training->checked) ? 'checked' : '' ?> type="checkbox" data-assistant="<?= $training->id ?>" class="custom-control-input checks" id="checkbox-<?= $training->id ?>" data-user="<?= $training->user->id ?>">
+                                            <input <?= $training->start_date->isToday() && !$training->checked ? "" :  "disabled" ?> <?= ($training->checked) ? 'checked' : '' ?> type="checkbox" data-assistant="<?= $training->id ?>" class="custom-control-input checks" id="checkbox-<?= $training->id ?>" data-user="<?= $training->user->id ?>">
                                             <label for="checkbox-<?= $training->id ?>" class="custom-control-label"></label>
                                         </div>
 
@@ -177,7 +177,7 @@ $training->set('end_hour', $training->end_date->format('H:i'));
                                             "id" => "btn-fingerprint",
                                             "name" => "btn-fingerprint",
                                             "style" => "color: rgb(38, 94, 215); margin-right: 5px; border: none; font-size: 18px;",
-                                            "disabled" => ($training->training->start_date->isToday() && !$training->checked) ? false : true
+                                            "disabled" => ($training->start_date->isToday() && !$training->checked) ? false : true
                                         ]) ?>
 
                                         <?php if (!$training->checked) : ?>
@@ -379,7 +379,7 @@ $training->set('end_hour', $training->end_date->format('H:i'));
 
 
 
-<?php if ($training->training->start_date->isToday()) : ?>
+<?php if ($training->start_date->isToday()) : ?>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
 
