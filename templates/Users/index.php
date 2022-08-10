@@ -53,7 +53,7 @@
             <tbody>
                 <?php foreach ($users as $user) : ?>
                     <tr>
-                        <td><?= $this->Number->format($user->id) ?></td>
+                        <td><?= $user->id ?></td>
                         <td><?= $user->has('role') ? $this->Html->link($user->role->name, ['controller' => 'Roles', 'action' => 'view', $user->role->id]) : '' ?></td>
                         <td><?= h($user->name) ?></td>
                         <td><?= h($user->lastname) ?></td>
@@ -108,8 +108,8 @@
                 orderable: false,
             }],
             "lengthMenu": [
-                [10, 25, 50, -1],
-                [10, 25, 50, "All"]
+                [10, 25],
+                [10, 25]
             ],
             "language": {
                 "info": "_START_-_END_ de _TOTAL_ registros",

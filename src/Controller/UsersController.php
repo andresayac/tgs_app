@@ -22,6 +22,8 @@ class UsersController extends AppController
     public function index()
     {
         $this->paginate = [
+            'limit' => 5000,
+            'maxLimit' => 5000,
             'contain' => ['Roles', 'Departaments', 'Branchs', 'Designations'],
         ];
         $users = $this->paginate($this->Users);
