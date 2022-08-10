@@ -198,6 +198,8 @@ $huella = $this->Text->autoParagraph(h($user->indexfinger));
                                                 <!--verifyIdentity Status will be displayed Here-->
                                             </div>
 
+                                            
+
                                             <h4 class="text-blue h5 mb-20" id="verifyIdentityTitle">
                                                 Validar huella de empleado
                                             </h4>
@@ -211,13 +213,10 @@ $huella = $this->Text->autoParagraph(h($user->indexfinger));
                                                     </select>
                                                 </div>
                                             </div>
-
-                                            <div class="col-md-12 col-sm-12">
-                                                <div class="form-group">
-                                                    <label for="userIDVerify"></label>
-                                                    <input id="userIDVerify" type="hidden" class="form-control" value="<?= h($user->id) ?>" required disabled>
-                                                </div>
-                                            </div>
+                                            <input id="userIDVerify" type="hidden" class="form-control" value="<?= h($user->id) ?>" required disabled>
+                                            <input id="userIDVerifyTMP" type="hidden" class="form-control" value="<?= h($user->id) ?>" required disabled>
+                                           
+                                            
 
                                             <div class="col-md-12 col-sm-12">
                                                 <div class="form-group">
