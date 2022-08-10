@@ -31,5 +31,17 @@ class Training extends Entity
      *
      * @var array<string, bool>
      */
-    protected $_accessible = ['*' => true];
+    protected $_accessible = [
+        'start_date' => true,
+        'end_date' => true,
+        'name' => true,
+        'note' => true,
+        'trainer' => true,
+        'status' => true,
+        'created_by' => true,
+        'modified_by' => true,
+        'created' => true,
+        'modified' => true,
+        'trainings_assistances' => true,
+    ];
 }

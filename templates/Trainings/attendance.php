@@ -164,7 +164,6 @@ $training->set('end_hour', $training->end_date->format('H:i'));
                                             <label for="checkbox-<?= $training_data->id ?>" class="custom-control-label"></label>
                                         </div>
 
-
                                         <?= $this->Form->control('', [
                                             "escape" => false,
                                             'type' => 'button',
@@ -182,12 +181,11 @@ $training->set('end_hour', $training->end_date->format('H:i'));
                                         ]) ?>
 
                                         <?php if (!$training_data->checked) : ?>
-                                            <?= $this->Form->postLink('', ['action' => 'attendanceDelete', $training_data->id, $training->training_id], [
+                                            <?= $this->Form->postLink('', ['action' => 'attendanceDelete', $training_data->id, $training->id], [
                                                 'class' => 'icon-copy dw dw-delete-3',
                                                 'style' => "color: rgb(233, 89, 89); margin-top: 3.1px;",
                                                 'confirm' => __(
-                                                    'Esta seguro que quiere eliminar el  asistente ',
-                                                    $training_data->user->name . " " . $training_data->user->lastname
+                                                    "Esta seguro que quiere eliminar el  asistente {$training_data->user->name} {$training_data->user->lastname}"
                                                 )
                                             ])
                                             ?>
