@@ -152,7 +152,7 @@ class TrainingsController extends AppController
 
 
         $next_trainings = $this->Trainings->find('all');
-        $next_trainings->where(['start_date >' => date("Y-m-d")]);
+        $next_trainings->where(['start_date >' => date("Y-m-d") . " 23:59:59"]);
         $next_trainings->where(['created_by =' => $this->Auth->user('id')]);
 
         $next_trainings = $this->paginate($next_trainings);
