@@ -48,9 +48,21 @@ class TrainingsTable extends Table
 
         $this->addBehavior('Timestamp');
 
+        $this->addBehavior('Search.Search');
+
         $this->hasMany('TrainingsAssistances', [
             'foreignKey' => 'training_id',
         ]);
+
+         // busqueda y filtros
+         $this->searchManager()
+         ->add('start_date', 'Search.Compare', [
+             'operator' => '>=',
+         ])
+         ->add('end_date', 'Search.Compare', [
+             'operator' => '<=',
+         ]);
+
     }
 
     /**
@@ -83,6 +95,10 @@ class TrainingsTable extends Table
             ->scalar('trainer')
             ->maxLength('trainer', 16777215)
             ->allowEmptyString('trainer');
+
+        $validator
+            ->integer('active')
+            ->allowEmptyString('active');
 
         return $validator;
     }

@@ -24,9 +24,10 @@ foreach ($assistances as $user) {
 
 $trainer = explode(",", $training->trainer);
 
-$training->set('start_hour', $training->start_date->format('H:i'));
+$start = $training->start_date;
+$training->set('start_date', $training->start_date->format('Y-m-d'));
+$training->set('start_hour', $start->format('H:i'));
 $training->set('end_hour', $training->end_date->format('H:i'));
-
 
 ?>
 
@@ -148,7 +149,7 @@ $training->set('end_hour', $training->end_date->format('H:i'));
                     </thead>
                     <tbody>
                         <?php foreach ($assistances as $training_data) : ?>
-                            <?php if(empty($training_data)) break;?>
+                            <?php if (empty($training_data)) break; ?>
                             <tr>
                                 <td><?= h($training_data->id) ?></td>
                                 <td><?= $training_data->has('user') ? $this->Html->link($training_data->user->name, ['controller' => 'Users', 'action' => 'view', $training_data->user->id]) : '' ?></td>

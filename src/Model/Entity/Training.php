@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Entity;
@@ -30,14 +31,5 @@ class Training extends Entity
      *
      * @var array<string, bool>
      */
-    protected $_accessible = [
-        'start_date' => true,
-        'end_date' => true,
-        'name' => true,
-        'note' => true,
-        'trainer' => true,
-        'created' => true,
-        'modified' => true,
-        'trainings_assistances' => true,
-    ];
+    protected $_accessible = ['*' => true];
 }

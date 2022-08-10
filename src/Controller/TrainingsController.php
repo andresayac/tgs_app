@@ -65,6 +65,7 @@ class TrainingsController extends AppController
             $data['trainer'] = implode(',', $data['trainer']);
 
             $training = $this->Trainings->patchEntity($training, $data);
+            $training->created_by = $this->Auth->user('id');
 
             if ($this->Trainings->save($training)) {
                 $this->Flash->success(__('La capacitación se ha creado con exito'));
@@ -95,7 +96,16 @@ class TrainingsController extends AppController
             'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $training = $this->Trainings->patchEntity($training, $this->request->getData());
+            $data = $this->request->getData();
+            $date_training = $data['start_date'];
+            $data['start_date'] =   $date_training . " " . $data['start_hour'];
+            $data['end_date']   =   $date_training . " " . $data['end_hour'];
+
+            $data['trainer'] = implode(',', $data['trainer']);
+            $data['modified_by'] =  $this->Auth->user('id');
+
+            $training = $this->Trainings->patchEntity($training, $data);
+
             if ($this->Trainings->save($training)) {
                 $this->Flash->success(__('The training has been saved.'));
 
@@ -126,7 +136,48 @@ class TrainingsController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
-    public function attendanceDelete($id,$training_id)
+    public function me()
+    {
+        $this->paginate = [
+            'limit' => 15,
+            'order' => [
+                'start_date' => 'ASC'
+            ],
+        ];
+
+        $trainings = $this->Trainings->find('all');
+        $trainings->where(['start_date >=' =>  date("Y-m-d")]);
+        $trainings->where(['end_date <=' => date("Y-m-d") . " 23:59:59"]);
+        $trainings->where(['created_by =' => $this->Auth->user('id')]);
+
+
+        $next_trainings = $this->Trainings->find('all');
+        $next_trainings->where(['start_date >' => date("Y-m-d")]);
+        $next_trainings->where(['created_by =' => $this->Auth->user('id')]);
+
+        $next_trainings = $this->paginate($next_trainings);
+
+        $this->set(compact('trainings', 'next_trainings'));
+    }
+
+    public function history()
+    {
+        $this->paginate = [
+            'limit' => 15,
+            'order' => [
+                'start_date' => 'DESC'
+            ],
+        ];
+
+        $query = $this->Trainings->find('search', ['search' => $this->request->getData()]);
+        $query->where(['created_by =' => $this->Auth->user('id')]);
+
+        $trainings = $this->paginate($query);
+
+        $this->set(compact('trainings'));
+    }
+
+    public function attendanceDelete($id, $training_id)
     {
         $this->request->allowMethod(['post', 'delete']);
         $TrainingAssistances = $this->getTableLocator()->get('TrainingsAssistances');

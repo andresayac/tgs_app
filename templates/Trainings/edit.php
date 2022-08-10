@@ -15,6 +15,11 @@ foreach ($users as $user) {
 
 $trainer = explode(",", $training->trainer);
 
+$start = $training->start_date;
+$training->set('start_date', $training->start_date->format('Y-m-d'));
+$training->set('start_hour', $start->format('H:i'));
+$training->set('end_hour', $training->end_date->format('H:i'));
+
 ?>
 
 <div class="page-header">

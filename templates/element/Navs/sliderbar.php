@@ -10,7 +10,7 @@ $active = ["class" => "active"];
 <div class="left-side-bar">
     <div class="brand-logo">
         <a href="/">
-            <img src="/img/tgs-logo-dark.png"  alt="" class="dark-logo">
+            <img src="/img/tgs-logo-dark.png" alt="" class="dark-logo">
             <img src="/img/tgs-logo-light.png" alt="" class="light-logo">
         </a>
         <div class="close-sidebar" data-toggle="left-sidebar-close">
@@ -39,8 +39,9 @@ $active = ["class" => "active"];
                         <span class="micon dw dw-presentation-2"></span><span class="mtext">Capacitación</span>
                     </a>
                     <ul class="submenu">
+                        <li><?= $this->Html->link('Mis Capacitaciónes', ['controller' => 'Trainings', 'action' => 'me'], ($c === 'Trainings' && $a === 'me') ? ["class" => "active"] : []) ?></li>
                         <li><?= $this->Html->link('Capacitaciones', ['controller' => 'Trainings', 'action' => 'index'], ($c === 'Trainings' && $a === 'index') ? ["class" => "active"] : []) ?></li>
-                
+
                     </ul>
                 </li>
                 <li>
