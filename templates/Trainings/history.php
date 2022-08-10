@@ -3,7 +3,7 @@
 $meses = [1 => 'Ene', 2 => 'Feb', 3 => 'Mar', 4 => 'May', 5 => 'Abr', 6 => 'Jun', 7 => 'Jul', 8 => 'Ago', 9 => 'Sep', 10 => 'Oct', 11 => 'Nov', 12 => 'Dic'];
 $dias = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
 
-$query_search = $this->request->getData();
+$query_search = $this->request->getData() ?? [];
 
 ?>
 
@@ -41,13 +41,13 @@ $query_search = $this->request->getData();
             <div class="col-md-6 col-sm-12">
                 <div class="form-group">
                     <label>Desde</label>
-                    <?= $this->Form->control('start_date', ['label' => false, 'placeholder' => 'ej. 2022-08-10', 'autocomplete' => 'off', 'class' => 'form-control form-control-sm datepicker-2 date-picker-history', 'value' => $query_search['start_date']]) ?>
+                    <?= $this->Form->control('start_date', ['label' => false, 'placeholder' => 'ej. 2022-08-10', 'autocomplete' => 'off', 'class' => 'form-control form-control-sm datepicker-2 date-picker-history', 'value' => $query_search['start_date'] ?? '']) ?>
                 </div>
             </div>
             <div class="col-md-6 col-sm-12">
                 <div class="form-group">
                     <label>Hasta</label>
-                    <?= $this->Form->control('end_date', ['label' => false, 'placeholder' => 'ej. 2022-08-15', 'autocomplete' => 'off', 'class' => 'form-control form-control-sm datepicker-2 date-picker-history', 'value' => $query_search['end_date']]) ?>
+                    <?= $this->Form->control('end_date', ['label' => false, 'placeholder' => 'ej. 2022-08-15', 'autocomplete' => 'off', 'class' => 'form-control form-control-sm datepicker-2 date-picker-history', 'value' => $query_search['end_date'] ?? '']) ?>
                 </div>
             </div>
         </div>
@@ -55,7 +55,7 @@ $query_search = $this->request->getData();
         <div class="row mt-2">
             <div class="col-md-6 col-sm-12">
                 <div class="form-group">
-                    <?php if ($query_search['start_date'] || $query_search['end_date']) : ?>
+                    <?php if (!empty($query_search['start_date']) || !empty($query_search['end_date'])) : ?>
                         <?= $this->Html->link('Limpiar filtros', ['action' => 'history'], ["class" => "btn btn-danger btn-sm"]) ?>
                     <?php endif ?>
                     <?= $this->Form->button('Buscar', ["class" => "btn btn-primary btn-sm"]) ?>
