@@ -213,7 +213,7 @@ $training->set('end_hour', $training->end_date->format('H:i'));
                 </button>
             </div>
             <div class="modal-body">
-                <?php if ($training->start_date->isToday()) : ?>
+                <?php if ($start->isToday()) : ?>
                     <?= $this->Form->hidden('userID', ['type' => 'text', 'id' => 'userID']) ?>
                     <?= $this->Form->hidden('TrainingID', ['type' => 'text', 'id' => 'TrainingID']) ?>
                     <?= $this->Form->hidden('userIDVerifyTMP', ['type' => 'text', 'id' => 'userIDVerifyTMP']) ?>
@@ -384,7 +384,7 @@ $training->set('end_hour', $training->end_date->format('H:i'));
 
 
 
-<?php if ($training->start_date->isToday()) : ?>
+<?php if ($start->isToday()) : ?>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
 
