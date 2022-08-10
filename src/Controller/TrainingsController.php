@@ -52,7 +52,7 @@ class TrainingsController extends AppController
     {
         $Users = $this->getTableLocator()->get('Users');
 
-        $users =  json_decode(json_encode($Users->find()->select(['document', 'name', 'lastname'])->toArray()), true);
+        $users =  json_decode(json_encode($Users->find()->contain(['Designations', 'Departaments'])->select(['Users.document', 'Users.name', 'Users.lastname', 'Departaments.name','Designations.name'])->toArray()), true);
 
         $training = $this->Trainings->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -89,7 +89,7 @@ class TrainingsController extends AppController
 
         $Users = $this->getTableLocator()->get('Users');
 
-        $users =  json_decode(json_encode($Users->find()->select(['document', 'name', 'lastname'])->toArray()), true);
+        $users =  json_decode(json_encode($Users->find()->contain(['Designations', 'Departaments'])->select(['Users.document', 'Users.name', 'Users.lastname', 'Departaments.name','Designations.name'])->toArray()), true);
 
 
         $training = $this->Trainings->get($id, [

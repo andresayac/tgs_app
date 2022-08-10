@@ -10,7 +10,7 @@ $assistants = [
 ];
 
 foreach ($users as $user) {
-    $assistants['Users'][$user['document']] = $user['name'] . " " . $user['lastname'] . " - " . $user['document'];
+    $assistants['Users']["Area: ". $user['departament']['name'] . " - Cargo: " . $user['designation']['name']][$user['document']] = $user['name'] . " " . $user['lastname'];
 }
 
 $trainer = explode(",", $training->trainer);
