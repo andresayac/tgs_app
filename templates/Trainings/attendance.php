@@ -154,7 +154,7 @@ $training->set('end_hour', $training->end_date->format('H:i'));
                             <?php if (empty($training_data)) break; ?>
                             <tr>
                                 <td><?= h($training_data->id) ?></td>
-                                <td><?= $training_data->has('user') ? $this->Html->link($training_data->user->name, ['controller' => 'Users', 'action' => 'view', $training_data->user->id]) : '' ?></td>
+                                <td><?= $training_data->has('user') ? $this->Html->link($training_data->user->name . ' ' . $training_data->user->lastname, ['controller' => 'Users', 'action' => 'view', $training_data->user->id]) : '' ?></td>
 
                                 <td><span class="badge badge-<?= ((bool) $training_data->checked) ? 'primary' : 'danger' ?>" id="badge-item-<?= $training_data->id ?>"><?= ((bool) $training_data->checked) ? 'Asistio' : 'No Asistio' ?></span></td>
 
