@@ -217,7 +217,7 @@ class TrainingsController extends AppController
     public function attendance($id)
     {
         $Users = $this->getTableLocator()->get('Users');
-        $users =  json_decode(json_encode($Users->find()->select(['document', 'name', 'lastname'])->toArray()), true);
+        $users =  json_decode(json_encode($Users->find()->contain(['Designations', 'Departaments'])->select(['Users.document', 'Users.name', 'Users.lastname', 'Departaments.name','Designations.name'])->toArray()), true);
 
         $TrainingAssistances = $this->getTableLocator()->get('TrainingsAssistances');
         $assistances = $TrainingAssistances->find('all')->contain(['Trainings', 'Users'])->where(['training_id' => $id])->toArray();

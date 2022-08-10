@@ -12,7 +12,7 @@ $assistants = [
 
 
 foreach ($users as $user) {
-    $assistants['Users'][$user['document']] = $user['name'] . " " . $user['lastname'];
+    $assistants['Users']["Area: ". $user['departament']['name'] . " - Cargo: " . $user['designation']['name']][$user['document']] = $user['name'] . " " . $user['lastname'];
 }
 
 $assistants['NewUsersAssistances'] = $assistants['Users'];
@@ -28,6 +28,8 @@ $start = $training->start_date;
 $training->set('start_date', $training->start_date->format('Y-m-d'));
 $training->set('start_hour', $start->format('H:i'));
 $training->set('end_hour', $training->end_date->format('H:i'));
+
+
 
 ?>
 
