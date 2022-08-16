@@ -1,4 +1,6 @@
 <?php
+
+
 ?>
 <div class="header">
     <div class="header-left">
@@ -60,42 +62,42 @@
                         <ul>
                             <li>
                                 <a href="#">
-                                     <?= $this->Html->image('/img/users/default.jpg'); ?>
+                                    <?= $this->Html->image('/img/users/default.jpg'); ?>
                                     <h3>John Doe</h3>
                                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
                                 </a>
                             </li>
                             <li>
                                 <a href="#">
-                                     <?= $this->Html->image('/img/users/default.jpg'); ?>
+                                    <?= $this->Html->image('/img/users/default.jpg'); ?>
                                     <h3>Lea R. Frith</h3>
                                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
                                 </a>
                             </li>
                             <li>
                                 <a href="#">
-                                     <?= $this->Html->image('/img/users/default.jpg'); ?>
+                                    <?= $this->Html->image('/img/users/default.jpg'); ?>
                                     <h3>Erik L. Richards</h3>
                                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
                                 </a>
                             </li>
                             <li>
                                 <a href="#">
-                                     <?= $this->Html->image('/img/users/default.jpg'); ?>
+                                    <?= $this->Html->image('/img/users/default.jpg'); ?>
                                     <h3>John Doe</h3>
                                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
                                 </a>
                             </li>
                             <li>
                                 <a href="#">
-                                     <?= $this->Html->image('/img/users/default.jpg'); ?>
+                                    <?= $this->Html->image('/img/users/default.jpg'); ?>
                                     <h3>Renee I. Hansen</h3>
                                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
                                 </a>
                             </li>
                             <li>
                                 <a href="#">
-                                <?= $this->Html->image('/img/users/default.jpg'); ?>
+                                    <?= $this->Html->image('/img/users/default.jpg'); ?>
                                     <h3>Vicki M. Coleman</h3>
                                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed...</p>
                                 </a>
@@ -111,22 +113,22 @@
                     <span class="user-icon">
                         <?= $this->Html->image('/img/users/default.jpg'); ?>
                     </span>
-                    <span class="user-name">Ross C. Lopez</span>
+                    <span class="user-name"><?= $_logged_user_['name'] ." ". $_logged_user_['lastname']?></span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
                     <a class="dropdown-item" href="profile"><i class="dw dw-user1"></i> Perfil</a>
                     <a class="dropdown-item" href="setting"><i class="dw dw-settings2"></i> Configuracción</a>
                     <a class="dropdown-item" href="help"><i class="dw dw-help"></i> Ayuda</a>
                     <?php echo $this->Html->link('<i class="dw dw-logout"></i> Cerrar Sesion', ['controller' => 'Users', 'action' => 'logout'], ['class' => 'dropdown-item', 'escape' => false]) ?>
-            </div>
-        </li>
-    </ul>
-</nav>
-
                 </div>
+                </li>
+                </ul>
+                </nav>
+
             </div>
         </div>
     </div>
+</div>
 </div>
 
 <div class="right-sidebar">

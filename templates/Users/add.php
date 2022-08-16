@@ -111,19 +111,19 @@
         <div class="row">
             <div class="col-md-6 col-sm-12">
                 <div class="form-group">
-                    <?= $this->Form->control('branch_id', ['options' => $branchs, 'empty' => '...', 'label' => ['text' => 'Sucursal'], 'class' => 'selectpicker form-control']); ?>
+                    <?= $this->Form->control('branch_id', ['options' => $branchs, 'empty' => '...', 'label' => ['text' => 'Sucursal'], 'class' => 'selectpicker form-control', "data-live-search" => true, "data-dropup-auto" => "false", "data-size" => "5"]); ?>
                 </div>
             </div>
             <div class="col-md-6 col-sm-12">
                 <div class="form-group">
-                    <?= $this->Form->control('dep_id', ['options' => $departaments, 'empty' => '...', 'label' => ['text' => 'Area'], 'class' => 'selectpicker form-control']); ?>
+                    <?= $this->Form->control('dep_id', ['options' => $departaments, 'empty' => '...', 'label' => ['text' => 'Area'], 'class' => 'selectpicker form-control', "data-live-search" => true, "data-dropup-auto" => "false", "data-size" => "5"]); ?>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6 col-sm-12">
                 <div class="form-group">
-                    <?= $this->Form->control('designation_id', ['options' => $designations, 'empty' => '...', 'label' => ['text' => 'Cargo'], 'class' => 'selectpicker form-control']); ?>
+                    <?= $this->Form->control('designation_id', ['options' => $designations, 'empty' => '...', 'label' => ['text' => 'Cargo'], 'class' => 'selectpicker form-control', "data-live-search" => true, "data-dropup-auto" => "false", "data-size" => "5"]); ?>
                 </div>
             </div>
 

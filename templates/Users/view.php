@@ -129,16 +129,16 @@ $huella = $this->Text->autoParagraph(h($user->indexfinger));
                                                     <div class="form-group">
                                                         <label class="my-text7 my-pri-color"><strong>Capturar el dedo índice</strong></label>
                                                         <div class="row justify-content-center" id="indexFingers">
-                                                            <div class="col-md-2 col-sm-3" id="indexfinger1">
+                                                            <div class="col-2" id="indexfinger1">
                                                                 <span class="icon icon-indexfinger-not-enrolled" title="not_enrolled"></span>
                                                             </div>
-                                                            <div class="col-md-2 col-sm-3" id="indexfinger2">
+                                                            <div class="col-2" id="indexfinger2">
                                                                 <span class="icon icon-indexfinger-not-enrolled" title="not_enrolled"></span>
                                                             </div>
-                                                            <div class="col-md-2 col-sm-3" id="indexfinger3">
+                                                            <div class="col-2" id="indexfinger3">
                                                                 <span class="icon icon-indexfinger-not-enrolled" title="not_enrolled"></span>
                                                             </div>
-                                                            <div class="col-md-2 col-sm-3" id="indexfinger4">
+                                                            <div class="col-2" id="indexfinger4">
                                                                 <span class="icon icon-indexfinger-not-enrolled" title="not_enrolled"></span>
                                                             </div>
                                                         </div>
@@ -148,16 +148,16 @@ $huella = $this->Text->autoParagraph(h($user->indexfinger));
                                                     <div class="form-group">
                                                         <label class="my-text7 my-pri-color"><strong>Captuar dedo del medio</strong> </label>
                                                         <div class="row justify-content-center" id="middleFingers">
-                                                            <div class="col-md-2 col-sm-3" id="middleFinger1">
+                                                            <div class="col-2" id="middleFinger1">
                                                                 <span class="icon icon-middlefinger-not-enrolled" title="not_enrolled"></span>
                                                             </div>
-                                                            <div class="col-md-2 col-sm-3" id="middleFinger2">
+                                                            <div class="col-2" id="middleFinger2">
                                                                 <span class="icon icon-middlefinger-not-enrolled" title="not_enrolled"></span>
                                                             </div>
-                                                            <div class="col-md-2 col-sm-3" id="middleFinger3">
+                                                            <div class="col-2" id="middleFinger3">
                                                                 <span class="icon icon-middlefinger-not-enrolled" title="not_enrolled"></span>
                                                             </div>
-                                                            <div class="col-md-2 col-sm-3" id="middleFinger4">
+                                                            <div class="col-2" id="middleFinger4">
                                                                 <span class="icon icon-middlefinger-not-enrolled" title="not_enrolled"></span>
                                                             </div>
                                                         </div>
@@ -168,14 +168,14 @@ $huella = $this->Text->autoParagraph(h($user->indexfinger));
                                                     <div class="form-group">
                                                         <div class="row justify-content-center">
 
-                                                            <div class="col-md-4 col-sm-3">
-                                                                <button class="btn btn-success" type="submit" onclick="beginCapture(<?=h($user->id)?>)">Capturar Huella</button>
+                                                            <div class="col-4 col-sm-2">
+                                                                <button class="btn btn-success" type="submit" onclick="beginCapture(<?=h($user->id)?>)">Capturar</button>
                                                             </div>
-                                                            <div class="col-md-4 col-sm-3">
-                                                                <button class="btn btn-primary" type="submit" onclick="serverEnroll()">Enrolar Empleado</button>
+                                                            <div class="col-4 col-sm-2">
+                                                                <button class="btn btn-primary" type="submit" onclick="serverEnroll()">Enrolar</button>
                                                             </div>
-                                                            <div class="col-md-4 col-sm-3">
-                                                                <button class="btn btn-dark" type="submit" onclick="clearCapture()">Limpiar Huellas</button>
+                                                            <div class="col-4 col-sm-2">
+                                                                <button class="btn btn-dark" type="submit" onclick="clearCapture()">Limpiar</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -236,14 +236,14 @@ $huella = $this->Text->autoParagraph(h($user->indexfinger));
 
 
                                             <div class="form-row m-3 mt-md-5 justify-content-center">
-                                                <div class="col-4">
-                                                    <button class="btn btn-success" type="submit" onclick="captureForIdentify(<?=h($user->id)?>)">Capturar Huella</button>
+                                                <div class="col-4 col-sm-2">
+                                                    <button class="btn btn-success" data-toggle="tooltip" title="Iniciar captura de huella" type="submit" onclick="captureForIdentify(<?=h($user->id)?>)">Capturar</button>
                                                 </div>
-                                                <div class="col-4">
-                                                    <button class="btn btn-primary" type="submit" onclick="serverIdentify()">Validar</button>
+                                                <div class="col-4 col-sm-2">
+                                                    <button class="btn btn-primary" data-toggle="tooltip" title="Validar huella" type="submit" onclick="serverIdentify()">Validar</button>
                                                 </div>
-                                                <div class="col-md-4 col-sm-3">
-                                                    <button class="btn btn-dark" type="submit" onclick="clearCapture()">Limpiar Huellas</button>
+                                                <div class="col-4 col-sm-2">
+                                                    <button class="btn btn-dark" type="submit" onclick="clearCapture()">Limpiar</button>
                                                 </div>
                                             </div>
                                 </form>
@@ -267,25 +267,25 @@ $huella = $this->Text->autoParagraph(h($user->indexfinger));
 <style>
     .icon {
         display: inline-block;
-        width: 64px;
-        height: 64px;
+        width: 84px;
+        height: 84px;
         background-size: cover;
     }
 
     .icon-indexfinger-not-enrolled {
-        background-image: url("/img/fingerprint/svg/indexfinger_not_enrolled.svg");
+        background-image: url("/img/fingerprint/svg/fingerprint_not_enrolled.svg");
     }
 
     .icon-indexfinger-enrolled {
-        background-image: url("/img/fingerprint//svg/indexfinger_enrolled.svg");
+        background-image: url("/img/fingerprint/svg/fingerprint_enrolled.svg");
     }
 
     .icon-middlefinger-not-enrolled {
-        background-image: url("/img/fingerprint/svg/middlefinger_not_enrolled.svg");
+        background-image: url("/img/fingerprint/svg/fingerprint_not_enrolled.svg");
     }
 
     .icon-middlefinger-enrolled {
-        background-image: url("/img/fingerprint/svg/middlefinger_enrolled.svg");
+        background-image: url("/img/fingerprint/svg/fingerprint_enrolled.svg");
     }
 
     .capture-indexfinger {
@@ -302,21 +302,21 @@ $huella = $this->Text->autoParagraph(h($user->indexfinger));
 
     @keyframes blink-index-finger {
         from {
-            background-image: url("/img/fingerprint/svg/indexfinger_not_enrolled.svg");
+            background-image: url("/img/fingerprint/svg/fingerprint_not_enrolled.svg");
         }
 
         to {
-            background-image: url("/img/fingerprint/svg/indexfinger-anim.svg");
+            background-image: url("/img/fingerprint/svg/fingerprint_anim.svg");
         }
     }
 
     @keyframes blink-middle-finger {
         from {
-            background-image: url("/img/fingerprint/svg/middlefinger_not_enrolled.svg");
+            background-image: url("/img/fingerprint/svg/fingerprint_not_enrolled.svg");
         }
 
         to {
-            background-image: url("/img/fingerprint/svg/middlefinger-anim.svg");
+            background-image: url("/img/fingerprint/svg/fingerprint_anim.svg");
         }
     }
 </style>

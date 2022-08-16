@@ -54,6 +54,7 @@ class AppController extends Controller
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
         $this->loadComponent('Auth', [
+            'authorize' => ['Controller'],
             'loginRedirect' => [
                 'controller' => 'Dashboard',
                 'action' => 'index'
@@ -87,10 +88,10 @@ class AppController extends Controller
 
         // add rol to user logged
         if (!empty($this->Auth->user())) {
-            if (empty($this->Auth->user('rol'))) {
+            if (empty($this->Auth->user('rol_id'))) {
                 $user_c = $this->Auth->user();
                 $Roles = $this->getTableLocator()->get('Roles');
-                $user_c['rol'] = $Roles->get($this->Auth->user('rol_id'))->toArray();
+                $user_c['rol_id'] = $Roles->get($this->Auth->user('rol_id'))->toArray();
                 $this->Auth->setUser($user_c);
             }
         }
@@ -99,19 +100,78 @@ class AppController extends Controller
     }
 
 
-
     public function isAuthorized($user)
     {
         // Admin can access every action
-        if (isset($user['role']) && $user['role'] === '1') {
+        if (isset($user['rol_id']) && $user['rol_id'] === '1') {
             return true;
         }
+
+
+        // by pass acciones del sistema
+        $funciones_sistema = [
+            'getCalendarioEvents', // controlles con gestion imagenes
+            'attendanceSave', // eventos controller
+            'attendanceDelete', // eventos controller
+            'calendar',  // eventos controller
+            'verify',
+            'enroll'
+        ];
+
+        if (in_array($this->request->getParam('action'), $funciones_sistema))
+            return true;
+        // permisions from db
+        $RolesPermisos = $this->getTableLocator()->get('RolesPermisos');
+        $permisos_bruto = $RolesPermisos->find('all')
+            ->where([
+                'roles LIKE' => '%' . $user['rol_id'] . '%'
+            ])->toArray();
+
+
+        $permisos_refinado = [];
+        $_permisos_users = [];
+        foreach ($permisos_bruto as $key => $value) {
+            if (in_array($user['rol_id'], explode(',', $value->roles))) {
+                $permisos_refinado[] = $value;
+
+                $_permisos_users[$value->modulo_padre][$value->modulo_hijo]=$value->modulo_hijo;
+            }
+        }
+
+        $this->set('_permisos_user_', $_permisos_users);
+
+        // users without permisions force to exit
+        if (empty($permisos_refinado)) {
+            $session = $this->request->getSession();
+            $session->destroy();
+            $this->Flash->error($this->Auth->getConfig('authError'));
+            header("Location: " . Router::url('/', true));
+            die();
+        }
+
+
+
+        // users autorized for controller and action are allowed
+        foreach ($permisos_refinado as $key => $value) {
+            if (
+                $value->modulo_padre == strtolower($this->request->getParam('controller'))
+                && $value->modulo_hijo == strtolower($this->request->getParam('action'))
+            ) {
+                array_push($_permisos_users, [$value->modulo_padre, $value->modulo_hijo]);
+                return true;
+            }
+        }
+
+
+
 
         // if redirect is present un url reset auth redirect
         $this->Auth->setConfig('unauthorizedRedirect', true);
         if (strpos($this->request->referer(), '?redirect=') !== false) {
             $this->Auth->setConfig('unauthorizedRedirect', $this->Auth->getConfig('loginRedirect'));
         }
+
+
 
         return false;
     }

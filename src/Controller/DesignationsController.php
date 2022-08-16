@@ -18,6 +18,10 @@ class DesignationsController extends AppController
      */
     public function index()
     {
+        $this->paginate = [
+            'limit' => 5000,
+            'maxLimit' => 5000
+        ];
         $designations = $this->paginate($this->Designations);
 
         $this->set(compact('designations'));

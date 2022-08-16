@@ -52,7 +52,7 @@ class TrainingsController extends AppController
     {
         $Users = $this->getTableLocator()->get('Users');
 
-        $users =  json_decode(json_encode($Users->find()->contain(['Designations', 'Departaments'])->select(['Users.document', 'Users.name', 'Users.lastname', 'Departaments.name','Designations.name'])->toArray()), true);
+        $users =  json_decode(json_encode($Users->find()->contain(['Designations', 'Departaments'])->select(['Users.document', 'Users.name', 'Users.lastname', 'Departaments.name', 'Designations.name'])->toArray()), true);
 
         $training = $this->Trainings->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -89,7 +89,7 @@ class TrainingsController extends AppController
 
         $Users = $this->getTableLocator()->get('Users');
 
-        $users =  json_decode(json_encode($Users->find()->contain(['Designations', 'Departaments'])->select(['Users.document', 'Users.name', 'Users.lastname', 'Departaments.name','Designations.name'])->toArray()), true);
+        $users =  json_decode(json_encode($Users->find()->contain(['Designations', 'Departaments'])->select(['Users.document', 'Users.name', 'Users.lastname', 'Departaments.name', 'Designations.name'])->toArray()), true);
 
 
         $training = $this->Trainings->get($id, [
@@ -217,7 +217,7 @@ class TrainingsController extends AppController
     public function attendance($id)
     {
         $Users = $this->getTableLocator()->get('Users');
-        $users =  json_decode(json_encode($Users->find()->contain(['Designations', 'Departaments'])->select(['Users.document', 'Users.name', 'Users.lastname', 'Departaments.name','Designations.name'])->toArray()), true);
+        $users =  json_decode(json_encode($Users->find()->contain(['Designations', 'Departaments'])->select(['Users.document', 'Users.name', 'Users.lastname', 'Departaments.name', 'Designations.name'])->toArray()), true);
 
         $TrainingAssistances = $this->getTableLocator()->get('TrainingsAssistances');
         $assistances = $TrainingAssistances->find('all')->contain(['Trainings', 'Users'])->where(['training_id' => $id])->toArray();
@@ -248,6 +248,22 @@ class TrainingsController extends AppController
         ]);
 
         $this->set(compact('training', 'users', 'assistances'));
+    }
+
+    public function duplicate($id = null)
+    {
+        $data = $this->Trainings->get($id)->toArray();
+
+        $training = $this->Trainings->newEmptyEntity();
+        $training = $this->Trainings->patchEntity($training, $data);
+
+        $training->name =  $training->name . " Duplicado";
+
+        if ($this->Trainings->save($training)) {
+            $this->Flash->success(__('La capacitación duplicada con exito '));
+
+            return $this->redirect(['action' => 'edit', $training->id]);
+        }
     }
 
     public function calendar()

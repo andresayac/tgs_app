@@ -89,6 +89,8 @@ foreach ($users as $user) {
                                         'escape' => false,
                                         'class' => 'dropdown-item'
                                     ]) ?>
+                                    <?= $this->Form->postLink('<i class="dw dw-copy"></i>Duplicar', ['action' => 'duplicate', $training->id], ['class' => 'dropdown-item', 'escape' => false, 'confirm' => __('Esta seguro que quiere duplicar la capacitación # {0}?', $training->id)]) ?>
+                               
                                     <?= $this->Html->link(__('<i class="dw dw-eye"></i>Ver'), ['action' => 'view', $training->id], [
                                         'escape' => false,
                                         'class' => 'dropdown-item'
@@ -96,7 +98,7 @@ foreach ($users as $user) {
                                     <?= $this->Html->link(__('<i class="dw dw-edit2"></i>Editar'), ['action' => 'edit', $training->id], [
                                         'escape' => false,
                                         'class' => 'dropdown-item'
-                                    ]) ?>
+                                    ]) ?>                                    
                                     <?= $this->Form->postLink('<i class="dw dw-delete-3"></i>Eliminar', ['action' => 'delete', $training->id], ['class' => 'dropdown-item', 'escape' => false, 'confirm' => __('Esta seguro que quiere eliminar la capacitación # {0}?', $training->id)]) ?>
                                 </div>
                             </div>

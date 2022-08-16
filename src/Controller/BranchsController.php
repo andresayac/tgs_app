@@ -19,8 +19,12 @@ class BranchsController extends AppController
     public function index()
     {
         $this->paginate = [
+            'limit' => 5000,
+            'maxLimit' => 5000,
             'contain' => ['Companies'],
         ];
+
+
         $branchs = $this->paginate($this->Branchs);
 
         $this->set(compact('branchs'));

@@ -6,6 +6,11 @@ namespace App\Controller;
 
 use Cake\Event\EventInterface;
 
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use     PhpOffice\PhpSpreadsheet\IOFactory;
+use Cake\Http\CallbackStream; // ← Added new in this sample
+
 /**
  * Users Controller
  *
@@ -84,7 +89,7 @@ class UsersController extends AppController
             'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            
+
             $data = $this->request->getData();
 
             $user = $this->Users->patchEntity($user, $data);
@@ -130,14 +135,148 @@ class UsersController extends AppController
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
-        $this->Auth->allow('add');
+        $this->Auth->allow(['login', 'logout']);
+    }
+
+    public function export()
+    {
+
+        $filename = 'Usuarios_' . date('Y-m-d_His');
+
+        $spreadsheet = new Spreadsheet();
+        $spreadsheet->setActiveSheetIndex(0);
+        $spreadsheet->getActiveSheet()->setTitle('Usuarios');
+        $spreadsheet->getProperties()->setCreator("TGS-APP");
+
+        $datos_excel = $this->Users->find()
+            ->contain(['Roles', 'Departaments', 'Branchs', 'Designations'])
+            ->select([
+                'ID_App' => 'Users.id',
+                'Tipo_Documento' => 'Users.document_type',
+                'Cedula' => 'Users.document',
+                'Nombre' => 'Users.name',
+                'Apellidos' => 'Users.lastname',
+                'Fecha_Nacimiento' => 'DATE_FORMAT(Users.date_birthday,"%Y-%m-%d")',
+                'Estado' => 'if(Users.active=1,"Activo","Inactivo")',
+                'Huella' => 'if(Users.indexfinger IS NULL,"NO","SI")',
+                'Telefono' => 'Users.telephone',
+                'Rol' => 'Roles.name',
+                'Area' => 'Departaments.name',
+                'Cargo' => 'Designations.name'
+            ])->disableHydration()->toArray();
+
+        array_unshift($datos_excel, array_keys($datos_excel[0]));
+
+        $spreadsheet->getActiveSheet()->fromArray($datos_excel, NULL, 'A1');
+
+        $writer = new Xlsx($spreadsheet);
+        $stream = new CallbackStream(function () use ($writer) {
+            $writer->save('php://output');
+        });
+
+        // Return the stream in a response
+        return $this->response->withType('xlsx')
+            ->withHeader('Content-Disposition', "attachment;filename=\"{$filename}.xlsx\"")
+            ->withBody($stream ?? '');
+    }
+
+    public function import($action = NULL)
+    {
+
+        if ($this->request->is('post')) {
+
+
+            if ($action === 'file_download') {
+                $filename = 'plantilla_usuarios';
+
+                $spreadsheet = new Spreadsheet();
+                $spreadsheet->setActiveSheetIndex(0);
+                $spreadsheet->getActiveSheet()->setTitle('Usuarios');
+                $spreadsheet->getProperties()->setCreator("TGS-APP");
+
+                $columns = [
+                    "Usuario[username]",
+                    "Nombres[name]",
+                    "Apellidos[lastname]",
+                    "Tipo Documento[document_type]",
+                    "Documento[document]",
+                    "Fecha Nacimiento[date_birthday]",
+                    "Telefono[telephone]",
+                    "Sucursal[branch_id]",
+                    "Area[dep_id]",
+                    "Cargo[designation_id]"
+                ];
+
+                $spreadsheet->getActiveSheet()->fromArray($columns, NULL, 'A1');
+
+                $writer = new Xlsx($spreadsheet);
+                $stream = new CallbackStream(function () use ($writer) {
+                    $writer->save('php://output');
+                });
+
+                // Return the stream in a response
+                return $this->response->withType('xlsx')
+                    ->withHeader('Content-Disposition', "attachment;filename=\"{$filename}.xlsx\"")
+                    ->withBody($stream ?? '');
+            }
+
+
+
+            $request = $this->request->getData();
+            $file = $request['excel'];
+            $mimes = array(
+                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            );
+
+            if (in_array($file->getClientMediaType(), $mimes)) {
+                /* var_dump($file->getClientFilename());
+                var_dump($file->getClientMediaType());
+                var_dump($file->getSize());
+                var_dump($file->getError());
+                
+                var_dump($file->getStream()->getMetadata('uri')); */
+
+                $spreadsheet = IOFactory::load($file->getStream()->getMetadata('uri'));
+
+                $sheet        = $spreadsheet->getActiveSheet();
+                $row_limit    = $sheet->getHighestDataRow();
+                $column_limit = $sheet->getHighestDataColumn();
+                $row_range    = range(2, $row_limit);
+                $column_range = range('F', $column_limit);
+
+
+                foreach ($row_range as $row) {
+                    $data[] = [
+                        'username' => $sheet->getCell('A' . $row)->getValue(),
+                        'name' => $sheet->getCell('B' . $row)->getValue(),
+                        'lastname' => $sheet->getCell('C' . $row)->getValue(),
+                        'document_type' => $sheet->getCell('D' . $row)->getValue(),
+                        'document' => $sheet->getCell('E' . $row)->getValue(),
+                        'date_birthday' => $sheet->getCell('F' . $row)->getValue(),
+                        'telephone' => $sheet->getCell('G' . $row)->getValue(),
+                        'branch_id' => $sheet->getCell('H' . $row)->getValue(),
+                        'dep_id' => $sheet->getCell('I' . $row)->getValue(),
+                        'designation_id' => $sheet->getCell('J' . $row)->getValue(),
+                    ];
+                }
+
+                var_dump($data);
+            }
+
+
+            if ($this->Auth->identify()) {
+
+                $this->Auth->setUser($this->Auth->identify());
+                return $this->redirect($this->Auth->redirectUrl());
+            }
+        }
     }
 
     public function login()
     {
         $this->viewBuilder()->disableAutoLayout();
 
-        
+
         if (!empty($this->Auth->user())) {
             // redirecicon inicial basado en rol
             $Roles = $this->getTableLocator()->get('Roles');

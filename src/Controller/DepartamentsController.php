@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -18,6 +19,13 @@ class DepartamentsController extends AppController
      */
     public function index()
     {
+
+        $this->paginate = [
+            'limit' => 5000,
+            'maxLimit' => 5000
+        ];
+
+
         $departaments = $this->paginate($this->Departaments);
 
         $this->set(compact('departaments'));

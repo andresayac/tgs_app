@@ -12,7 +12,7 @@ $assistants = [
 
 
 foreach ($users as $user) {
-    $assistants['Users']["Area: ". $user['departament']['name'] . " - Cargo: " . $user['designation']['name']][$user['document']] = $user['name'] . " " . $user['lastname'];
+    $assistants['Users'][$user['document']] = $user['name'] . " " . $user['lastname'];
 }
 
 $assistants['NewUsersAssistances'] = $assistants['Users'];
@@ -217,6 +217,8 @@ $training->set('end_hour', $training->end_date->format('H:i'));
                     <?= $this->Form->hidden('userID', ['type' => 'text', 'id' => 'userID']) ?>
                     <?= $this->Form->hidden('TrainingID', ['type' => 'text', 'id' => 'TrainingID']) ?>
                     <?= $this->Form->hidden('userIDVerifyTMP', ['type' => 'text', 'id' => 'userIDVerifyTMP']) ?>
+                    <?= $this->Form->hidden('userDetails', ['type' => 'text', 'id' => 'userIDVerifyTMP']) ?>
+
 
                     <div id="verifyIdentityStatusField" class="text-center">
 
@@ -249,26 +251,24 @@ $training->set('end_hour', $training->end_date->format('H:i'));
                     </div>
 
 
-                    <div class="form-row mt-3" id="userDetails">
-                        <!--this is where user details will be displayed-->
-                    </div>
-
-
-                    <div class="form-row m-3 mt-md-5 justify-content-center">
-                        <div class="col-4">
-                            <?= '<button class="btn btn-success" type="submit" onclick="captureForIdentify()">Capturar Huella</button>' ?>
-                        </div>
-                        <div class="col-4">
-                            <button class="btn btn-primary" type="submit" onclick="serverIdentifyAssistance()">Validar</button>
-                        </div>
-                        <div class="col-md-4 col-sm-3">
-                            <button class="btn btn-dark" type="submit" onclick="clearCapture()">Limpiar Huellas</button>
-                        </div>
-                    </div>
-                <?php endif ?>
             </div>
+
+
+            <div class="form-row m-3 mt-md-5 justify-content-center">
+                <div class="col-3 col-sm-3">
+                    <button class="btn btn-success" type="submit" onclick="captureForIdentify()">Capturar</button>
+                </div>
+                <div class="col-3 col-sm-3">
+                    <button class="btn btn-primary" type="submit" onclick="serverIdentifyAssistance()">Validar</button>
+                </div>
+                <div class="col-3 col-sm-3">
+                    <button class="btn btn-dark" type="submit" onclick="clearCapture()">Limpiar</button>
+                </div>
+            </div>
+        <?php endif ?>
         </div>
     </div>
+</div>
 </div>
 
 
@@ -277,34 +277,29 @@ $training->set('end_hour', $training->end_date->format('H:i'));
 <?php echo $this->Html->script("/src/plugins/sweetalert2/sweet-alert.init.js"); ?>
 
 
-<?php echo $this->Html->script("/src/scripts/fingerprint/es6-shim.js"); ?>
-<?php echo $this->Html->script("/src/scripts/fingerprint/websdk.client.bundle.min.js"); ?>
-<?php echo $this->Html->script("/src/scripts/fingerprint/fingerprint.sdk.min.js"); ?>
-<?php echo $this->Html->script("/src/scripts/fingerprint/custom.js"); ?>
-
 
 <style>
     .icon {
         display: inline-block;
-        width: 64px;
-        height: 64px;
+        width: 84px;
+        height: 84px;
         background-size: cover;
     }
 
     .icon-indexfinger-not-enrolled {
-        background-image: url("/img/fingerprint/svg/indexfinger_not_enrolled.svg");
+        background-image: url("/img/fingerprint/svg/fingerprint_not_enrolled.svg");
     }
 
     .icon-indexfinger-enrolled {
-        background-image: url("/img/fingerprint//svg/indexfinger_enrolled.svg");
+        background-image: url("/img/fingerprint/svg/fingerprint_enrolled.svg");
     }
 
     .icon-middlefinger-not-enrolled {
-        background-image: url("/img/fingerprint/svg/middlefinger_not_enrolled.svg");
+        background-image: url("/img/fingerprint/svg/fingerprint_not_enrolled.svg");
     }
 
     .icon-middlefinger-enrolled {
-        background-image: url("/img/fingerprint/svg/middlefinger_enrolled.svg");
+        background-image: url("/img/fingerprint/svg/fingerprint_enrolled.svg");
     }
 
     .capture-indexfinger {
@@ -321,21 +316,21 @@ $training->set('end_hour', $training->end_date->format('H:i'));
 
     @keyframes blink-index-finger {
         from {
-            background-image: url("/img/fingerprint/svg/indexfinger_not_enrolled.svg");
+            background-image: url("/img/fingerprint/svg/fingerprint_not_enrolled.svg");
         }
 
         to {
-            background-image: url("/img/fingerprint/svg/indexfinger-anim.svg");
+            background-image: url("/img/fingerprint/svg/fingerprint_anim.svg");
         }
     }
 
     @keyframes blink-middle-finger {
         from {
-            background-image: url("/img/fingerprint/svg/middlefinger_not_enrolled.svg");
+            background-image: url("/img/fingerprint/svg/fingerprint_not_enrolled.svg");
         }
 
         to {
-            background-image: url("/img/fingerprint/svg/middlefinger-anim.svg");
+            background-image: url("/img/fingerprint/svg/fingerprint_anim.svg");
         }
     }
 </style>
@@ -385,6 +380,10 @@ $training->set('end_hour', $training->end_date->format('H:i'));
 
 
 <?php if ($start->isToday()) : ?>
+    <?php echo $this->Html->script("/src/scripts/fingerprint/es6-shim.js"); ?>
+    <?php echo $this->Html->script("/src/scripts/fingerprint/websdk.client.bundle.min.js"); ?>
+    <?php echo $this->Html->script("/src/scripts/fingerprint/fingerprint.sdk.min.js"); ?>
+    <?php echo $this->Html->script("/src/scripts/fingerprint/custom.js"); ?>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
 

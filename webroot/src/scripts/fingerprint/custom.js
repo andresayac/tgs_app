@@ -18,15 +18,15 @@ let FingerprintSdkTest = (function () {
         this.sdk = new Fingerprint.WebApi;
         this.sdk.onDeviceConnected = function (e) {
             // Detects if the device is connected for which acquisition started
-            showMessage("Escanear el dedo apropiado en el lector", "success");
+            showMessage("Escanear el dedo apropiado en el lector", "info");
         };
         this.sdk.onDeviceDisconnected = function (e) {
             // Detects if device gets disconnected - provides deviceUid of disconnected device
-            showMessage("El dispositivo está desconectado. Por favor, vuelva a conectarse");
+            showMessage("El dispositivo está desconectado. Por favor, vuelva a conectarse", "error");
         };
         this.sdk.onCommunicationFailed = function (e) {
             // Detects if there is a failure in communicating with U.R.U web SDK
-            showMessage("Comunicación fallida. Vuelva a conectar el dispositivo")
+            showMessage("Comunicación fallida. Vuelva a conectar el dispositivo", "error")
         };
         this.sdk.onSamplesAcquired = function (s) {
             // Sample acquired event triggers this function
@@ -43,7 +43,7 @@ let FingerprintSdkTest = (function () {
         if (this.acquisitionStarted) // Monitoring if already started capturing
             return;
         let _instance = this;
-        showMessage("");
+        showMessage("Capturando huella", 'info');
         this.operationToRestart = this.startCapture;
         this.sdk.startAcquisition(currentFormat, "").then(function () {
             _instance.acquisitionStarted = true;
@@ -60,10 +60,8 @@ let FingerprintSdkTest = (function () {
         if (!this.acquisitionStarted) //Monitor if already stopped capturing
             return;
         let _instance = this;
-        showMessage("");
         this.sdk.stopAcquisition().then(function () {
             _instance.acquisitionStarted = false;
-
             //Disabling stop once stopped
             //disableEnableStartStop();
 
@@ -112,7 +110,7 @@ class Reader {
         selectField.innerHTML = `<option>Seleccionar lector de huellas dactilares</option>`;
         readers.then(function (availableReaders) {  // when promise is fulfilled
             if (availableReaders.length > 0) {
-                showMessage("");
+                showMessage("Lector de Huellas conectado con exito", "success");
                 for (let reader of availableReaders) {
                     selectField.innerHTML += `<option value="${reader}" selected>${reader}</option>`;
                 }
@@ -174,6 +172,32 @@ function showMessage(message, message_type = "error") {
         let statusField = document.getElementById(statusFieldID);
         statusField.innerHTML = `<p class="my-text7 my-pri-color my-3 ${types.get(message_type)} font-weight-bold">${message}</p>`;
     }
+
+    if (message_type === 'success') {
+        iziToast.success({
+            // title: 'Hey',
+            position: 'topCenter',
+            message: message
+        });
+    }
+
+    if (message_type === 'error') {
+        iziToast.error({
+            // title: 'Hey',
+            position: 'topCenter',
+            message: message
+        });
+    }
+
+    if (message_type === 'warning') {
+        iziToast.warning({
+            // title: 'Hey',
+            position: 'topCenter',
+            message: message
+        });
+    }
+
+
 }
 
 function beginCapture(user_id) {
@@ -382,6 +406,7 @@ function serverEnroll() {
 
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
+            console.log(this.responseText)
             if (this.responseText === "success") {
                 showMessage(successMessage, "success");
             }
