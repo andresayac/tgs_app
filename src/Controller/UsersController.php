@@ -183,8 +183,7 @@ class UsersController extends AppController
     public function import($action = NULL)
     {
 
-        if ($this->request->is('post')) {
-
+        if ($this->request->is(['patch', 'post', 'put'])) {
 
             if ($action === 'file_download') {
                 $filename = 'plantilla_usuarios';
@@ -337,15 +336,40 @@ class UsersController extends AppController
                 if (empty($error_data)) {
                     $this->Flash->success(__('Usuarios Agregados con exito'));
                 } else {
-                    $this->Flash->error(__('Se han identificado '. count($error_data) . ' registros con error o duplicados'));
+                    $this->Flash->error(__('Se han identificado ' . count($error_data) . ' registros con error o duplicados'));
                 }
             }
 
             $this->set('error', $error_data);
+
+            if (!empty($error_data)) {
+                $filename = 'Usuarios_error' . date('Y-m-d_His');
+
+                $spreadsheet = new Spreadsheet();
+                $spreadsheet->setActiveSheetIndex(0);
+                $spreadsheet->getActiveSheet()->setTitle('UsuariosError');
+                $spreadsheet->getProperties()->setCreator("TGS-APP");
+
+                array_unshift($error_data, array_keys($error_data[0]));
+
+                $spreadsheet->getActiveSheet()->fromArray($error_data, NULL, 'A1');
+
+                $writer = new Xlsx($spreadsheet);
+                $stream = new CallbackStream(function () use ($writer) {
+                    $writer->save('php://output');
+                });
+
+                // Return the stream in a response
+                return $this->response->withType('xlsx')
+                    ->withHeader('Content-Disposition', "attachment;filename=\"{$filename}.xlsx\"")
+                    ->withBody($stream ?? '');
+            }
+
+            return $this->redirect(['action' => 'import']);
         }
     }
 
- 
+
     public function login()
     {
         $this->viewBuilder()->disableAutoLayout();
