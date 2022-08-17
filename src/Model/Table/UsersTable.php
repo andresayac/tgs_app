@@ -62,9 +62,9 @@ class UsersTable extends Table
         $this->belongsTo('Designations', [
             'foreignKey' => 'designation_id',
         ]);
-
-
-        
+        $this->hasMany('TrainingsAssistances', [
+            'foreignKey' => 'user_id',
+        ]);
     }
 
     /**
@@ -107,7 +107,8 @@ class UsersTable extends Table
         $validator
             ->scalar('document')
             ->maxLength('document', 44)
-            ->allowEmptyString('document');
+            ->allowEmptyString('document')
+            ->add('document', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         $validator
             ->date('date_birthday')
@@ -155,6 +156,7 @@ class UsersTable extends Table
     public function buildRules(RulesChecker $rules): RulesChecker
     {
         $rules->add($rules->isUnique(['username']), ['errorField' => 'username']);
+        $rules->add($rules->isUnique(['document'], ['allowMultipleNulls' => true]), ['errorField' => 'document']);
         $rules->add($rules->existsIn('rol_id', 'Roles'), ['errorField' => 'rol_id']);
         $rules->add($rules->existsIn('dep_id', 'Departaments'), ['errorField' => 'dep_id']);
         $rules->add($rules->existsIn('branch_id', 'Branchs'), ['errorField' => 'branch_id']);

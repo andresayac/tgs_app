@@ -195,19 +195,90 @@ class UsersController extends AppController
                 $spreadsheet->getProperties()->setCreator("TGS-APP");
 
                 $columns = [
-                    "Usuario[username]",
-                    "Nombres[name]",
-                    "Apellidos[lastname]",
-                    "Tipo Documento[document_type]",
-                    "Documento[document]",
-                    "Fecha Nacimiento[date_birthday]",
-                    "Telefono[telephone]",
-                    "Sucursal[branch_id]",
-                    "Area[dep_id]",
-                    "Cargo[designation_id]"
+                    "Usuario",
+                    "Nombres",
+                    "Apellidos",
+                    "Documento",
+                    "Telefono",
+                    "Sucursal Id",
+                    "Area Id",
+                    "Cargo Id"
                 ];
 
+                $spreadsheet->getActiveSheet()
+                    ->getStyle('A1:H1')
+                    ->getFill()
+                    ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                    ->getStartColor()
+                    ->setARGB('00FF7F');
+
+                foreach (range('A', 'H') as $letter) {
+                    $spreadsheet->getActiveSheet()->getColumnDimension($letter)->setAutoSize(true);
+                }
+
                 $spreadsheet->getActiveSheet()->fromArray($columns, NULL, 'A1');
+
+                $spreadsheet->createSheet();
+                $spreadsheet->setActiveSheetIndex(1);
+                $spreadsheet->getActiveSheet()->setTitle('Tablas de datos');
+
+                $branchs = $this->getTableLocator()->get('Branchs')->find()->select(['Sucursal_ID' => 'id', 'Sucursal_Nombre' => 'name'])->disableHydration()->toArray();;
+                $departaments = $this->getTableLocator()->get('Departaments')->find()->select(['Area_ID' => 'id', 'Area_Nombre' => 'name'])->disableHydration()->toArray();;
+                $designations = $this->getTableLocator()->get('Designations')->find()->select(['Cargo_ID' => 'id', 'Cargo_Nombre' => 'name'])->disableHydration()->toArray();;
+
+                array_unshift($branchs, array_keys($branchs[0]));
+                array_unshift($departaments, array_keys($departaments[0]));
+                array_unshift($designations, array_keys($designations[0]));
+
+                $ejemplo = [
+                    [
+                        "Usuario" => 'empleado1',
+                        "Nombres" => 'Nombre1 Nombre 2',
+                        "Apellidos" => 'Apellido1 Apellido2',
+                        "Documento" => '100000123',
+                        "Telefono" => '3110001234',
+                        "Sucursal Id" => '2',
+                        "Area Id" => '5',
+                        "Cargo Id" => ' 12'
+                    ],
+                    [
+                        "Usuario" => 'empleado2',
+                        "Nombres" => 'Nombre2 Nombre 2',
+                        "Apellidos" => 'Apellido2 Apellido2',
+                        "Documento" => '100000124',
+                        "Telefono" => '3110001235',
+                        "Sucursal Id" => '3',
+                        "Area Id" => '6',
+                        "Cargo Id" => ' 10'
+                    ]
+                ];
+
+                array_unshift($ejemplo, array_keys($ejemplo[0]));
+
+                $range = [
+                    'A1:B1',
+                    'D1:E1',
+                    'G1:H1',
+                    'K2:R2',
+                ];
+
+                foreach ($range as $value) {
+                    $spreadsheet->getActiveSheet()
+                        ->getStyle($value)
+                        ->getFill()
+                        ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                        ->getStartColor()
+                        ->setARGB('00FF7F');
+                }
+                foreach (range('A', 'R') as $letter) {
+                    $spreadsheet->getActiveSheet()->getColumnDimension($letter)->setAutoSize(true);
+                }
+
+                $spreadsheet->getActiveSheet()->fromArray($branchs, NULL, 'A1');
+                $spreadsheet->getActiveSheet()->fromArray($departaments, NULL, 'D1');
+                $spreadsheet->getActiveSheet()->fromArray($designations, NULL, 'G1');
+                $spreadsheet->getActiveSheet()->setCellValue('J1', 'Ejemplo de Inserción Usuarios');
+                $spreadsheet->getActiveSheet()->fromArray($ejemplo, NULL, 'K2');
 
                 $writer = new Xlsx($spreadsheet);
                 $stream = new CallbackStream(function () use ($writer) {
@@ -228,14 +299,10 @@ class UsersController extends AppController
                 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
             );
 
-            if (in_array($file->getClientMediaType(), $mimes)) {
-                /* var_dump($file->getClientFilename());
-                var_dump($file->getClientMediaType());
-                var_dump($file->getSize());
-                var_dump($file->getError());
-                
-                var_dump($file->getStream()->getMetadata('uri')); */
+            if ($file->getError()) $this->Flash->error(__('Archivo no valido o vacio'));
 
+
+            if (in_array($file->getClientMediaType(), $mimes) && $file->getSize() < 50235) {
                 $spreadsheet = IOFactory::load($file->getStream()->getMetadata('uri'));
 
                 $sheet        = $spreadsheet->getActiveSheet();
@@ -244,34 +311,41 @@ class UsersController extends AppController
                 $row_range    = range(2, $row_limit);
                 $column_range = range('F', $column_limit);
 
+                if ($row_range  <= 2) $this->Flash->error(__('El archivo se encuentra vacio, debe completar'));
 
+                $error_data = [];
                 foreach ($row_range as $row) {
-                    $data[] = [
-                        'username' => $sheet->getCell('A' . $row)->getValue(),
-                        'name' => $sheet->getCell('B' . $row)->getValue(),
-                        'lastname' => $sheet->getCell('C' . $row)->getValue(),
-                        'document_type' => $sheet->getCell('D' . $row)->getValue(),
-                        'document' => $sheet->getCell('E' . $row)->getValue(),
-                        'date_birthday' => $sheet->getCell('F' . $row)->getValue(),
-                        'telephone' => $sheet->getCell('G' . $row)->getValue(),
-                        'branch_id' => $sheet->getCell('H' . $row)->getValue(),
-                        'dep_id' => $sheet->getCell('I' . $row)->getValue(),
-                        'designation_id' => $sheet->getCell('J' . $row)->getValue(),
-                    ];
+                    $user = $this->Users->newEmptyEntity();
+                    $data['username'] = $user->username = $sheet->getCell('A' . $row)->getValue();
+                    $data['name'] = $user->name = $sheet->getCell('B' . $row)->getValue();
+                    $data['lastname'] = $user->lastname = $sheet->getCell('C' . $row)->getValue();
+                    $data['document'] = $user->document = $sheet->getCell('D' . $row)->getValue();
+                    $data['telephone'] = $user->telephone = $sheet->getCell('E' . $row)->getValue();
+                    $data['branch_id'] = $user->branch_id = $sheet->getCell('F' . $row)->getValue();
+                    $data['dep_id'] = $user->dep_id = $sheet->getCell('G' . $row)->getValue();
+                    $data['designation_id'] = $user->designation_id = $sheet->getCell('H' . $row)->getValue();
+                    $user->active = '1';
+                    $user->document_type = 'CC';
+                    $user->rol_id = 5;
+
+                    $reponse = $this->Users->save($user);
+                    if (!$reponse) {
+                        $error_data[] = $data;
+                    }
                 }
 
-                var_dump($data);
+                if (empty($error_data)) {
+                    $this->Flash->success(__('Usuarios Agregados con exito'));
+                } else {
+                    $this->Flash->error(__('Se han identificado '. count($error_data) . ' registros con error o duplicados'));
+                }
             }
 
-
-            if ($this->Auth->identify()) {
-
-                $this->Auth->setUser($this->Auth->identify());
-                return $this->redirect($this->Auth->redirectUrl());
-            }
+            $this->set('error', $error_data);
         }
     }
 
+ 
     public function login()
     {
         $this->viewBuilder()->disableAutoLayout();
