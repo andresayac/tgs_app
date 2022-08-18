@@ -114,7 +114,7 @@ class DashboardController extends AppController
                     ['users_modified' => 'users'],
                     ['TrainingsAssistances.modified_by = users_modified.id']
                 )
-                ->where(['Trainings.created >=' => $rango[0], 'trainings.created <=' =>  $rango[1] . ' 23:59:59'])
+                ->where(['Trainings.created >=' => $rango[0], 'Trainings.created <=' =>  $rango[1] . ' 23:59:59'])
                 ->group('TrainingsAssistances.id ')
                 ->order(['Trainings.id' => 'ASC'])
                 ->disableHydration()
