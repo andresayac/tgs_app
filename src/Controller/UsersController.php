@@ -63,11 +63,12 @@ class UsersController extends AppController
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
             if ($this->Users->save($user)) {
-                $this->Flash->success(__('The user has been saved.'));
+                $this->Flash->success(__('El usuario ha sido guardado.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The user could not be saved. Please, try again.'));
+            $this->Flash->error(__('Es posible que el numero de documento ya se encuentre registrado'));
+            $this->Flash->error(__('No se pudo guardar el usuario. Inténtalo de nuevo. '));
         }
         $roles_permisos = (in_array($this->Auth->user('rol_id'), [1, 2])) ? [0] : [1, 2];
 
