@@ -10,7 +10,7 @@ $assistants = [
 ];
 
 foreach ($users as $user) {
-    $assistants['Users']["Area: ". $user['departament']['name'] . " - Cargo: " . $user['designation']['name']][$user['document']] = $user['name'] . " " . $user['lastname'];
+    $assistants['Users']["Area: " . $user['departament']['name'] . " - Cargo: " . $user['designation']['name']][$user['document']] = $user['name'] . " " . $user['lastname'];
 }
 
 $fecha_selected = $this->request->getQuery('d') ?? false;
@@ -106,18 +106,13 @@ if ($this->request->getQuery('d')) {
 
 
 <script>
-    $(".date-time-picker-training").datepicker({
-        timepicker: true,
-        language: "es",
-        autoClose: false,
-        dateFormat: 'yyyy-mm-dd'
-    });
 
     // date picker
     $(".date-picker-training").datepicker({
         language: "en",
         autoClose: true,
-        dateFormat: "yyyy-mm-dd",
+        minDate: new Date(),
+        dateFormat: "yyyy-mm-dd"
     });
 
 

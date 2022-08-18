@@ -20,7 +20,9 @@ class TrainingsController extends AppController
     public function index()
     {
         $Users = $this->getTableLocator()->get('Users');
-        $users =  json_decode(json_encode($Users->find()->select(['document', 'name', 'lastname'])->toArray()), true);
+        $users =  $Users->find()->select(['document', 'name', 'lastname'])
+            ->disableHydration()
+            ->toArray();
 
         $trainings = $this->paginate($this->Trainings);
 
@@ -52,7 +54,12 @@ class TrainingsController extends AppController
     {
         $Users = $this->getTableLocator()->get('Users');
 
-        $users =  json_decode(json_encode($Users->find()->contain(['Designations', 'Departaments'])->select(['Users.document', 'Users.name', 'Users.lastname', 'Departaments.name', 'Designations.name'])->toArray()), true);
+        $users =  $Users->find()
+            ->contain(['Designations', 'Departaments'])
+            ->select(['Users.document', 'Users.name', 'Users.lastname', 'Departaments.name', 'Designations.name'])
+            ->where(['Users.active' => 1, 'Users.rol_id NOT IN' => [1]])
+            ->disableHydration()
+            ->toArray();
 
         $training = $this->Trainings->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -89,7 +96,12 @@ class TrainingsController extends AppController
 
         $Users = $this->getTableLocator()->get('Users');
 
-        $users =  json_decode(json_encode($Users->find()->contain(['Designations', 'Departaments'])->select(['Users.document', 'Users.name', 'Users.lastname', 'Departaments.name', 'Designations.name'])->toArray()), true);
+        $users = $Users->find()
+            ->contain(['Designations', 'Departaments'])
+            ->select(['Users.document', 'Users.name', 'Users.lastname', 'Departaments.name', 'Designations.name'])
+            ->where(['Users.active' => 1, 'Users.rol_id NOT IN' => [1]])
+            ->disableHydration()
+            ->toArray();
 
 
         $training = $this->Trainings->get($id, [
@@ -217,7 +229,12 @@ class TrainingsController extends AppController
     public function attendance($id)
     {
         $Users = $this->getTableLocator()->get('Users');
-        $users =  json_decode(json_encode($Users->find()->contain(['Designations', 'Departaments'])->select(['Users.document', 'Users.name', 'Users.lastname', 'Departaments.name', 'Designations.name'])->toArray()), true);
+        $users =  $Users->find()
+            ->contain(['Designations', 'Departaments'])
+            ->select(['Users.document', 'Users.name', 'Users.lastname', 'Departaments.name', 'Designations.name'])
+            ->where(['Users.active' => 1, 'rol_id NOT IN' => [1, 2]])
+            ->disableHydration()
+            ->toArray();
 
         $TrainingAssistances = $this->getTableLocator()->get('TrainingsAssistances');
         $assistances = $TrainingAssistances->find('all')->contain(['Trainings', 'Users'])->where(['training_id' => $id])->toArray();
@@ -282,6 +299,7 @@ class TrainingsController extends AppController
         $capacitaciones_data = $this->Trainings->find('all');
         $capacitaciones_data->where(['start_date >=' => $request["start"]]);
         $capacitaciones_data->where(['end_date <=' => $request["end"]]);
+        if (!in_array($this->Auth->user('rol_id'), [1, 2])) $capacitaciones_data->where(['created_by ' => $this->Auth->user('id')]);
 
 
         // construyo arreglo para fullcalendar

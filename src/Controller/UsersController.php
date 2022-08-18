@@ -8,7 +8,7 @@ use Cake\Event\EventInterface;
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-use     PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 use Cake\Http\CallbackStream; // ← Added new in this sample
 
 /**
@@ -163,7 +163,20 @@ class UsersController extends AppController
                 'Rol' => 'Roles.name',
                 'Area' => 'Departaments.name',
                 'Cargo' => 'Designations.name'
-            ])->disableHydration()->toArray();
+            ])
+            ->disableHydration()
+            ->toArray();
+
+        $spreadsheet->getActiveSheet()
+            ->getStyle('A1:L1')
+            ->getFill()
+            ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+            ->getStartColor()
+            ->setARGB('00FF7F');
+
+        foreach (range('A', 'L') as $letter) {
+            $spreadsheet->getActiveSheet()->getColumnDimension($letter)->setAutoSize(true);
+        }
 
         array_unshift($datos_excel, array_keys($datos_excel[0]));
 
@@ -221,7 +234,11 @@ class UsersController extends AppController
                 $spreadsheet->setActiveSheetIndex(1);
                 $spreadsheet->getActiveSheet()->setTitle('Tablas de datos');
 
-                $branchs = $this->getTableLocator()->get('Branchs')->find()->select(['Sucursal_ID' => 'id', 'Sucursal_Nombre' => 'name'])->disableHydration()->toArray();;
+                $branchs = $this->getTableLocator()
+                    ->get('Branchs')->find()
+                    ->select(['Sucursal_ID' => 'id', 'Sucursal_Nombre' => 'name'])
+                    ->disableHydration()
+                    ->toArray();
                 $departaments = $this->getTableLocator()->get('Departaments')->find()->select(['Area_ID' => 'id', 'Area_Nombre' => 'name'])->disableHydration()->toArray();;
                 $designations = $this->getTableLocator()->get('Designations')->find()->select(['Cargo_ID' => 'id', 'Cargo_Nombre' => 'name'])->disableHydration()->toArray();;
 
@@ -300,7 +317,6 @@ class UsersController extends AppController
 
             if ($file->getError()) $this->Flash->error(__('Archivo no valido o vacio'));
 
-
             if (in_array($file->getClientMediaType(), $mimes) && $file->getSize() < 50235) {
                 $spreadsheet = IOFactory::load($file->getStream()->getMetadata('uri'));
 
@@ -313,34 +329,35 @@ class UsersController extends AppController
                 if ($row_range  <= 2) $this->Flash->error(__('El archivo se encuentra vacio, debe completar'));
 
                 $error_data = [];
+                $success = 0;
                 foreach ($row_range as $row) {
                     $user = $this->Users->newEmptyEntity();
                     $data['username'] = $user->username = $sheet->getCell('A' . $row)->getValue();
                     $data['name'] = $user->name = $sheet->getCell('B' . $row)->getValue();
                     $data['lastname'] = $user->lastname = $sheet->getCell('C' . $row)->getValue();
-                    $data['document'] = $user->document = $sheet->getCell('D' . $row)->getValue();
+                    $data['document'] = $user->document = (int) $sheet->getCell('D' . $row)->getValue();
                     $data['telephone'] = $user->telephone = $sheet->getCell('E' . $row)->getValue();
-                    $data['branch_id'] = $user->branch_id = $sheet->getCell('F' . $row)->getValue();
-                    $data['dep_id'] = $user->dep_id = $sheet->getCell('G' . $row)->getValue();
-                    $data['designation_id'] = $user->designation_id = $sheet->getCell('H' . $row)->getValue();
+                    $data['branch_id'] = $user->branch_id = (int) $sheet->getCell('F' . $row)->getValue();
+                    $data['dep_id'] = $user->dep_id = (int) $sheet->getCell('G' . $row)->getValue();
+                    $data['designation_id'] = $user->designation_id = (int)$sheet->getCell('H' . $row)->getValue();
                     $user->active = '1';
                     $user->document_type = 'CC';
                     $user->rol_id = 5;
 
-                    $reponse = $this->Users->save($user);
-                    if (!$reponse) {
+
+                    if (!$this->Users->save($user)) {
                         $error_data[] = $data;
+                    } else {
+                        $success++;
                     }
                 }
 
                 if (empty($error_data)) {
-                    $this->Flash->success(__('Usuarios Agregados con exito'));
+                    $this->Flash->success(__('Usuarios Agregados con exito =>' . $success));
                 } else {
-                    $this->Flash->error(__('Se han identificado ' . count($error_data) . ' registros con error o duplicados'));
+                    $this->Flash->error(__('Se han identificado ' . count($error_data) . ' registros duplicados'));
                 }
             }
-
-            $this->set('error', $error_data);
 
             if (!empty($error_data)) {
                 $filename = 'Usuarios_error' . date('Y-m-d_His');
@@ -365,7 +382,7 @@ class UsersController extends AppController
                     ->withBody($stream ?? '');
             }
 
-            return $this->redirect(['action' => 'import']);
+            $this->redirect($this->referer());
         }
     }
 

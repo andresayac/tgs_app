@@ -54,15 +54,14 @@ class TrainingsTable extends Table
             'foreignKey' => 'training_id',
         ]);
 
-         // busqueda y filtros
-         $this->searchManager()
-         ->add('start_date', 'Search.Compare', [
-             'operator' => '>=',
-         ])
-         ->add('end_date', 'Search.Compare', [
-             'operator' => '<=',
-         ]);
-
+        // busqueda y filtros
+        $this->searchManager()
+            ->add('start_date', 'Search.Compare', [
+                'operator' => '>=',
+            ])
+            ->add('end_date', 'Search.Compare', [
+                'operator' => '<=',
+            ]);
     }
 
     /**
@@ -75,16 +74,16 @@ class TrainingsTable extends Table
     {
         $validator
             ->dateTime('start_date')
-            ->allowEmptyDateTime('start_date');
+            ->notEmptyString('start_date', 'Fecha requerida');
 
         $validator
             ->dateTime('end_date')
-            ->allowEmptyDateTime('end_date');
+            ->notEmptyString('end_date', 'Hora Fin requerida');
 
         $validator
             ->scalar('name')
             ->maxLength('name', 65)
-            ->allowEmptyString('name');
+            ->notEmptyString('name', 'Nombre requerido');
 
         $validator
             ->scalar('note')
@@ -94,7 +93,7 @@ class TrainingsTable extends Table
         $validator
             ->scalar('trainer')
             ->maxLength('trainer', 16777215)
-            ->allowEmptyString('trainer');
+            ->notEmptyString('trainer', 'Capacitador requerido');
 
         $validator
             ->integer('active')

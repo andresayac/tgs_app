@@ -113,7 +113,6 @@ class AppController extends Controller
             'getCalendarioEvents', // controlles con gestion imagenes
             'attendanceSave', // eventos controller
             'attendanceDelete', // eventos controller
-            'calendar',  // eventos controller
             'verify',
             'enroll'
         ];
