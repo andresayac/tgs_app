@@ -83,23 +83,23 @@ class DashboardController extends AppController
                     ['Trainings.id= TrainingsAssistances.training_id ']
                 )
                 ->leftJoin(
-                    ['Users' => 'Users'],
+                    ['Users' => 'users'],
                     ['Users.id = TrainingsAssistances.user_id ']
                 )
                 ->leftJoin(
-                    ['Branchs' => 'Branchs'],
+                    ['Branchs' => 'branchs'],
                     ['Branchs.id = Users.branch_id']
                 )
                 ->leftJoin(
-                    ['Designations' => 'Designations'],
+                    ['Designations' => 'designations'],
                     ['Designations.id = Users.designation_id ']
                 )
                 ->leftJoin(
-                    ['Departaments' => 'Departaments'],
+                    ['Departaments' => 'departaments'],
                     ['Departaments.id = Users.dep_id ']
                 )
                 ->leftJoin(
-                    ['Roles' => 'Roles'],
+                    ['Roles' => 'roles'],
                     ['Roles.id = Users.rol_id ']
                 )
                 ->leftJoin(
