@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Cake\I18n\FrozenTime;
+
 /**
  * Trainings Controller
  *
@@ -110,20 +112,29 @@ class TrainingsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $data = $this->request->getData();
             $date_training = $data['start_date'];
-            $data['start_date'] =   $date_training . " " . $data['start_hour'];
-            $data['end_date']   =   $date_training . " " . $data['end_hour'];
 
-            $data['trainer'] = implode(',', $data['trainer']);
-            $data['modified_by'] =  $this->Auth->user('id');
+            $date_input =  new FrozenTime($date_training);
+            $date_now = new FrozenTime(FrozenTime::now()->i18nFormat('yyyy-MM-dd'));
 
-            $training = $this->Trainings->patchEntity($training, $data);
+            if ($date_input < $date_now) {
+                $this->Flash->error(__('La fecha proporcionada debe ser mayor o igual al dia actual'));
+                $this->redirect($this->referer());
+            } else {
+                $data['start_date'] =   $date_training . " " . $data['start_hour'];
+                $data['end_date']   =   $date_training . " " . $data['end_hour'];
 
-            if ($this->Trainings->save($training)) {
-                $this->Flash->success(__('The training has been saved.'));
+                $data['trainer'] = implode(',', $data['trainer']);
+                $data['modified_by'] =  $this->Auth->user('id');
 
-                return $this->redirect(['action' => 'index']);
+                $training = $this->Trainings->patchEntity($training, $data);
+
+                if ($this->Trainings->save($training)) {
+                    $this->Flash->success(__('La capacitación se ha guardado.'));
+
+                    return $this->redirect(['action' => 'index']);
+                }
+                $this->Flash->error(__('No se pudo guardar la capacitación. Inténtalo de nuevo.'));
             }
-            $this->Flash->error(__('The training could not be saved. Please, try again.'));
         }
         $this->set(compact('training', 'users'));
     }

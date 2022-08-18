@@ -159,12 +159,14 @@
                 }
             },
             dayClick: function(date, jsEvent, view) {
-                // evento al hacer click sobre parte en blanco
-                console.log(date.format("YYYY-MM-DD"))
-                return false;
-                window.location.href = eventoAddUrl +
-                    '?d=' + date.format("YYYY-MM-DD") +
-                    '&t=' + date.format("HH:mm:ss");
+                if (moment().format('YYYY-MM-DD') <= date.format('YYYY-MM-DD')) {
+                    window.location.href = eventoAddUrl +
+                        '?d=' + date.format("YYYY-MM-DD") +
+                        '&t=' + date.format("HH:mm:ss");
+
+                } else {
+                    alert("Selecione una fecha mayor o igual a la actual")
+                }
             },
 
             eventClick: function(calEvent, jsEvent, view) {
