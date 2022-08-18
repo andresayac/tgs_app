@@ -340,7 +340,7 @@ class UsersController extends AppController
                     $data['designation_id'] = $user->designation_id = $sheet->getCell('H' . $row)->getValue();
                     $user->active = '1';
                     $user->document_type = 'CC';
-                    $user->rol_id = 5;
+                    $user->rol_id = 4;
 
 
                     if (!$this->Users->save($user)) {
