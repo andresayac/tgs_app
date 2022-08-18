@@ -232,12 +232,15 @@ class TrainingsController extends AppController
         $users =  $Users->find()
             ->contain(['Designations', 'Departaments'])
             ->select(['Users.document', 'Users.name', 'Users.lastname', 'Departaments.name', 'Designations.name'])
-            ->where(['Users.active' => 1, 'rol_id NOT IN' => [1, 2]])
+            ->where(['Users.active' => 1, 'rol_id NOT IN' => [1]])
             ->disableHydration()
             ->toArray();
 
         $TrainingAssistances = $this->getTableLocator()->get('TrainingsAssistances');
-        $assistances = $TrainingAssistances->find('all')->contain(['Trainings', 'Users'])->where(['training_id' => $id])->toArray();
+        $assistances = $TrainingAssistances->find('all')
+            ->contain(['Trainings', 'Users'])
+            ->where(['training_id' => $id])
+            ->toArray();
 
         if ($this->request->is(['patch', 'post', 'put'])) {
             $data = $this->request->getData();
