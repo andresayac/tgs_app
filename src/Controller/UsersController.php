@@ -307,8 +307,6 @@ class UsersController extends AppController
                     ->withBody($stream ?? '');
             }
 
-
-
             $request = $this->request->getData();
             $file = $request['excel'];
             $mimes = array(
@@ -335,11 +333,11 @@ class UsersController extends AppController
                     $data['username'] = $user->username = $sheet->getCell('A' . $row)->getValue();
                     $data['name'] = $user->name = $sheet->getCell('B' . $row)->getValue();
                     $data['lastname'] = $user->lastname = $sheet->getCell('C' . $row)->getValue();
-                    $data['document'] = $user->document = (int) $sheet->getCell('D' . $row)->getValue();
+                    $data['document'] = $user->document = $sheet->getCell('D' . $row)->getValue();
                     $data['telephone'] = $user->telephone = $sheet->getCell('E' . $row)->getValue();
-                    $data['branch_id'] = $user->branch_id = (int) $sheet->getCell('F' . $row)->getValue();
-                    $data['dep_id'] = $user->dep_id = (int) $sheet->getCell('G' . $row)->getValue();
-                    $data['designation_id'] = $user->designation_id = (int)$sheet->getCell('H' . $row)->getValue();
+                    $data['branch_id'] = $user->branch_id =  $sheet->getCell('F' . $row)->getValue();
+                    $data['dep_id'] = $user->dep_id = $sheet->getCell('G' . $row)->getValue();
+                    $data['designation_id'] = $user->designation_id = $sheet->getCell('H' . $row)->getValue();
                     $user->active = '1';
                     $user->document_type = 'CC';
                     $user->rol_id = 5;
