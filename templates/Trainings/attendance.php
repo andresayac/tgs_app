@@ -146,7 +146,7 @@ $training->set('end_hour', $training->end_date->format('H:i'));
                             <th><?= $this->Paginator->sort('user_id', 'Empleado') ?></th>
                             <th><?= $this->Paginator->sort('checked', 'Asistio') ?></th>
                             <th><?= $this->Paginator->sort('type_check', 'Tipo de Verificación') ?></th>
-                            <th class="actions"><?= __('Acciones') ?></th>
+                            <th class="actions datatable-nosort"><?= __('Acciones') ?></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -342,10 +342,19 @@ $training->set('end_hour', $training->end_date->format('H:i'));
             scrollCollapse: true,
             autoWidth: false,
             responsive: true,
-            columnDefs: [{
-                targets: "datatable-nosort",
-                orderable: false,
-            }],
+           columnDefs: [{
+                    targets: "datatable-nosort",
+                    orderable: false,
+                },
+                {
+                    responsivePriority: 1,
+                    targets: "datatable-nosort"
+                },
+                {
+                    targets: 1,
+                    className: "truncate"
+                }
+            ],
             "lengthMenu": [
                 [10, 25, 50, -1],
                 [10, 25, 50, "All"]

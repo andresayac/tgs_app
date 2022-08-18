@@ -45,7 +45,7 @@
                     <th><?= $this->Paginator->sort('state', 'Estado') ?></th>
                     <th><?= $this->Paginator->sort('country', 'País') ?></th>
                     <th><?= $this->Paginator->sort('active', 'Estado') ?></th>
-                    <th class="actions"><?= __('Acciones') ?></th>
+                    <th class="actions datatable-nosort"><?= __('Acciones') ?></th>
                 </tr>
             </thead>
             <tbody>
@@ -90,10 +90,19 @@
             scrollCollapse: true,
             autoWidth: false,
             responsive: true,
-            columnDefs: [{
-                targets: "datatable-nosort",
-                orderable: false,
-            }],
+           columnDefs: [{
+                    targets: "datatable-nosort",
+                    orderable: false,
+                },
+                {
+                    responsivePriority: 1,
+                    targets: "datatable-nosort"
+                },
+                {
+                    targets: 1,
+                    className: "truncate"
+                }
+            ],
             "lengthMenu": [
                 [10, 25, 50, -1],
                 [10, 25, 50, "All"]

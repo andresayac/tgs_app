@@ -106,10 +106,19 @@ $designation->note = 'Agregar a Futuro';
             scrollCollapse: true,
             autoWidth: false,
             responsive: true,
-            columnDefs: [{
-                targets: "datatable-nosort",
-                orderable: false,
-            }],
+           columnDefs: [{
+                    targets: "datatable-nosort",
+                    orderable: false,
+                },
+                {
+                    responsivePriority: 1,
+                    targets: "datatable-nosort"
+                },
+                {
+                    targets: 1,
+                    className: "truncate"
+                }
+            ],
             "lengthMenu": [
                 [10, 25, 50, -1],
                 [10, 25, 50, "All"]

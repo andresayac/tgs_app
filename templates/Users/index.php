@@ -45,23 +45,23 @@
             <thead>
                 <tr>
                     <th><?= $this->Paginator->sort('id') ?></th>
-                    <th><?= $this->Paginator->sort('rol_id', 'Rol') ?></th>
                     <th><?= $this->Paginator->sort('name', 'Nombres') ?></th>
                     <th><?= $this->Paginator->sort('lastname', 'Apellidos') ?></th>
+                    <th><?= $this->Paginator->sort('rol_id', 'Rol') ?></th>
                     <th><?= $this->Paginator->sort('active', 'Estado') ?></th>
                     <th><?= $this->Paginator->sort('branch_id', 'Sucursal') ?></th>
                     <th><?= $this->Paginator->sort('dep_id', 'Area') ?></th>
                     <th><?= $this->Paginator->sort('designation_id', 'Cargo') ?></th>
-                    <th class="actions"><?= __('Acciones') ?></th>
+                    <th class="datatable-nosort"><?= __('Acciones') ?></th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($users as $user) : ?>
                     <tr>
                         <td><?= $user->id ?></td>
-                        <td><?= $user->has('role') ? $this->Html->link($user->role->name, ['controller' => 'Roles', 'action' => 'view', $user->role->id]) : '' ?></td>
                         <td><?= h($user->name) ?></td>
                         <td><?= h($user->lastname) ?></td>
+                        <td><?= $user->has('role') ? $this->Html->link($user->role->name, ['controller' => 'Roles', 'action' => 'view', $user->role->id]) : '' ?></td>
                         <td><span class="badge badge-<?= ((bool) $user->active) ? 'primary' : 'danger' ?>"><?= ((bool) $user->active) ? 'Activo' : 'Inactivo' ?></span></td>
                         <td><?= $user->has('branch') ? $this->Html->link($user->branch->name, ['controller' => 'Branchs', 'action' => 'view', $user->branch->id]) : '' ?></td>
                         <td><?= $user->has('departament') ? $this->Html->link($user->departament->name, ['controller' => 'Departaments', 'action' => 'view', $user->departament->id]) : '' ?></td>
@@ -97,11 +97,22 @@
         $('.data-table').DataTable({
             scrollCollapse: true,
             autoWidth: false,
+            info: true,
+            paging: true,
             responsive: true,
             columnDefs: [{
-                targets: "datatable-nosort",
-                orderable: false,
-            }],
+                    targets: "datatable-nosort",
+                    orderable: false,
+                },
+                {
+                    responsivePriority: 1,
+                    targets: "datatable-nosort"
+                },
+                {
+                    targets: 1,
+                    className: "truncate"
+                }
+            ],
             "lengthMenu": [
                 [10, 25],
                 [10, 25]
