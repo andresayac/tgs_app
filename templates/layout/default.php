@@ -29,7 +29,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     </title>
 
     <!-- General CSS Files -->
-    <?php echo $this->Html->css("/vendors/styles/styles.css"); ?>
+    <?php echo $this->Html->css("/css/styles.css"); ?>
     <?php echo $this->Html->css("/vendors/styles/core.css"); ?>
     <?php echo $this->Html->css("/vendors/styles/icon-font.min.css"); ?>
     <?php echo $this->Html->css("/src/plugins/datatables/css/dataTables.bootstrap4.min.css"); ?>

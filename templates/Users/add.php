@@ -33,6 +33,23 @@
         <p class="mb-0"></p>
     </div>
     <?= $this->Form->create($user) ?>
+    <?php if ($user->hasErrors()) : ?>
+            <div class="row">
+                <div class="col-12">
+                    <div class="alert alert-danger">
+                        <div class="alert-title">Revisa estos campos</div>
+                        <ul>
+                            <?php foreach ($user->getErrors() as $campo => $errores) {
+                                foreach ($errores as $tipo => $error) {
+                                    echo "<li>" . $error . "</li>";
+                                }
+                            } ?>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        <?php endif ?>
     <div class="pd-20 card-box mb-30">
         <div class="row">
             <div class="col-md-12 col-sm-12">
@@ -82,16 +99,16 @@
                     <div class="col-md-12 col-sm-12">
                         <label>Tipo y número de identificación</label>
                     </div>
-                    <div class="col-md-6 col-sm-12">
+                    <div class="col-md-1 col-sm-12">
                         <div class="form-group">
                             <?= $this->Form->select('document_type', [
                                 'CC' => 'CC',
                                 'CE' => 'CE',
                                 'Otro' => 'Otro',
-                            ], ['empty' => '...', 'class' => 'selectpicker form-control', 'label' => false, 'required' => true]) ?>
+                            ], ['empty' => '...', 'class' => 'selectpicker form-control', 'styles' => '', 'label' => false, 'required' => true]) ?>
                         </div>
                     </div>
-                    <div class="col-md-6 col-sm-12">
+                    <div class="col-md-3 col-sm-12">
                         <div class="form-group">
                             <?= $this->Form->control('document', ['type' => 'number', 'label' => false, 'required' => true, 'error' => false, 'class' => 'form-control']) ?>
                         </div>
@@ -141,7 +158,6 @@
 </div>
 
 <script>
-
     // date picker
     $(".date-picker-date-birthday").datepicker({
         language: "en",

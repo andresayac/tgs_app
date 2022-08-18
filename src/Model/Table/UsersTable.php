@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -77,12 +78,14 @@ class UsersTable extends Table
     {
         $validator
             ->integer('rol_id')
-            ->allowEmptyString('rol_id');
+            ->notEmptyString('rol_id', 'Rol requerido');
 
         $validator
             ->scalar('username')
             ->maxLength('username', 65)
-            ->allowEmptyString('username');
+            ->notEmptyString('username', 'Usuario Requerido')
+            ->add('username', 'unique', ['rule' => 'validateUnique', 'provider' => 'table', 'message' => 'Ya existe el usuario']);
+            
 
         $validator
             ->scalar('password')
@@ -92,23 +95,23 @@ class UsersTable extends Table
         $validator
             ->scalar('name')
             ->maxLength('name', 65)
-            ->allowEmptyString('name');
+            ->notEmptyString('name', 'Nombre Requerido');
 
         $validator
             ->scalar('lastname')
             ->maxLength('lastname', 65)
-            ->allowEmptyString('lastname');
+            ->notEmptyString('lastname', 'Apellidos Requeridos');
 
         $validator
             ->scalar('document_type')
             ->maxLength('document_type', 4)
-            ->allowEmptyString('document_type');
+            ->notEmptyString('document_type', 'Tipo de documento requerido');
 
         $validator
             ->scalar('document')
             ->maxLength('document', 44)
-            ->allowEmptyString('document')
-            ->add('document', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+            ->notEmptyString('document', 'Documento requerido')
+            ->add('document', 'unique', ['rule' => 'validateUnique', 'provider' => 'table', 'message' => 'Ya existe un usuario con este número de identificación']);
 
         $validator
             ->date('date_birthday')
