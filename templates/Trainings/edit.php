@@ -10,7 +10,7 @@ $assistants = [
 ];
 
 foreach ($users as $user) {
-    $assistants['Users']["Area: ". $user['departament']['name'] . " - Cargo: " . $user['designation']['name']][$user['document']] = $user['name'] . " " . $user['lastname'];
+    $assistants['Users']["Area: " . $user['departament']['name'] . " - Cargo: " . $user['designation']['name']][$user['document']] = $user['name'] . " " . $user['lastname'];
 }
 
 $trainer = explode(",", $training->trainer);
@@ -105,18 +105,12 @@ $training->set('end_hour', $training->end_date->format('H:i'));
 
 
 <script>
-    $(".date-time-picker-training").datepicker({
-        timepicker: true,
-        language: "es",
-        autoClose: false,
-        dateFormat: 'yyyy-mm-dd'
-    });
-
     // date picker
     $(".date-picker-training").datepicker({
         language: "en",
         autoClose: true,
-        dateFormat: "yyyy-mm-dd",
+        minDate: new Date(),
+        dateFormat: "yyyy-mm-dd"
     });
 
 

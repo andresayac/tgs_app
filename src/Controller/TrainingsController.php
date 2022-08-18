@@ -138,11 +138,23 @@ class TrainingsController extends AppController
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
+
         $training = $this->Trainings->get($id);
+
+        $TrainingAssistances = $this->getTableLocator()->get('TrainingsAssistances');
+        $valided_assistences = $TrainingAssistances->find()
+            ->where(['training_id' => $id])
+            ->count();
+
+        if ($valided_assistences > 0) {
+            $this->Flash->error(__('No se puede eliminar la capacitación tiene asistentes vinculados.'));
+            return $this->redirect(['action' => 'index']);
+        }
+
         if ($this->Trainings->delete($training)) {
-            $this->Flash->success(__('The training has been deleted.'));
+            $this->Flash->success(__('Capacitación Eliminada'));
         } else {
-            $this->Flash->error(__('The training could not be deleted. Please, try again.'));
+            $this->Flash->error(__('No puede ser eliminada la capacitación intente mas tarde'));
         }
 
         return $this->redirect(['action' => 'index']);
