@@ -69,10 +69,21 @@ class UsersController extends AppController
             }
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
-        $roles = $this->Users->Roles->find('list', ['limit' => 200])->all();
-        $departaments = $this->Users->Departaments->find('list', ['limit' => 200])->all();
-        $branchs = $this->Users->Branchs->find('list', ['limit' => 200])->all();
-        $designations = $this->Users->Designations->find('list', ['limit' => 200])->all();
+        $roles_permisos = (in_array($this->Auth->user('rol_id'), [1, 2])) ? [0] : [1, 2];
+
+        $roles = $this->Users->Roles
+            ->find('list', ['limit' => 2000])
+            ->where(['Roles.id  NOT IN ' => $roles_permisos]);
+
+        $departaments = $this->Users->Departaments
+            ->find('list', ['limit' => 2000])
+            ->all();
+        $branchs = $this->Users->Branchs
+            ->find('list', ['limit' => 2000])
+            ->all();
+        $designations = $this->Users->Designations
+            ->find('list', ['limit' => 2000])
+            ->all();
         $this->set(compact('user', 'roles', 'departaments', 'branchs', 'designations'));
     }
 
@@ -103,10 +114,23 @@ class UsersController extends AppController
             }
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
-        $roles = $this->Users->Roles->find('list', ['limit' => 200])->all();
-        $departaments = $this->Users->Departaments->find('list', ['limit' => 200])->all();
-        $branchs = $this->Users->Branchs->find('list', ['limit' => 200])->all();
-        $designations = $this->Users->Designations->find('list', ['limit' => 200])->all();
+
+        $roles_permisos = (in_array($this->Auth->user('rol_id'), [1, 2])) ? [0] : [1, 2];
+
+        $roles = $this->Users->Roles
+            ->find('list', ['limit' => 2000])
+            ->where(['Roles.id  NOT IN ' => $roles_permisos]);
+
+        $departaments = $this->Users->Departaments
+            ->find('list', ['limit' => 2000])
+            ->all();
+        $branchs = $this->Users->Branchs
+            ->find('list', ['limit' => 2000])
+            ->all();
+        $designations = $this->Users->Designations
+            ->find('list', ['limit' => 2000])
+            ->all();
+
         $this->set(compact('user', 'roles', 'departaments', 'branchs', 'designations'));
     }
 

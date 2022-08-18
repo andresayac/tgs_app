@@ -40,7 +40,7 @@
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group">
                             <label>Activo</label>
-                            <?= $this->Form->select('active', ['0' => 'NO', '1' => 'SI'], ['empty' => false, 'class' => 'selectpicker form-control', 'label' => false, 'required' => true]) ?>
+                            <?= $this->Form->select('active', ['0' => 'NO', '1' => 'SI'], ['empty' => false, 'class' => 'selectpicker form-control', 'label' => false, 'required' => true, 'value' => 1]) ?>
                         </div>
                     </div>
                     <div class="col-md-6 col-sm-12">
@@ -58,7 +58,9 @@
                     </div>
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group">
-                            <?= $this->Form->control('lastname', ['label' => 'Contraseña', 'class' => 'form-control', 'type' => 'password']); ?>
+                            <?php
+                            if (in_array($_logged_user_['rol_id'], [1, 2])) echo $this->Form->control('lastname', ['label' => 'Contraseña', 'class' => 'form-control', 'type' => 'password']);
+                            ?>
                         </div>
                     </div>
                 </div>
@@ -97,7 +99,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
-                        <?= $this->Form->control('date_birthday', ['empty' => true, 'label' => ['text' => 'Fecha de Nacimiento'], 'class' => "form-control date-picker", 'placeholder' => 'Selecione Fecha']); ?>
+                        <?= $this->Form->control('date_birthday', ['empty' => true, 'label' => ['text' => 'Fecha de Nacimiento'], 'class' => "form-control date-picker-date-birthday", 'placeholder' => 'Selecione Fecha']); ?>
                     </div>
                     <div class="col-md-6 col-sm-12">
                         <?= $this->Form->control('telephone', ['label' => 'Teléfono', 'class' => 'form-control']); ?>
@@ -137,3 +139,13 @@
     </div>
     <?= $this->Form->end() ?>
 </div>
+
+<script>
+
+    // date picker
+    $(".date-picker-date-birthday").datepicker({
+        language: "en",
+        autoClose: true,
+        dateFormat: "yyyy-mm-dd"
+    });
+</script>

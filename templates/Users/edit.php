@@ -96,7 +96,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
-                        <?= $this->Form->control('date_birthday', ['empty' => true, 'label' => ['text' => 'Fecha de Nacimiento'], 'class' => "form-control date-picker", 'placeholder' => 'Selecione Fecha']); ?>
+                        <?= $this->Form->control('date_birthday', ['empty' => true, 'label' => ['text' => 'Fecha de Nacimiento'], 'class' => "form-control date-picker-date-birthday", 'placeholder' => 'Selecione Fecha']); ?>
                     </div>
                     <div class="col-md-6 col-sm-12">
                         <?= $this->Form->control('telephone', ['label' => 'Teléfono', 'class' => 'form-control']); ?>
@@ -136,3 +136,13 @@
     </div>
     <?= $this->Form->end() ?>
 </div>
+
+<script>
+
+    // date picker
+    $(".date-picker-date-birthday").datepicker({
+        language: "en",
+        autoClose: true,
+        dateFormat: "yyyy-mm-dd"
+    });
+</script>
