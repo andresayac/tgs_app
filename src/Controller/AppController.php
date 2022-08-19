@@ -48,6 +48,7 @@ class AppController extends Controller
     {
         parent::initialize();
 
+
         // $this->loadComponent('RequestHandler');
         // $this->loadComponent('Flash');
 
@@ -78,6 +79,7 @@ class AppController extends Controller
     {
         parent::beforeFilter($event);
 
+        // Force to SSL
         $this->request->addDetector('ssl', array(
             'env' => 'HTTP_X_FORWARDED_PROTO',
             'value' => 'https'
@@ -133,7 +135,7 @@ class AppController extends Controller
             if (in_array($user['rol_id'], explode(',', $value->roles))) {
                 $permisos_refinado[] = $value;
 
-                $_permisos_users[$value->modulo_padre][$value->modulo_hijo]=$value->modulo_hijo;
+                $_permisos_users[$value->modulo_padre][$value->modulo_hijo] = $value->modulo_hijo;
             }
         }
 

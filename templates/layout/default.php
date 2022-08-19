@@ -22,12 +22,19 @@ $cakeDescription = 'TGS';
 
 <head>
     <?= $this->Html->charset() ?>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>
         <?= $cakeDescription ?>:
         <?= $this->fetch('title') ?>
     </title>
 
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"> 
+    <meta name="theme-color" content="#343a40">
     <!-- General CSS Files -->
     <?php echo $this->Html->css("/css/styles.css"); ?>
     <?php echo $this->Html->css("/vendors/styles/core.css"); ?>
@@ -50,14 +57,6 @@ $cakeDescription = 'TGS';
     <?php //echo $this->Html->script("/vendors/scripts/dashboard.js"); 
     ?>
     <?php echo $this->Html->script("/src/scripts/iziToast.min.js"); ?>
-
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"> 
-    <meta name="theme-color" content="#343a40">
 
 </head>
 
