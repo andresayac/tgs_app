@@ -127,7 +127,7 @@ $huella = $this->Text->autoParagraph(h($user->indexfinger));
                                                 </div>
                                                 <div class="col-md-12 col-sm-12">
                                                     <div class="form-group">
-                                                        <label class="my-text7 my-pri-color"><strong>Capturar el dedo índice</strong></label>
+                                                        <label class="my-text7 my-pri-color"><strong>Dedo índice</strong></label>
                                                         <div class="row justify-content-center" id="indexFingers">
                                                             <div class="col-2" id="indexfinger1">
                                                                 <span class="icon icon-indexfinger-not-enrolled" title="not_enrolled"></span>
@@ -146,7 +146,7 @@ $huella = $this->Text->autoParagraph(h($user->indexfinger));
                                                 </div>
                                                 <div class="col-md-12 col-sm-12">
                                                     <div class="form-group">
-                                                        <label class="my-text7 my-pri-color"><strong>Captuar dedo del medio</strong> </label>
+                                                        <label class="my-text7 my-pri-color"><strong>Otro Dedo</strong> </label>
                                                         <div class="row justify-content-center" id="middleFingers">
                                                             <div class="col-2" id="middleFinger1">
                                                                 <span class="icon icon-middlefinger-not-enrolled" title="not_enrolled"></span>
@@ -169,7 +169,7 @@ $huella = $this->Text->autoParagraph(h($user->indexfinger));
                                                         <div class="row justify-content-center">
 
                                                             <div class="col-4 col-sm-2">
-                                                                <button class="btn btn-success" type="submit" onclick="beginCapture(<?=h($user->id)?>)">Capturar</button>
+                                                                <button class="btn btn-success" type="submit" onclick="beginCapture(<?= h($user->id) ?>)">Capturar</button>
                                                             </div>
                                                             <div class="col-4 col-sm-2">
                                                                 <button class="btn btn-primary" type="submit" onclick="serverEnroll()">Enrolar</button>
@@ -198,7 +198,7 @@ $huella = $this->Text->autoParagraph(h($user->indexfinger));
                                                 <!--verifyIdentity Status will be displayed Here-->
                                             </div>
 
-                                            
+
 
                                             <h4 class="text-blue h5 mb-20" id="verifyIdentityTitle">
                                                 Validar huella de empleado
@@ -215,8 +215,8 @@ $huella = $this->Text->autoParagraph(h($user->indexfinger));
                                             </div>
                                             <input id="userIDVerify" type="hidden" class="form-control" value="<?= h($user->id) ?>" required disabled>
                                             <input id="userIDVerifyTMP" type="hidden" class="form-control" value="<?= h($user->id) ?>" required disabled>
-                                           
-                                            
+
+
 
                                             <div class="col-md-12 col-sm-12">
                                                 <div class="form-group">
@@ -237,7 +237,7 @@ $huella = $this->Text->autoParagraph(h($user->indexfinger));
 
                                             <div class="form-row m-3 mt-md-5 justify-content-center">
                                                 <div class="col-4 col-sm-2">
-                                                    <button class="btn btn-success" data-toggle="tooltip" title="Iniciar captura de huella" type="submit" onclick="captureForIdentify(<?=h($user->id)?>)">Capturar</button>
+                                                    <button class="btn btn-success" data-toggle="tooltip" title="Iniciar captura de huella" type="submit" onclick="captureForIdentify(<?= h($user->id) ?>)">Capturar</button>
                                                 </div>
                                                 <div class="col-4 col-sm-2">
                                                     <button class="btn btn-primary" data-toggle="tooltip" title="Validar huella" type="submit" onclick="serverIdentify()">Validar</button>
@@ -267,8 +267,8 @@ $huella = $this->Text->autoParagraph(h($user->indexfinger));
 <style>
     .icon {
         display: inline-block;
-        width: 84px;
-        height: 84px;
+        width: 70px;
+        height: 70px;
         background-size: cover;
     }
 
