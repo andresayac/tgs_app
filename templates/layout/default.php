@@ -15,7 +15,7 @@
  * @var \App\View\AppView $this
  */
 
-$cakeDescription = 'CakePHP: the rapid development php framework';
+$cakeDescription = 'TGS';
 ?>
 <!DOCTYPE html>
 <html>
@@ -47,22 +47,15 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?php echo $this->Html->script("/src/plugins/datatables/js/dataTables.bootstrap4.min.js"); ?>
     <?php echo $this->Html->script("/src/plugins/datatables/js/dataTables.responsive.min.js"); ?>
     <?php echo $this->Html->script("/src/plugins/datatables/js/responsive.bootstrap4.min.js"); ?>
-    <?php //echo $this->Html->script("/vendors/scripts/dashboard.js"); ?>
+    <?php //echo $this->Html->script("/vendors/scripts/dashboard.js"); 
+    ?>
     <?php echo $this->Html->script("/src/scripts/iziToast.min.js"); ?>
 
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
 
-
-    <?= $this->Html->meta('icon') ?>
-
-
-    <?php
-    // $this->Html->css(['normalize.min', 'milligram.min', 'cake']) 
-
-
-    //$this->fetch('meta') 
-    //$this->fetch('css') 
-    //$this->fetch('script') 
-    ?>
 </head>
 
 <body>

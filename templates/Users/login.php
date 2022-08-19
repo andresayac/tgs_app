@@ -5,8 +5,8 @@
     <?= $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>
-        <?= 'Login' ?>:
-        <?= $this->fetch('title') ?>
+        <?= 'TGS' ?>:
+        <?= 'Login' ?>
     </title>
 
     <!-- General CSS Files -->
@@ -15,21 +15,12 @@
     <?php echo $this->Html->css("/src/plugins/datatables/css/dataTables.bootstrap4.min.css"); ?>
     <?php echo $this->Html->css("/src/plugins/datatables/css/responsive.bootstrap4.min.css"); ?>
     <?php echo $this->Html->css("/vendors/styles/style.css"); ?>
-
-
     <!-- pace js -->
-    <?php echo $this->Html->script("/vendors/scripts/core.js"); ?>
-    <?php echo $this->Html->script("/vendors/scripts/script.min.js"); ?>
-    <?php echo $this->Html->script("/vendors/scripts/process.js"); ?>
-    <?php echo $this->Html->script("/vendors/scripts/layout-settings.js"); ?>
-    <?php echo $this->Html->script("/src/plugins/datatables/js/jquery.dataTables.min.js"); ?>
-    <?php echo $this->Html->script("/src/plugins/datatables/js/dataTables.bootstrap4.min.js"); ?>
-    <?php echo $this->Html->script("/src/plugins/datatables/js/dataTables.responsive.min.js"); ?>
-    <?php echo $this->Html->script("/src/plugins/datatables/js/responsive.bootstrap4.min.js"); ?>
-    <?php echo $this->Html->script("/vendors/scripts/dashboard.js"); ?>
 
-
-    <?= $this->Html->meta('icon') ?>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
 
 </head>
 
@@ -38,7 +29,7 @@
         <div class="container-fluid d-flex justify-content-between align-items-center">
             <div class="brand-logo">
                 <a href="/">
-                    <?php $this->Html->image('/img/tgs-logo-dark.png'); ?>
+                    <img src="/img/tgs-logo-dark.png" alt="">
                 </a>
             </div>
         </div>
