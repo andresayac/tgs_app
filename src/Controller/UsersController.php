@@ -408,6 +408,14 @@ class UsersController extends AppController
         }
     }
 
+    public function profile()
+    {
+        $user = $this->Users->get($this->Auth->user('id'), [
+            'contain' => ['Roles'],
+        ]);
+
+        $this->set(compact('user'));
+    }
 
     public function login()
     {
