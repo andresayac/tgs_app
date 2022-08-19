@@ -236,13 +236,13 @@ class TrainingsController extends AppController
         $trainingAssistance = $TrainingAssistances->get($data['assistant_id']);
 
         if ($data["accion"] == "asistir") {
-            $training = $this->Trainings->patchEntity($trainingAssistance, ['checked' => 1, 'type_check' => 'Confirma Asistencia Manual', 'modified_by' => $this->Auth->user('id')]);
+            $training = $this->Trainings->patchEntity($trainingAssistance, ['checked' => 1, 'check_ts' => new FrozenTime(FrozenTime::now()->i18nFormat('yyyy-MM-dd kk:mm:ss')), 'type_check' => 'Confirma Asistencia Manual', 'modified_by' => $this->Auth->user('id')]);
             $TrainingAssistances->save($training);
         }
 
 
         if ($data["accion"] == "no_asistir") {
-            $training = $this->Trainings->patchEntity($trainingAssistance, ['checked' => 0, 'type_check' => 'Elimina Asistencia', 'modified_by' => $this->Auth->user('id')]);
+            $training = $this->Trainings->patchEntity($trainingAssistance, ['checked' => 0, 'check_ts' => new FrozenTime(FrozenTime::now()->i18nFormat('yyyy-MM-dd kk:mm:ss')), 'type_check' => 'Elimina Asistencia', 'modified_by' => $this->Auth->user('id')]);
             $TrainingAssistances->save($training);
         }
 

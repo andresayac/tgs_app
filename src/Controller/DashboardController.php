@@ -71,6 +71,7 @@ class DashboardController extends AppController
                     'ASISTENTE_DOCUMENTO' => 'Users.document',
                     'ASISTENTE_ROL' => 'Roles.name',
                     'ASISTE_EVENTO' => 'if(TrainingsAssistances.checked=1,"SI","NO")',
+                    'ASISTE_FECHA' => 'TrainingsAssistances.check_ts',
                     'ASISTE_TIPO' => 'TrainingsAssistances.type_check',
                     'ASISTENCIA_AGREGA_USER' => 'CONCAT(users_created.name," ",users_created.lastname)',
                     'ASISTENCIA_TOMA' => 'CONCAT(users_modified.name," ",users_modified.lastname)',

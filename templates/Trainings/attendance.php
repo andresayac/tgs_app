@@ -146,6 +146,7 @@ $training->set('end_hour', $training->end_date->format('H:i'));
                             <th><?= $this->Paginator->sort('user_id', 'Empleado') ?></th>
                             <th><?= $this->Paginator->sort('checked', 'Asistio') ?></th>
                             <th><?= $this->Paginator->sort('type_check', 'Tipo de Verificación') ?></th>
+                            <th><?= $this->Paginator->sort('check_ts', 'Hora de Asistencia') ?></th>
                             <th class="actions datatable-nosort"><?= __('Acciones') ?></th>
                         </tr>
                     </thead>
@@ -159,6 +160,7 @@ $training->set('end_hour', $training->end_date->format('H:i'));
                                 <td><span class="badge badge-<?= ((bool) $training_data->checked) ? 'primary' : 'danger' ?>" id="badge-item-<?= $training_data->id ?>"><?= ((bool) $training_data->checked) ? 'Asistio' : 'No Asistio' ?></span></td>
 
                                 <td><?= h($training_data->type_check) ?></td>
+                                <td><?= h($training_data->check_ts) ?></td>
                                 <td>
                                     <div class="table-actions">
                                         <div class="custom-control custom-checkbox mb-5">

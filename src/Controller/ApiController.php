@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Http\Client;
+use Cake\I18n\FrozenTime;
 
 class ApiController extends AppController
 {
@@ -91,7 +92,7 @@ class ApiController extends AppController
         $trainingAssistance = $TrainingAssistances->get($training_id);
 
 
-        $training = $TrainingAssistances->patchEntity($trainingAssistance, ['checked' => 1, 'type_check' => 'Confirma Asistencia Huella', 'modified_by' => $this->Auth->user('id')]);
+        $training = $TrainingAssistances->patchEntity($trainingAssistance, ['checked' => 1, 'check_ts' => new FrozenTime(FrozenTime::now()->i18nFormat('yyyy-MM-dd kk:mm:ss')), 'type_check' => 'Confirma Asistencia Huella', 'modified_by' => $this->Auth->user('id')]);
         $TrainingAssistances->save($training);
     }
 

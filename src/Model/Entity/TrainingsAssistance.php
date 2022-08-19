@@ -37,6 +37,7 @@ class TrainingsAssistance extends Entity
         'user_id' => true,
         'checked' => true,
         'type_check' => true,
+        'check_ts' => true,
         'created_by' => true,
         'modified_by' => true,
         'created' => true,
