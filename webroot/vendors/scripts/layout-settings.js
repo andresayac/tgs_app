@@ -72,7 +72,7 @@
 			jQuery(this).addClass("active");
 			header_light.removeClass("active");
 			body.removeClass("header-white").addClass("header-dark");
-
+			document.querySelector('meta[name="theme-color"]').setAttribute('content', 'var(--dark)');
 			//Store in local storage
 			setOptions("headerBackground", "header-dark");
 		});
@@ -87,7 +87,7 @@
 			jQuery(this).addClass("active");
 			header_dark.removeClass("active");
 			body.removeClass("header-dark").addClass("header-white");
-
+			document.querySelector('meta[name="theme-color"]').setAttribute('content', 'var(--light)');
 			//Store in local storage
 			setOptions("headerBackground", "header-white");
 		});
