@@ -98,6 +98,7 @@ foreach ($users as $user) {
                     <th scope="col">Tipo de Asistencia</th>
                 </tr>
             </thead>
+
             <tbody>
                 <?php foreach ($training->trainings_assistances as $trainingsAssistances) : ?>
                     <tr>
@@ -111,17 +112,16 @@ foreach ($users as $user) {
             </tbody>
         </table>
         <div class="invoice-desc pb-30">
-
-
+            
             <div class="invoice-desc-footer">
                 <div class="invoice-desc-head clearfix">
                     <div class="invoice-sub"></div>
-                    <div class="invoice-rate"></div>
+                    <div class="invoice-sub"><?php if (empty($training->trainings_assistances)) echo "No hay Asistentes"; ?></div>
                     <div class="invoice-subtotal"></div>
                 </div>
 
             </div>
         </div>
-        <h4 class="text-center pb-20"><?=(!$training->start_date->isPast()) ? 'PENDIENTE' : 'FINALIZADA'; ?></h4>
+        <h4 class="text-center pb-20"><?= (!$training->start_date->isPast()) ? 'PENDIENTE' : 'FINALIZADA'; ?></h4>
     </div>
 </div>
