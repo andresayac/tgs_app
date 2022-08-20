@@ -20,11 +20,9 @@
             </nav>
         </div>
         <div class="col-md-6 col-sm-12 text-right">
-            <div class="dropdown">
-                <a class="btn btn-primary dropdown-toggle" href="/branchs/add">
-                    Nueva Sucursal
-                </a>
-            </div>
+            <a class="btn btn-primary" href="/branchs/add">
+                Nueva Sucursal
+            </a>
         </div>
     </div>
 </div>
@@ -97,7 +95,7 @@
             scrollCollapse: true,
             autoWidth: false,
             responsive: true,
-           columnDefs: [{
+            columnDefs: [{
                     targets: "datatable-nosort",
                     orderable: false,
                 },

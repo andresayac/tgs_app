@@ -21,11 +21,9 @@
             </nav>
         </div>
         <div class="col-md-6 col-sm-12 text-right">
-            <div class="dropdown">
-                <a class="btn btn-primary dropdown-toggle" href="/designations/add">
+                <a class="btn btn-primary" href="/designations/add">
                     Nuevo Cargo
                 </a>
-            </div>
         </div>
     </div>
 </div>
@@ -41,9 +39,9 @@
                 <tr>
                     <th><?= $this->Paginator->sort('id') ?></th>
                     <th><?= $this->Paginator->sort('name', 'Cargo') ?></th>
-                    <th><?= $this->Paginator->sort('active','Estado') ?></th>
+                    <th><?= $this->Paginator->sort('active', 'Estado') ?></th>
                     <th class="actions datatable-nosort"><?= __('Acciones') ?></th>
-                </tr>   
+                </tr>
             </thead>
             <tbody>
                 <?php foreach ($designations as $designation) : ?>
@@ -83,7 +81,7 @@
             scrollCollapse: true,
             autoWidth: false,
             responsive: true,
-           columnDefs: [{
+            columnDefs: [{
                     targets: "datatable-nosort",
                     orderable: false,
                 },

@@ -33,11 +33,9 @@ foreach ($users as $user) {
             </nav>
         </div>
         <div class="col-md-6 col-sm-12 text-right">
-            <div class="dropdown">
-                <a class="btn btn-primary dropdown-toggle" href="/trainings/add">
-                    Nueva Capacitación
-                </a>
-            </div>
+            <a class="btn btn-primary" href="/trainings/add">
+                Nueva Capacitación
+            </a>
         </div>
     </div>
 </div>
@@ -54,8 +52,10 @@ foreach ($users as $user) {
                     <th><?= $this->Paginator->sort('id') ?></th>
                     <th><?= $this->Paginator->sort('name', 'Nombre') ?></th>
                     <th><?= $this->Paginator->sort('trainer', 'Capacitador') ?></th>
-                    <th><?= $this->Paginator->sort('start_date', 'Fecha Inicio') ?></th>
-                    <th><?= $this->Paginator->sort('end_date', 'Fecha Fin') ?></th>
+                    <th><?= $this->Paginator->sort('start_date', 'Fecha') ?></th>
+                    <th><?= $this->Paginator->sort('start_date', 'Inicio') ?></th>
+                    <th><?= $this->Paginator->sort('end_date', 'Fin') ?></th>
+                    <th><?= $this->Paginator->sort('created_by', 'Crea') ?></th>
                     <th class="actions datatable-nosort"><?= __('Acciones') ?></th>
                 </tr>
             </thead>
@@ -77,8 +77,10 @@ foreach ($users as $user) {
                                 echo "<span class='badge badge-primary' style='margin: 1px;'>{$data['Users'][$value]['name']}</span>";
                                 $count++;
                             } ?></td>
-                        <td><?= h($training->start_date) ?></td>
-                        <td><?= h($training->end_date) ?></td>
+                        <td><?= h($training->start_date->format('Y-m-d')) ?></td>
+                        <td><?= h($training->start_date->format('h:i a')) ?></td>
+                        <td><?= h($training->end_date->format('h:i a')) ?></td>
+                        <td><?= h($training->created_by) ?></td>
                         <td>
                             <div class="dropdown">
                                 <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
@@ -90,7 +92,7 @@ foreach ($users as $user) {
                                         'class' => 'dropdown-item'
                                     ]) ?>
                                     <?= $this->Form->postLink('<i class="dw dw-copy"></i>Duplicar', ['action' => 'duplicate', $training->id], ['class' => 'dropdown-item', 'escape' => false, 'confirm' => __('Esta seguro que quiere duplicar la capacitación # {0}?', $training->id)]) ?>
-                               
+
                                     <?= $this->Html->link(__('<i class="dw dw-eye"></i>Ver'), ['action' => 'view', $training->id], [
                                         'escape' => false,
                                         'class' => 'dropdown-item'
@@ -98,7 +100,7 @@ foreach ($users as $user) {
                                     <?= $this->Html->link(__('<i class="dw dw-edit2"></i>Editar'), ['action' => 'edit', $training->id], [
                                         'escape' => false,
                                         'class' => 'dropdown-item'
-                                    ]) ?>                                    
+                                    ]) ?>
                                     <?= $this->Form->postLink('<i class="dw dw-delete-3"></i>Eliminar', ['action' => 'delete', $training->id], ['class' => 'dropdown-item', 'escape' => false, 'confirm' => __('Esta seguro que quiere eliminar la capacitación # {0}?', $training->id)]) ?>
                                 </div>
                             </div>
@@ -117,7 +119,7 @@ foreach ($users as $user) {
             scrollCollapse: true,
             autoWidth: false,
             responsive: true,
-           columnDefs: [{
+            columnDefs: [{
                     targets: "datatable-nosort",
                     orderable: false,
                 },

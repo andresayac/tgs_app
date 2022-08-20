@@ -77,12 +77,15 @@ class UsersController extends AppController
 
         $departaments = $this->Users->Departaments
             ->find('list', ['limit' => 2000])
+            ->where(['active' => 1])
             ->all();
         $branchs = $this->Users->Branchs
             ->find('list', ['limit' => 2000])
+            ->where(['active' => 1])
             ->all();
         $designations = $this->Users->Designations
             ->find('list', ['limit' => 2000])
+            ->where(['active' => 1])
             ->all();
         $this->set(compact('user', 'roles', 'departaments', 'branchs', 'designations'));
     }
@@ -123,12 +126,15 @@ class UsersController extends AppController
 
         $departaments = $this->Users->Departaments
             ->find('list', ['limit' => 2000])
+            ->where(['active' => 1])
             ->all();
         $branchs = $this->Users->Branchs
             ->find('list', ['limit' => 2000])
+            ->where(['active' => 1])
             ->all();
         $designations = $this->Users->Designations
             ->find('list', ['limit' => 2000])
+            ->where(['active' => 1])
             ->all();
 
         $this->set(compact('user', 'roles', 'departaments', 'branchs', 'designations'));
