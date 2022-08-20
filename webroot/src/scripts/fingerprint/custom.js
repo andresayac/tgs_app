@@ -244,7 +244,6 @@ function clearCapture() {
     clearPrints();
     clearHand();
     myReader.reader.stopCapture();
-    document.getElementById("userDetails").innerHTML = "";
 }
 
 function clearInputs() {
@@ -406,7 +405,6 @@ function serverEnroll() {
 
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
-            console.log(this.responseText)
             if (this.responseText === "success") {
                 showMessage(successMessage, "success");
             }
@@ -439,7 +437,6 @@ function serverIdentify() {
                 let response = this.responseText;
                 if (response !== "failed" && response !== null) {
                     showMessage(successMessage, "success");
-                    document.getElementById("userDetails")
                 }
                 else {
                     showMessage(failedMessage);
@@ -466,7 +463,6 @@ function serverIdentifyAssistance() {
     let successMessage = "¡Identificación exitosa!";
     let failedMessage = "Identificación fallida!. Intentar otra vez";
     let payload = `data=${data}`;
-    console.log(payload)
 
     let xhttp = new XMLHttpRequest();
 

@@ -256,7 +256,7 @@ $training->set('end_hour', $training->end_date->format('H:i'));
             </div>
 
 
-            <div class="form-row m-3 mt-md-5 justify-content-center">
+            <div class="form-row mb-3  justify-content-center">
                 <div class="col-3 col-sm-3">
                     <button class="btn btn-success" type="submit" onclick="captureForIdentify()">Capturar</button>
                 </div>

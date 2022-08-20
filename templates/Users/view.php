@@ -129,16 +129,16 @@ $huella = $this->Text->autoParagraph(h($user->indexfinger));
                                                     <div class="form-group">
                                                         <label class="my-text7 my-pri-color"><strong>Dedo índice</strong></label>
                                                         <div class="row justify-content-center" id="indexFingers">
-                                                            <div class="col-2" id="indexfinger1">
+                                                            <div id="indexfinger1">
                                                                 <span class="icon icon-indexfinger-not-enrolled" title="not_enrolled"></span>
                                                             </div>
-                                                            <div class="col-2" id="indexfinger2">
+                                                            <div id="indexfinger2">
                                                                 <span class="icon icon-indexfinger-not-enrolled" title="not_enrolled"></span>
                                                             </div>
-                                                            <div class="col-2" id="indexfinger3">
+                                                            <div id="indexfinger3">
                                                                 <span class="icon icon-indexfinger-not-enrolled" title="not_enrolled"></span>
                                                             </div>
-                                                            <div class="col-2" id="indexfinger4">
+                                                            <div id="indexfinger4">
                                                                 <span class="icon icon-indexfinger-not-enrolled" title="not_enrolled"></span>
                                                             </div>
                                                         </div>
@@ -148,16 +148,16 @@ $huella = $this->Text->autoParagraph(h($user->indexfinger));
                                                     <div class="form-group">
                                                         <label class="my-text7 my-pri-color"><strong>Otro Dedo</strong> </label>
                                                         <div class="row justify-content-center" id="middleFingers">
-                                                            <div class="col-2" id="middleFinger1">
+                                                            <div id="middleFinger1">
                                                                 <span class="icon icon-middlefinger-not-enrolled" title="not_enrolled"></span>
                                                             </div>
-                                                            <div class="col-2" id="middleFinger2">
+                                                            <div id="middleFinger2">
                                                                 <span class="icon icon-middlefinger-not-enrolled" title="not_enrolled"></span>
                                                             </div>
-                                                            <div class="col-2" id="middleFinger3">
+                                                            <div id="middleFinger3">
                                                                 <span class="icon icon-middlefinger-not-enrolled" title="not_enrolled"></span>
                                                             </div>
-                                                            <div class="col-2" id="middleFinger4">
+                                                            <div id="middleFinger4">
                                                                 <span class="icon icon-middlefinger-not-enrolled" title="not_enrolled"></span>
                                                             </div>
                                                         </div>
