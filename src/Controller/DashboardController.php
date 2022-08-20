@@ -133,13 +133,13 @@ class DashboardController extends AppController
             array_unshift($users_report, array_keys($users_report[0]));
 
             $spreadsheet->getActiveSheet()
-                ->getStyle('A1:Q1')
+                ->getStyle('A1:R1')
                 ->getFill()
                 ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                 ->getStartColor()
                 ->setARGB('00FF7F');
 
-            foreach (range('A', 'Q') as $letter) {
+            foreach (range('A', 'R') as $letter) {
                 $spreadsheet->getActiveSheet()->getColumnDimension($letter)->setAutoSize(true);
             }
 
