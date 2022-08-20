@@ -40,11 +40,16 @@ class TrainingsController extends AppController
      */
     public function view($id = null)
     {
+        $Users = $this->getTableLocator()->get('Users');
+        $users =  $Users->find()->select(['document', 'name', 'lastname'])
+            ->disableHydration()
+            ->toArray();
+
         $training = $this->Trainings->get($id, [
-            'contain' => ['TrainingsAssistances'],
+            'contain' => ['TrainingsAssistances', 'TrainingsAssistances.Users'],
         ]);
 
-        $this->set(compact('training'));
+        $this->set(compact('training','users'));
     }
 
     /**
