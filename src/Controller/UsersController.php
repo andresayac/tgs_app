@@ -160,8 +160,6 @@ class UsersController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
-
-
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
@@ -191,6 +189,7 @@ class UsersController extends AppController
                 'Huella' => 'if(Users.indexfinger IS NULL,"NO","SI")',
                 'Telefono' => 'Users.telephone',
                 'Rol' => 'Roles.name',
+                'Sucursal' => 'Branchs.name',
                 'Area' => 'Departaments.name',
                 'Cargo' => 'Designations.name'
             ])
