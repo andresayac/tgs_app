@@ -6,8 +6,8 @@ $dias = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sába
 $month_categories = [];
 $data_report = [
     ['name' => 'Capacitaciones'],
-    ['name' => 'Asistentes Cofirmados'],
-    ['name' => 'Asistentes no Cofirmado']
+    ['name' => 'Asistentes Confirmados'],
+    ['name' => 'Asistentes no Confirmados']
 ];
 
 
