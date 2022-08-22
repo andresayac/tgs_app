@@ -10,7 +10,7 @@ $assistants = [
 ];
 
 foreach ($users as $user) {
-    $assistants['Users']["Area: " . $user['departament']['name'] . " - Cargo: " . $user['designation']['name']][$user['document']] = $user['fullname'];
+    $assistants['Users'][] = ['text' => $user['fullname'], 'value' => $user['document'], 'data-subtext' => "Cedula: {$user['document']} | Sede: {$user['branch']['name']} | Area: {$user['departament']['name']}"];
 }
 
 $trainer = explode(",", $training->trainer);
@@ -57,16 +57,16 @@ $training->set('end_hour', $training->end_date->format('H:i'));
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group">
-                            <div class="input text">
-                                <label>Fecha de realización</label>
-                                <?= $this->Form->input('start_date', ['type' => 'text', 'label' => false, 'class' => 'form-control date-picker-training']) ?>
-                            </div>
+                            <label>Capacitador</label>
+                            <?= $this->Form->select('trainer', $assistants['Users'], ['empty' => false, 'class' => 'selectpicker form-control', 'label' => false, 'required' => true, "multiple" => true, "data-actions-box" => true, "data-live-search" => true, "value" => $trainer, 'data-size' => '7']) ?>
                         </div>
                     </div>
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group">
-                            <label>Capacitador</label>
-                            <?= $this->Form->select('trainer', $assistants['Users'], ['empty' => false, 'class' => 'selectpicker form-control', 'label' => false, 'required' => true, "multiple" => true, "data-actions-box" => true, "data-live-search" => true, "value" => $trainer]) ?>
+                            <div class="input text">
+                                <label>Fecha de realización</label>
+                                <?= $this->Form->input('start_date', ['type' => 'text', 'label' => false, 'class' => 'form-control date-picker-training']) ?>
+                            </div>
                         </div>
                     </div>
                 </div>

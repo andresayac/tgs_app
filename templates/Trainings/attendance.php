@@ -122,7 +122,7 @@ $training->set('end_hour', $training->end_date->format('H:i'));
                 <?= $this->Form->create($training) ?>
                 <div class="form-group">
                     <label>Usuarios disponibles </label>
-                    <?= $this->Form->select('new_assistances', $assistants['NewUsersAssistances'], ['empty' => false, 'class' => 'selectpicker form-control', 'label' => false, 'required' => true, "multiple" => true, "data-actions-box" => true, "data-live-search" => true, 'data-size' => '6']) ?>
+                    <?= $this->Form->select('new_assistances', $assistants['NewUsersAssistances'], ['empty' => false, 'class' => 'selectpicker form-control', 'label' => false, 'required' => true, "multiple" => true, "data-actions-box" => true, "data-live-search" => true, 'data-size' => '7']) ?>
                 </div>
             </div>
         </div>

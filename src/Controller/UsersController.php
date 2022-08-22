@@ -69,7 +69,7 @@ class UsersController extends AppController
             }
             $this->Flash->error(__('No se pudo guardar el usuario. Inténtalo de nuevo. '));
         }
-        $roles_permisos = (in_array($this->Auth->user('rol_id'), [1, 2])) ? [0] : [1, 2];
+        $roles_permisos = (in_array($this->Auth->user('rol_id'), [1, 2])) ? [1, 2] : [1, 2, 3];
 
         $roles = $this->Users->Roles
             ->find('list', ['limit' => 2000])
@@ -118,7 +118,7 @@ class UsersController extends AppController
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
 
-        $roles_permisos = (in_array($this->Auth->user('rol_id'), [1, 2])) ? [0] : [1, 2];
+        $roles_permisos = (in_array($this->Auth->user('rol_id'), [1, 2])) ? [1, 2] : [1, 2, 3];
 
         $roles = $this->Users->Roles
             ->find('list', ['limit' => 2000])

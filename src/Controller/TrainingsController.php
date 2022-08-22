@@ -62,8 +62,8 @@ class TrainingsController extends AppController
         $Users = $this->getTableLocator()->get('Users');
 
         $users =  $Users->find()
-            ->contain(['Designations', 'Departaments'])
-            ->select(['Users.document', 'Users.fullname', 'Departaments.name', 'Designations.name'])
+            ->contain(['Designations', 'Departaments', 'Branchs'])
+            ->select(['Users.document', 'Users.fullname', 'Departaments.name', 'Designations.name','Branchs.name'])
             ->where(['Users.active' => 1, 'Users.rol_id NOT IN' => [1]])
             ->disableHydration()
             ->toArray();
@@ -104,8 +104,8 @@ class TrainingsController extends AppController
         $Users = $this->getTableLocator()->get('Users');
 
         $users = $Users->find()
-            ->contain(['Designations', 'Departaments'])
-            ->select(['Users.document', 'Users.fullname', 'Departaments.name', 'Designations.name'])
+            ->contain(['Designations', 'Departaments', 'Branchs'])
+            ->select(['Users.document', 'Users.fullname', 'Departaments.name', 'Designations.name', 'Branchs.name'])
             ->where(['Users.active' => 1, 'Users.rol_id NOT IN' => [1]])
             ->disableHydration()
             ->toArray();
