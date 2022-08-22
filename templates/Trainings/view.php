@@ -136,6 +136,6 @@ foreach ($users as $user) {
 
             </div>
         </div>
-        <h4 class="text-center pb-20"><?= (!$training->start_date->isPast()) ? 'PENDIENTE' : 'FINALIZADA'; ?></h4>
+        <h4 class="text-center pb-20"><?= (!$training->end_date->isPast()) ? 'PENDIENTE' : 'FINALIZADA'; ?></h4>
     </div>
 </div>

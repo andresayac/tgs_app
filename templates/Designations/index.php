@@ -21,9 +21,9 @@
             </nav>
         </div>
         <div class="col-md-6 col-sm-12 text-right">
-                <a class="btn btn-primary" href="/designations/add">
-                    Nuevo Cargo
-                </a>
+            <a class="btn btn-primary" href="/designations/add">
+                Nuevo Cargo
+            </a>
         </div>
     </div>
 </div>
@@ -55,15 +55,21 @@
                                     <i class="dw dw-more"></i>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                    <?= $this->Html->link(__('<i class="dw dw-eye"></i>Ver'), ['action' => 'view', $designation->id], [
-                                        'escape' => false,
-                                        'class' => 'dropdown-item'
-                                    ]) ?>
-                                    <?= $this->Html->link(__('<i class="dw dw-edit2"></i>Editar'), ['action' => 'edit', $designation->id], [
-                                        'escape' => false,
-                                        'class' => 'dropdown-item'
-                                    ]) ?>
-                                    <?= $this->Form->postLink('<i class="dw dw-delete-3"></i>Eliminar', ['action' => 'delete', $designation->id], ['class' => 'dropdown-item', 'escape' => false, 'confirm' => __('Esta seguro que quiere eliminar la capacitación # {0}?', $designation->id)]) ?>
+                                    <?php if (isset($_permisos_user_['designations']['view'])) : ?>
+                                        <?= $this->Html->link(__('<i class="dw dw-eye"></i>Ver'), ['action' => 'view', $designation->id], [
+                                            'escape' => false,
+                                            'class' => 'dropdown-item'
+                                        ]) ?>
+                                    <?php endif; ?>
+                                    <?php if (isset($_permisos_user_['designations']['edit'])) : ?>
+                                        <?= $this->Html->link(__('<i class="dw dw-edit2"></i>Editar'), ['action' => 'edit', $designation->id], [
+                                            'escape' => false,
+                                            'class' => 'dropdown-item'
+                                        ]) ?>
+                                    <?php endif; ?>
+                                    <?php if (isset($_permisos_user_['designations']['delete'])) : ?>
+                                        <?= $this->Form->postLink('<i class="dw dw-delete-3"></i>Eliminar', ['action' => 'delete', $designation->id], ['class' => 'dropdown-item', 'escape' => false, 'confirm' => __('Esta seguro que quiere eliminar la capacitación # {0}?', $designation->id)]) ?>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </td>

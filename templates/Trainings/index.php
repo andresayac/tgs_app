@@ -71,21 +71,30 @@ foreach ($users as $user) {
                                     <i class="dw dw-more"></i>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                    <?= $this->Html->link(__('<i class="icon-copy bi bi-calendar-check"></i>Asistencia'), ['action' => 'attendance', $training->id], [
-                                        'escape' => false,
-                                        'class' => 'dropdown-item'
-                                    ]) ?>
-                                    <?= $this->Form->postLink('<i class="dw dw-copy"></i>Duplicar', ['action' => 'duplicate', $training->id], ['class' => 'dropdown-item', 'escape' => false, 'confirm' => __('Esta seguro que quiere duplicar la capacitación # {0}?', $training->id)]) ?>
-
-                                    <?= $this->Html->link(__('<i class="dw dw-eye"></i>Ver'), ['action' => 'view', $training->id], [
-                                        'escape' => false,
-                                        'class' => 'dropdown-item'
-                                    ]) ?>
-                                    <?= $this->Html->link(__('<i class="dw dw-edit2"></i>Editar'), ['action' => 'edit', $training->id], [
-                                        'escape' => false,
-                                        'class' => 'dropdown-item'
-                                    ]) ?>
-                                    <?= $this->Form->postLink('<i class="dw dw-delete-3"></i>Eliminar', ['action' => 'delete', $training->id], ['class' => 'dropdown-item', 'escape' => false, 'confirm' => __('Esta seguro que quiere eliminar la capacitación # {0}?', $training->id)]) ?>
+                                    <?php if (isset($_permisos_user_['trainings']['attendance'])) : ?>
+                                        <?= $this->Html->link(__('<i class="icon-copy bi bi-calendar-check"></i>Asistencia'), ['action' => 'attendance', $training->id], [
+                                            'escape' => false,
+                                            'class' => 'dropdown-item'
+                                        ]) ?>
+                                    <?php endif; ?>
+                                    <?php if (isset($_permisos_user_['trainings']['duplicate'])) : ?>
+                                        <?= $this->Form->postLink('<i class="dw dw-copy"></i>Duplicar', ['action' => 'duplicate', $training->id], ['class' => 'dropdown-item', 'escape' => false, 'confirm' => __('Esta seguro que quiere duplicar la capacitación # {0}?', $training->id)]) ?>
+                                    <?php endif; ?>
+                                    <?php if (isset($_permisos_user_['trainings']['view'])) : ?>
+                                        <?= $this->Html->link(__('<i class="dw dw-eye"></i>Ver'), ['action' => 'view', $training->id], [
+                                            'escape' => false,
+                                            'class' => 'dropdown-item'
+                                        ]) ?>
+                                    <?php endif; ?>
+                                    <?php if (isset($_permisos_user_['trainings']['edit'])) : ?>
+                                        <?= $this->Html->link(__('<i class="dw dw-edit2"></i>Editar'), ['action' => 'edit', $training->id], [
+                                            'escape' => false,
+                                            'class' => 'dropdown-item'
+                                        ]) ?>
+                                    <?php endif; ?>
+                                    <?php if (isset($_permisos_user_['trainings']['delete'])) : ?>
+                                        <?= $this->Form->postLink('<i class="dw dw-delete-3"></i>Eliminar', ['action' => 'delete', $training->id], ['class' => 'dropdown-item', 'escape' => false, 'confirm' => __('Esta seguro que quiere eliminar la capacitación # {0}?', $training->id)]) ?>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </td>

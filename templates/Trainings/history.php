@@ -100,18 +100,24 @@ $query_search = $this->request->getData() ?? [];
                             <i class="dw dw-more" style="font-size: 18px;"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                            <?= $this->Html->link(__('<i class="icon-copy bi bi-calendar-check"></i>Asistencia'), ['action' => 'attendance', $training->id], [
-                                'escape' => false,
-                                'class' => 'dropdown-item'
-                            ]) ?>
-                            <?= $this->Html->link(__('<i class="dw dw-eye"></i>Ver'), ['action' => 'view', $training->id], [
-                                'escape' => false,
-                                'class' => 'dropdown-item'
-                            ]) ?>
-                            <?= $this->Html->link(__('<i class="dw dw-edit2"></i>Editar'), ['action' => 'edit', $training->id], [
-                                'escape' => false,
-                                'class' => 'dropdown-item'
-                            ]) ?>
+                            <?php if (isset($_permisos_user_['trainings']['attendance'])) : ?>
+                                <?= $this->Html->link(__('<i class="icon-copy bi bi-calendar-check"></i>Asistencia'), ['action' => 'attendance', $training->id], [
+                                    'escape' => false,
+                                    'class' => 'dropdown-item'
+                                ]) ?>
+                            <?php endif; ?>
+                            <?php if (isset($_permisos_user_['trainings']['view'])) : ?>
+                                <?= $this->Html->link(__('<i class="dw dw-eye"></i>Ver'), ['action' => 'view', $training->id], [
+                                    'escape' => false,
+                                    'class' => 'dropdown-item'
+                                ]) ?>
+                            <?php endif; ?>
+                            <?php if (isset($_permisos_user_['trainings']['edit'])) : ?>
+                                <?= $this->Html->link(__('<i class="dw dw-edit2"></i>Editar'), ['action' => 'edit', $training->id], [
+                                    'escape' => false,
+                                    'class' => 'dropdown-item'
+                                ]) ?>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>

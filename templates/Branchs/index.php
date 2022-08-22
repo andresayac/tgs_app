@@ -56,28 +56,34 @@
                                     <i class="dw dw-more"></i>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                    <?= $this->Html->link(__('<i class="dw dw-eye"></i>Ver'), ['action' => 'view', $branch->id], [
-                                        'escape' => false,
-                                        'class' => 'dropdown-item'
-                                    ]) ?>
-                                    <?= $this->Html->link(__('<i class="dw dw-edit2"></i>Editar'), ['action' => 'edit', $branch->id], [
-                                        'escape' => false,
-                                        'class' => 'dropdown-item'
-                                    ]) ?>
-                                    <?= $this->Form->postLink(
-                                        '<i class="dw dw-delete-3"></i>Eliminar',
-                                        [
-                                            'action' => 'delete', $branch->id
-                                        ],
-                                        [
-                                            'class' => 'dropdown-item',
+                                    <?php if (isset($_permisos_user_['branchs']['view'])) : ?>
+                                        <?= $this->Html->link(__('<i class="dw dw-eye"></i>Ver'), ['action' => 'view', $branch->id], [
                                             'escape' => false,
-                                            'confirm' => __(
-                                                'Esta seguro que quiere eliminar la capacitación # {0}?',
-                                                $branch->id
-                                            )
-                                        ]
-                                    ) ?>
+                                            'class' => 'dropdown-item'
+                                        ]) ?>
+                                    <?php endif; ?>
+                                    <?php if (isset($_permisos_user_['branchs']['edit'])) : ?>
+                                        <?= $this->Html->link(__('<i class="dw dw-edit2"></i>Editar'), ['action' => 'edit', $branch->id], [
+                                            'escape' => false,
+                                            'class' => 'dropdown-item'
+                                        ]) ?>
+                                    <?php endif; ?>
+                                    <?php if (isset($_permisos_user_['branchs']['delete'])) : ?>
+                                        <?= $this->Form->postLink(
+                                            '<i class="dw dw-delete-3"></i>Eliminar',
+                                            [
+                                                'action' => 'delete', $branch->id
+                                            ],
+                                            [
+                                                'class' => 'dropdown-item',
+                                                'escape' => false,
+                                                'confirm' => __(
+                                                    'Esta seguro que quiere eliminar la capacitación # {0}?',
+                                                    $branch->id
+                                                )
+                                            ]
+                                        ) ?>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </td>

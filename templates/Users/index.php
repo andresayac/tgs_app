@@ -22,13 +22,14 @@
         </div>
         <div class="col-md-6 col-sm-12 text-right">
             <div class="dropdown">
-                <a class="btn btn-primary dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                <?php $valida_menu = (isset($_permisos_user_['users']['import']) && isset($_permisos_user_['users']['export'])) ? true : false; ?>
+                <a class="btn btn-primary <?php if ($valida_menu) echo "dropdown-toggle" ?>" href="/users/add" role="button" data-toggle="<?php if ($valida_menu) echo "dropdown" ?>">
                     Nuevo usuario
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
                     <a class="dropdown-item" href="/users/add">Nuevo Usuario</a>
-                    <a class="dropdown-item" href="/users/import">Importar Usuarios</a>
-                    <a class="dropdown-item" href="/users/export">Exportar Usuarios</a>
+                    <?php if (isset($_permisos_user_['users']['import'])) : ?><a class="dropdown-item" href="/users/import">Importar Usuarios</a><?php endif; ?>
+                    <?php if (isset($_permisos_user_['users']['export'])) : ?><a class="dropdown-item" href="/users/export">Exportar Usuarios</a><?php endif; ?>
                 </div>
             </div>
         </div>
@@ -70,16 +71,21 @@
                                     <i class="dw dw-more"></i>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                    <?= $this->Html->link(__('<i class="dw dw-eye"></i>Ver'), ['action' => 'view', $user->id], [
-                                        'escape' => false,
-                                        'class' => 'dropdown-item'
-                                    ]) ?>
-                                    <?= $this->Html->link(__('<i class="dw dw-edit2"></i>Editar'), ['action' => 'edit', $user->id], [
-                                        'escape' => false,
-                                        'class' => 'dropdown-item'
-                                    ]) ?>
-
-                                    <?= $this->Form->postLink('<i class="dw dw-delete-3"></i>Eliminar', ['action' => 'delete', $user->id], ['class' => 'dropdown-item', 'escape' => false, 'confirm' => __('Esta seguro que quiere eliminar el usuario # {0}?', $user->fullname)]) ?>
+                                    <?php if (isset($_permisos_user_['users']['view'])) : ?>
+                                        <?= $this->Html->link(__('<i class="dw dw-eye"></i>Ver'), ['action' => 'view', $user->id], [
+                                            'escape' => false,
+                                            'class' => 'dropdown-item'
+                                        ]) ?>
+                                    <?php endif; ?>
+                                    <?php if (isset($_permisos_user_['users']['edit'])) : ?>
+                                        <?= $this->Html->link(__('<i class="dw dw-edit2"></i>Editar'), ['action' => 'edit', $user->id], [
+                                            'escape' => false,
+                                            'class' => 'dropdown-item'
+                                        ]) ?>
+                                    <?php endif; ?>
+                                    <?php if (isset($_permisos_user_['users']['delete'])) : ?>
+                                        <?= $this->Form->postLink('<i class="dw dw-delete-3"></i>Eliminar', ['action' => 'delete', $user->id], ['class' => 'dropdown-item', 'escape' => false, 'confirm' => __('Esta seguro que quiere eliminar el usuario # {0}?', $user->fullname)]) ?>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </td>
