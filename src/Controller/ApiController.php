@@ -136,7 +136,7 @@ class ApiController extends AppController
     private function getUserDetails($user_id)
     {
         $Users = $this->getTableLocator()->get('Users');
-        $all_data = $Users->find()->select(['username', 'name'])->where(['id' => $user_id]);
+        $all_data = $Users->find()->select(['username', 'fullname'])->where(['id' => $user_id]);
         $data = json_encode($all_data->toArray());
 
         return $data;

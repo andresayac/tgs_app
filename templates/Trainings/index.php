@@ -10,7 +10,7 @@ $data = [
 
 foreach ($users as $user) {
     $data['Users'][$user['document']] = [
-        "name" => $user['name'] . " " . $user['lastname']
+        "name" => $user['fullname']
     ];
 }
 

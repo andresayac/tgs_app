@@ -16,10 +16,9 @@ $data = [
     "Users" => []
 ];
 
-// strtoupper($user['name'] . " " . $user['lastname']) 
 foreach ($users as $user) {
     $data['Users'][$user['document']] = [
-        "name" =>  explode(' ', strtoupper($user['name']))[0]  . " " . explode(' ', strtoupper($user['lastname']))[0] ?? ''
+        "name" => strtoupper($user['fullname']) ?? ''
     ];
 }
 
@@ -102,7 +101,7 @@ foreach ($users as $user) {
             <tbody>
                 <?php foreach ($training->trainings_assistances as $trainingsAssistances) : ?>
                     <tr>
-                        <td scope="row"><?= h($trainingsAssistances->user->name) ?></td>
+                        <td scope="row"><?= h($trainingsAssistances->user->fullname) ?></td>
                         <td scope="row"><span class="badge badge-<?= ((bool) $trainingsAssistances->checked) ? 'primary' : 'danger' ?>"><?= ((bool) $trainingsAssistances->checked) ? 'Asistio' : 'No Asistio' ?></span></td>
                         <td scope="row"><?= h($trainingsAssistances->check_ts) ?></td>
                         <td scope="row"><?= h($trainingsAssistances->type_check) ?></td>

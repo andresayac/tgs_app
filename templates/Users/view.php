@@ -39,7 +39,7 @@ $huella = $this->Text->autoParagraph(h($user->indexfinger));
             <div class="profile-photo">
                 <img src="/img/users/default.jpg" alt="" class="avatar-photo">
             </div>
-            <h5 class="text-center h5 mb-0"><?= h($user->name) ?> <?= h($user->lastname) ?></h5>
+            <h5 class="text-center h5 mb-0"><?= h($user->fullname) ?></h5>
             <p class="text-center text-muted font-14">
                 <strong>Rol: </strong> <?= $user->has('role') ? $this->Html->link($user->role->name, ['controller' => 'Roles', 'action' => 'view', $user->role->id]) : '' ?>
             </p>

@@ -14,8 +14,7 @@ use Cake\ORM\Entity;
  * @property int|null $rol_id
  * @property string|null $username
  * @property string|null $password
- * @property string|null $name
- * @property string|null $lastname
+ * @property string|null $fullname
  * @property string|null $document_type
  * @property string|null $document
  * @property \Cake\I18n\FrozenDate|null $date_birthday
@@ -49,12 +48,12 @@ class User extends Entity
         'rol_id' => true,
         'username' => true,
         'password' => true,
-        'name' => true,
-        'lastname' => true,
+        'fullname' => true,
         'document_type' => true,
         'document' => true,
         'date_birthday' => true,
         'telephone' => true,
+        'manual_assistance' => true,
         'active' => true,
         'dep_id' => true,
         'branch_id' => true,

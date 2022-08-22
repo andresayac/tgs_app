@@ -72,8 +72,7 @@ $designation->note = 'Agregar a Futuro';
                             <tr>
                                 <th><?= $this->Paginator->sort('id') ?></th>
                                 <th><?= $this->Paginator->sort('username', 'Usuario') ?></th>
-                                <th><?= $this->Paginator->sort('name', 'Nombres') ?></th>
-                                <th><?= $this->Paginator->sort('lastname', 'Apellidos') ?></th>
+                                <th><?= $this->Paginator->sort('fullname', 'Nombre') ?></th>
                                 <th><?= $this->Paginator->sort('document', 'Documento') ?></th>
                                 <th><?= $this->Paginator->sort('active', 'Estado') ?></th>
 
@@ -84,8 +83,7 @@ $designation->note = 'Agregar a Futuro';
                                 <tr>
                                     <td><?= $users->has('id') ? $this->Html->link($users->id, ['controller' => 'Branchs', 'action' => 'view', $users->id]) : '' ?></td>
                                     <td><?= h($users->username) ?></td>
-                                    <td><?= h($users->name) ?></td>
-                                    <td><?= h($users->lastname) ?></td>
+                                    <td><?= h($users->fullname) ?></td>
                                     <td><?= h($users->date_birthday) ?></td>
                                     <td><span class="badge badge-<?= ((bool) $users->active) ? 'primary' : 'danger' ?>"><?= ((bool) $users->active) ? 'Activo' : 'Inactivo' ?></span></td>
                                 </tr>

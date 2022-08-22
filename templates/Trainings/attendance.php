@@ -12,7 +12,7 @@ $assistants = [
 
 
 foreach ($users as $user) {
-    $assistants['Users'][$user['document']] = $user['name'] . " " . $user['lastname'];
+    $assistants['Users'][] = ['text' => $user['fullname'], 'value' => $user['document'], 'data-subtext' => "Cedula: {$user['document']} | Sede: {$user['branch']['name']} | Area: {$user['departament']['name']}"];
 }
 
 $assistants['NewUsersAssistances'] = $assistants['Users'];
@@ -122,7 +122,7 @@ $training->set('end_hour', $training->end_date->format('H:i'));
                 <?= $this->Form->create($training) ?>
                 <div class="form-group">
                     <label>Usuarios disponibles </label>
-                    <?= $this->Form->select('new_assistances', $assistants['NewUsersAssistances'], ['empty' => false, 'class' => 'selectpicker form-control', 'label' => false, 'required' => true, "multiple" => true, "data-actions-box" => true, "data-live-search" => true]) ?>
+                    <?= $this->Form->select('new_assistances', $assistants['NewUsersAssistances'], ['empty' => false, 'class' => 'selectpicker form-control', 'label' => false, 'required' => true, "multiple" => true, "data-actions-box" => true, "data-live-search" => true, 'data-size' => '6']) ?>
                 </div>
             </div>
         </div>
@@ -136,6 +136,20 @@ $training->set('end_hour', $training->end_date->format('H:i'));
     </div>
     <?= $this->Form->end() ?>
 
+    <div class="row justify-content-end">
+        <div class="col-md-2 col-sm-12">
+            <div class="form-group">
+                <?php if (!empty($training_data)) echo $this->Form->postLink('<i class="dw dw-delete-3"></i> Eliminar Asistentes', ['action' => 'attendanceDelete', 0, $training->id, 'all'], [
+                    'class' => 'btn btn-outline-danger btn-sm',
+                    'escape' => false,
+                    'confirm' => __(
+                        "Esta seguro que quiere eliminar los asistentes que aún no confirman asistencia."
+                    )
+                ]);
+                ?>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-12 col-sm-12">
             <div class="dataTables_wrapper dt-bootstrap4 no-footer">
@@ -155,7 +169,7 @@ $training->set('end_hour', $training->end_date->format('H:i'));
                             <?php if (empty($training_data)) break; ?>
                             <tr>
                                 <td><?= h($training_data->id) ?></td>
-                                <td><?= $training_data->has('user') ? $this->Html->link($training_data->user->name . ' ' . $training_data->user->lastname, ['controller' => 'Users', 'action' => 'view', $training_data->user->id]) : '' ?></td>
+                                <td><?= $training_data->has('user') ? $this->Html->link($training_data->user->fullname, ['controller' => 'Users', 'action' => 'view', $training_data->user->id]) : '' ?></td>
 
                                 <td><span class="badge badge-<?= ((bool) $training_data->checked) ? 'primary' : 'danger' ?>" id="badge-item-<?= $training_data->id ?>"><?= ((bool) $training_data->checked) ? 'Asistio' : 'No Asistio' ?></span></td>
 
@@ -164,8 +178,10 @@ $training->set('end_hour', $training->end_date->format('H:i'));
                                 <td>
                                     <div class="table-actions">
                                         <div class="custom-control custom-checkbox mb-5">
-                                            <input <?= $training_data->training->start_date->isToday() && !$training_data->checked ? "" :  "disabled" ?> <?= ($training_data->checked) ? 'checked' : '' ?> type="checkbox" data-assistant="<?= $training_data->id ?>" class="custom-control-input checks" id="checkbox-<?= $training_data->id ?>" data-user="<?= $training_data->user->id ?>">
-                                            <label for="checkbox-<?= $training_data->id ?>" class="custom-control-label"></label>
+                                            <?php if ($training_data->user->manual_assistance || in_array($_logged_user_['rol_id'], [1])) : ?>
+                                                <input <?= $training_data->training->start_date->isToday() && !$training_data->checked ? "" :  "disabled" ?> <?= ($training_data->checked) ? 'checked' : '' ?> type="checkbox" data-assistant="<?= $training_data->id ?>" class="custom-control-input checks" id="checkbox-<?= $training_data->id ?>" data-user="<?= $training_data->user->id ?>">
+                                                <label for="checkbox-<?= $training_data->id ?>" class="custom-control-label"></label>
+                                            <?php endif; ?>
                                         </div>
 
                                         <?= $this->Form->control('', [
@@ -176,7 +192,7 @@ $training->set('end_hour', $training->end_date->format('H:i'));
                                             "data-target" => "#modal-1",
                                             "data-user-id" => $training_data->user->id,
                                             "data-training-id" => $training_data->id,
-                                            "data-name-id" => $training_data->user->name,
+                                            "data-name-id" => $training_data->user->fullname,
                                             "data-color" => "#265ed7",
                                             "id" => "btn-fingerprint",
                                             "name" => "btn-fingerprint",
@@ -185,11 +201,11 @@ $training->set('end_hour', $training->end_date->format('H:i'));
                                         ]) ?>
 
                                         <?php if (!$training_data->checked) : ?>
-                                            <?= $this->Form->postLink('', ['action' => 'attendanceDelete', $training_data->id, $training->id], [
+                                            <?= $this->Form->postLink('', ['action' => 'attendanceDelete', $training_data->id, $training->id, 'item'], [
                                                 'class' => 'icon-copy dw dw-delete-3',
                                                 'style' => "color: rgb(233, 89, 89); margin-top: 3.1px;",
                                                 'confirm' => __(
-                                                    "Esta seguro que quiere eliminar el  asistente {$training_data->user->name} {$training_data->user->lastname}"
+                                                    "Esta seguro que quiere eliminar el  asistente {$training_data->user->fullname}"
                                                 )
                                             ])
                                             ?>
@@ -344,7 +360,7 @@ $training->set('end_hour', $training->end_date->format('H:i'));
             scrollCollapse: true,
             autoWidth: false,
             responsive: true,
-           columnDefs: [{
+            columnDefs: [{
                     targets: "datatable-nosort",
                     orderable: false,
                 },

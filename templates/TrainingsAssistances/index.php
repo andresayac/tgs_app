@@ -28,7 +28,7 @@
                 <tr>
                     <td><?= $this->Number->format($trainingsAssistance->id) ?></td>
                     <td><?= $trainingsAssistance->has('training') ? $this->Html->link($trainingsAssistance->training->name, ['controller' => 'Trainings', 'action' => 'view', $trainingsAssistance->training->id]) : '' ?></td>
-                    <td><?= $trainingsAssistance->has('user') ? $this->Html->link($trainingsAssistance->user->name, ['controller' => 'Users', 'action' => 'view', $trainingsAssistance->user->id]) : '' ?></td>
+                    <td><?= $trainingsAssistance->has('user') ? $this->Html->link($trainingsAssistance->user->fullname, ['controller' => 'Users', 'action' => 'view', $trainingsAssistance->user->id]) : '' ?></td>
                     <td><?= $trainingsAssistance->checked === null ? '' : $this->Number->format($trainingsAssistance->checked) ?></td>
                     <td><?= h($trainingsAssistance->type_check) ?></td>
                     <td><?= $trainingsAssistance->created_by === null ? '' : $this->Number->format($trainingsAssistance->created_by) ?></td>

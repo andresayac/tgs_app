@@ -82,8 +82,7 @@
                             <?php foreach ($error as $error_data) : ?>
                                 <tr>
                                     <td><?= $error_data['username'] ?></td>
-                                    <td><?= $error_data['name'] ?></td>
-                                    <td><?= $error_data['lastname'] ?></td>
+                                    <td><?= $error_data['fullname'] ?></td>
                                     <td><?= $error_data['document'] ?></td>
                                     <td><?= $error_data['telephone'] ?></td>
                                     <td><?= $error_data['branch_id'] ?></td>

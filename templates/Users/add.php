@@ -34,22 +34,22 @@
     </div>
     <?= $this->Form->create($user) ?>
     <?php if ($user->hasErrors()) : ?>
-            <div class="row">
-                <div class="col-12">
-                    <div class="alert alert-danger">
-                        <div class="alert-title">Revisa estos campos</div>
-                        <ul>
-                            <?php foreach ($user->getErrors() as $campo => $errores) {
-                                foreach ($errores as $tipo => $error) {
-                                    echo "<li>" . $error . "</li>";
-                                }
-                            } ?>
-                        </ul>
-                    </div>
-
+        <div class="row">
+            <div class="col-12">
+                <div class="alert alert-danger">
+                    <div class="alert-title">Revisa estos campos</div>
+                    <ul>
+                        <?php foreach ($user->getErrors() as $campo => $errores) {
+                            foreach ($errores as $tipo => $error) {
+                                echo "<li>" . $error . "</li>";
+                            }
+                        } ?>
+                    </ul>
                 </div>
+
             </div>
-        <?php endif ?>
+        </div>
+    <?php endif ?>
     <div class="pd-20 card-box mb-30">
         <div class="row">
             <div class="col-md-12 col-sm-12">
@@ -73,28 +73,23 @@
                             <?= $this->Form->control('username', ['label' => 'Usuario', 'class' => 'form-control']); ?>
                         </div>
                     </div>
-                    <div class="col-md-6 col-sm-12">
-                        <div class="form-group">
-                            <?php
-                            if (in_array($_logged_user_['rol_id'], [1, 2])) echo $this->Form->control('lastname', ['label' => 'Contraseña', 'class' => 'form-control', 'type' => 'password']);
-                            ?>
+                    <?php if (in_array($_logged_user_['rol_id'], [1, 2])) : ?>
+                        <div class="col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <?= $this->Form->control('password', ['label' => 'Contraseña', 'class' => 'form-control', 'type' => 'password']);
+                                ?>
+                            </div>
                         </div>
-                    </div>
+                    <?php endif; ?>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-6 col-sm-12">
+                    <div class="col-md-12 col-sm-12">
                         <div class="form-group">
-                            <?= $this->Form->control('name', ['label' => 'Nombre', 'class' => 'form-control']); ?>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-sm-12">
-                        <div class="form-group">
-                            <?= $this->Form->control('lastname', ['label' => 'Apellido', 'class' => 'form-control']); ?>
+                            <?= $this->Form->control('fullname', ['label' => 'Nombre', 'class' => 'form-control']); ?>
                         </div>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="col-md-12 col-sm-12">
                         <label>Tipo y número de identificación</label>
@@ -116,12 +111,25 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
-                        <?= $this->Form->control('date_birthday', ['empty' => true, 'label' => ['text' => 'Fecha de Nacimiento'], 'class' => "form-control date-picker-date-birthday", 'placeholder' => 'Selecione Fecha']); ?>
+                        <div class="form-group">
+                            <?= $this->Form->control('date_birthday', ['empty' => true, 'label' => ['text' => 'Fecha de Nacimiento'], 'class' => "form-control date-picker-date-birthday", 'placeholder' => 'Selecione Fecha']); ?>
+
+                        </div>
                     </div>
                     <div class="col-md-6 col-sm-12">
-                        <?= $this->Form->control('telephone', ['label' => 'Teléfono', 'class' => 'form-control']); ?>
+                        <div class="form-group">
+                            <?= $this->Form->control('telephone', ['label' => 'Teléfono', 'class' => 'form-control']); ?>
+                        </div>
                     </div>
                 </div>
+                <?php if (in_array($_logged_user_['rol_id'], [1, 2])) : ?>
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12">
+                            <label>Asistencia Manual</label>
+                            <?= $this->Form->select('manual_assistance', ['0' => 'NO', '1' => 'SI'], ['empty' => false, 'class' => 'selectpicker form-control', 'label' => false, 'required' => true, 'value' => 0]) ?>
+                        </div>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
     </div>

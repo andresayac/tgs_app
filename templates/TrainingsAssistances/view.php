@@ -24,7 +24,7 @@
                 </tr>
                 <tr>
                     <th><?= __('User') ?></th>
-                    <td><?= $trainingsAssistance->has('user') ? $this->Html->link($trainingsAssistance->user->name, ['controller' => 'Users', 'action' => 'view', $trainingsAssistance->user->id]) : '' ?></td>
+                    <td><?= $trainingsAssistance->has('user') ? $this->Html->link($trainingsAssistance->user->fullname, ['controller' => 'Users', 'action' => 'view', $trainingsAssistance->user->id]) : '' ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Type Check') ?></th>

@@ -37,6 +37,7 @@ class Training extends Entity
         'name' => true,
         'note' => true,
         'trainer' => true,
+        'place' => true,
         'status' => true,
         'created_by' => true,
         'modified_by' => true,

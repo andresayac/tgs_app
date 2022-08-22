@@ -18,7 +18,7 @@
                     <span class="user-icon">
                         <?= $this->Html->image('/img/users/default.jpg'); ?>
                     </span>
-                    <span class="user-name"><?= explode(' ', $_logged_user_['name'])[0] ?? ''  ?> <?= explode(' ', $_logged_user_['lastname'])[0] ?? '' ?></span>
+                    <span class="user-name"><?= explode(' ', $_logged_user_['fullname'])[0] ?? ''  ?></span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
                     <a class="dropdown-item" href="/users/profile"><i class="dw dw-user1"></i> Perfil</a>

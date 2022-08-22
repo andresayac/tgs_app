@@ -182,8 +182,7 @@ class UsersController extends AppController
                 'ID_App' => 'Users.id',
                 'Tipo_Documento' => 'Users.document_type',
                 'Cedula' => 'Users.document',
-                'Nombre' => 'Users.name',
-                'Apellidos' => 'Users.lastname',
+                'Nombre_Completo' => 'Users.fullname',
                 'Fecha_Nacimiento' => 'DATE_FORMAT(Users.date_birthday,"%Y-%m-%d")',
                 'Estado' => 'if(Users.active=1,"Activo","Inactivo")',
                 'Huella' => 'if(Users.indexfinger IS NULL,"NO","SI")',
@@ -237,8 +236,7 @@ class UsersController extends AppController
 
                 $columns = [
                     "Usuario",
-                    "Nombres",
-                    "Apellidos",
+                    "Nombre",
                     "Documento",
                     "Telefono",
                     "Sucursal Id",
@@ -253,7 +251,7 @@ class UsersController extends AppController
                     ->getStartColor()
                     ->setARGB('00FF7F');
 
-                foreach (range('A', 'H') as $letter) {
+                foreach (range('A', 'J') as $letter) {
                     $spreadsheet->getActiveSheet()->getColumnDimension($letter)->setAutoSize(true);
                 }
 
@@ -278,8 +276,7 @@ class UsersController extends AppController
                 $ejemplo = [
                     [
                         "Usuario" => 'empleado1',
-                        "Nombres" => 'Nombre1 Nombre 2',
-                        "Apellidos" => 'Apellido1 Apellido2',
+                        "Nombre" => 'Nombre Apellido',
                         "Documento" => '100000123',
                         "Telefono" => '3110001234',
                         "Sucursal Id" => '2',
@@ -288,8 +285,7 @@ class UsersController extends AppController
                     ],
                     [
                         "Usuario" => 'empleado2',
-                        "Nombres" => 'Nombre2 Nombre 2',
-                        "Apellidos" => 'Apellido2 Apellido2',
+                        "Nombre" => 'Nombre Apellido',
                         "Documento" => '100000124',
                         "Telefono" => '3110001235',
                         "Sucursal Id" => '3',
@@ -360,13 +356,12 @@ class UsersController extends AppController
                 foreach ($row_range as $row) {
                     $user = $this->Users->newEmptyEntity();
                     $data['username'] = $user->username = $sheet->getCell('A' . $row)->getValue();
-                    $data['name'] = $user->name = $sheet->getCell('B' . $row)->getValue();
-                    $data['lastname'] = $user->lastname = $sheet->getCell('C' . $row)->getValue();
-                    $data['document'] = $user->document = $sheet->getCell('D' . $row)->getValue();
-                    $data['telephone'] = $user->telephone = $sheet->getCell('E' . $row)->getValue();
-                    $data['branch_id'] = $user->branch_id =  $sheet->getCell('F' . $row)->getValue();
-                    $data['dep_id'] = $user->dep_id = $sheet->getCell('G' . $row)->getValue();
-                    $data['designation_id'] = $user->designation_id = $sheet->getCell('H' . $row)->getValue();
+                    $data['fullname'] = $user->fullname = $sheet->getCell('B' . $row)->getValue();
+                    $data['document'] = $user->document = $sheet->getCell('C' . $row)->getValue();
+                    $data['telephone'] = $user->telephone = $sheet->getCell('D' . $row)->getValue();
+                    $data['branch_id'] = $user->branch_id =  $sheet->getCell('E' . $row)->getValue();
+                    $data['dep_id'] = $user->dep_id = $sheet->getCell('F' . $row)->getValue();
+                    $data['designation_id'] = $user->designation_id = $sheet->getCell('G' . $row)->getValue();
                     $user->active = '1';
                     $user->document_type = 'CC';
                     $user->rol_id = 4;

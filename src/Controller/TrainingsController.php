@@ -22,7 +22,7 @@ class TrainingsController extends AppController
     public function index()
     {
         $Users = $this->getTableLocator()->get('Users');
-        $users =  $Users->find()->select(['document', 'name', 'lastname'])
+        $users =  $Users->find()->select(['document', 'fullname'])
             ->disableHydration()
             ->toArray();
 
@@ -41,7 +41,7 @@ class TrainingsController extends AppController
     public function view($id = null)
     {
         $Users = $this->getTableLocator()->get('Users');
-        $users =  $Users->find()->select(['document', 'name', 'lastname'])
+        $users =  $Users->find()->select(['document', 'fullname'])
             ->disableHydration()
             ->toArray();
 
@@ -49,7 +49,7 @@ class TrainingsController extends AppController
             'contain' => ['TrainingsAssistances', 'TrainingsAssistances.Users'],
         ]);
 
-        $this->set(compact('training','users'));
+        $this->set(compact('training', 'users'));
     }
 
     /**
@@ -63,7 +63,7 @@ class TrainingsController extends AppController
 
         $users =  $Users->find()
             ->contain(['Designations', 'Departaments'])
-            ->select(['Users.document', 'Users.name', 'Users.lastname', 'Departaments.name', 'Designations.name'])
+            ->select(['Users.document', 'Users.fullname', 'Departaments.name', 'Designations.name'])
             ->where(['Users.active' => 1, 'Users.rol_id NOT IN' => [1]])
             ->disableHydration()
             ->toArray();
@@ -105,7 +105,7 @@ class TrainingsController extends AppController
 
         $users = $Users->find()
             ->contain(['Designations', 'Departaments'])
-            ->select(['Users.document', 'Users.name', 'Users.lastname', 'Departaments.name', 'Designations.name'])
+            ->select(['Users.document', 'Users.fullname', 'Departaments.name', 'Designations.name'])
             ->where(['Users.active' => 1, 'Users.rol_id NOT IN' => [1]])
             ->disableHydration()
             ->toArray();
@@ -217,16 +217,30 @@ class TrainingsController extends AppController
         $this->set(compact('trainings'));
     }
 
-    public function attendanceDelete($id, $training_id)
+    public function attendanceDelete($id, $training_id, $action)
     {
         $this->request->allowMethod(['post', 'delete']);
         $TrainingAssistances = $this->getTableLocator()->get('TrainingsAssistances');
-        $training = $TrainingAssistances->get($id);
-        if ($training) {
-            $TrainingAssistances->delete($training);
-            $this->Flash->success(__('The training has been deleted.'));
-        } else {
-            $this->Flash->error(__('The training could not be deleted. Please, try again.'));
+
+
+        if ($action === 'all') {
+            $assistances_delete = $TrainingAssistances->find()
+                ->where(['training_id' => $training_id, 'checked' => 0]);
+
+            foreach ($assistances_delete as  $assistance_delete) {
+                $TrainingAssistances->delete($assistance_delete);
+            }
+            $this->Flash->success(__('Asistentes Eliminados'));
+        }
+
+        if ($action === 'item') {
+            $training = $TrainingAssistances->get($id);
+            if ($training) {
+                $TrainingAssistances->delete($training);
+                $this->Flash->success(__('The training has been deleted.'));
+            } else {
+                $this->Flash->error(__('The training could not be deleted. Please, try again.'));
+            }
         }
         return $this->redirect(['action' => 'attendance', $training_id]);
     }
@@ -258,8 +272,8 @@ class TrainingsController extends AppController
     {
         $Users = $this->getTableLocator()->get('Users');
         $users =  $Users->find()
-            ->contain(['Designations', 'Departaments'])
-            ->select(['Users.document', 'Users.name', 'Users.lastname', 'Departaments.name', 'Designations.name'])
+            ->contain(['Designations', 'Departaments', 'Branchs'])
+            ->select(['Users.document', 'Users.fullname', 'Departaments.name', 'Designations.name', 'Branchs.name'])
             ->where(['Users.active' => 1, 'rol_id NOT IN' => [1]])
             ->disableHydration()
             ->toArray();
@@ -271,6 +285,7 @@ class TrainingsController extends AppController
             ->toArray();
 
         if ($this->request->is(['patch', 'post', 'put'])) {
+
             $data = $this->request->getData();
 
             foreach ($data['new_assistances'] as $assistance) {

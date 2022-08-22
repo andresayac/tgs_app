@@ -96,6 +96,11 @@ class TrainingsTable extends Table
             ->notEmptyString('trainer', 'Capacitador requerido');
 
         $validator
+            ->scalar('place')
+            ->maxLength('place', 65)
+            ->notEmptyString('place', 'Lugar requerido');
+
+        $validator
             ->integer('active')
             ->allowEmptyString('active');
 

@@ -93,14 +93,9 @@ class UsersTable extends Table
             ->allowEmptyString('password');
 
         $validator
-            ->scalar('name')
-            ->maxLength('name', 65)
-            ->notEmptyString('name', 'Nombre Requerido');
-
-        $validator
-            ->scalar('lastname')
-            ->maxLength('lastname', 65)
-            ->notEmptyString('lastname', 'Apellidos Requeridos');
+            ->scalar('fullname')
+            ->maxLength('fullname', 255)
+            ->notEmptyString('fullname', 'Nombre Requerido');
 
         $validator
             ->scalar('document_type')
@@ -121,6 +116,10 @@ class UsersTable extends Table
             ->scalar('telephone')
             ->maxLength('telephone', 11)
             ->allowEmptyString('telephone');
+
+        $validator
+            ->integer('manual_assistance')
+            ->allowEmptyString('manual_assistance');
 
         $validator
             ->integer('active')

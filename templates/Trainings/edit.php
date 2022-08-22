@@ -10,7 +10,7 @@ $assistants = [
 ];
 
 foreach ($users as $user) {
-    $assistants['Users']["Area: " . $user['departament']['name'] . " - Cargo: " . $user['designation']['name']][$user['document']] = $user['name'] . " " . $user['lastname'];
+    $assistants['Users']["Area: " . $user['departament']['name'] . " - Cargo: " . $user['designation']['name']][$user['document']] = $user['fullname'];
 }
 
 $trainer = explode(",", $training->trainer);
@@ -81,6 +81,13 @@ $training->set('end_hour', $training->end_date->format('H:i'));
                         <div class="form-group">
                             <label>Hora estimada de finalización</label>
                             <?= $this->Form->input('end_hour', ['empty' => false, 'class' => 'form-control time-picker-training select2', 'label' => false, 'required' => true]) ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <?= $this->Form->control('place', ['label' => 'Lugar de Capacitación', 'class' => 'form-control']); ?>
                         </div>
                     </div>
                 </div>

@@ -45,8 +45,7 @@
             <thead>
                 <tr>
                     <th><?= $this->Paginator->sort('id') ?></th>
-                    <th><?= $this->Paginator->sort('name', 'Nombres') ?></th>
-                    <th><?= $this->Paginator->sort('lastname', 'Apellidos') ?></th>
+                    <th><?= $this->Paginator->sort('fullname', 'Nombre') ?></th>
                     <th><?= $this->Paginator->sort('rol_id', 'Rol') ?></th>
                     <th><?= $this->Paginator->sort('active', 'Estado') ?></th>
                     <th><?= $this->Paginator->sort('branch_id', 'Sucursal') ?></th>
@@ -59,8 +58,7 @@
                 <?php foreach ($users as $user) : ?>
                     <tr>
                         <td><?= $user->id ?></td>
-                        <td><?= h($user->name) ?></td>
-                        <td><?= h($user->lastname) ?></td>
+                        <td><?= h($user->fullname) ?></td>
                         <td><?= $user->has('role') ? $this->Html->link($user->role->name, ['controller' => 'Roles', 'action' => 'view', $user->role->id]) : '' ?></td>
                         <td><span class="badge badge-<?= ((bool) $user->active) ? 'primary' : 'danger' ?>"><?= ((bool) $user->active) ? 'Activo' : 'Inactivo' ?></span></td>
                         <td><?= $user->has('branch') ? $this->Html->link($user->branch->name, ['controller' => 'Branchs', 'action' => 'view', $user->branch->id]) : '' ?></td>
@@ -81,7 +79,7 @@
                                         'class' => 'dropdown-item'
                                     ]) ?>
 
-                                    <?= $this->Form->postLink('<i class="dw dw-delete-3"></i>Eliminar', ['action' => 'delete', $user->id], ['class' => 'dropdown-item', 'escape' => false, 'confirm' => __('Esta seguro que quiere eliminar el usuario # {0}?', $user->name)]) ?>
+                                    <?= $this->Form->postLink('<i class="dw dw-delete-3"></i>Eliminar', ['action' => 'delete', $user->id], ['class' => 'dropdown-item', 'escape' => false, 'confirm' => __('Esta seguro que quiere eliminar el usuario # {0}?', $user->fullname)]) ?>
                                 </div>
                             </div>
                         </td>
@@ -109,7 +107,7 @@
                     targets: "datatable-nosort"
                 },
                 {
-                    targets: 1,
+                    targets: [1,4,5,6],
                     className: "truncate"
                 }
             ],
