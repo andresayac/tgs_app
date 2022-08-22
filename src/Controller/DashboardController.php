@@ -128,7 +128,7 @@ class DashboardController extends AppController
             $spreadsheet = new Spreadsheet();
             $spreadsheet->setActiveSheetIndex(0);
             $spreadsheet->getActiveSheet()->setTitle('Informe Capacitaciones');
-            $spreadsheet->getProperties()->setCreator("TGS-APP");
+            $spreadsheet->getProperties()->setCreator("T-MTI VTF");
 
             array_unshift($users_report, array_keys($users_report[0]));
 

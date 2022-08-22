@@ -174,7 +174,7 @@ class UsersController extends AppController
         $spreadsheet = new Spreadsheet();
         $spreadsheet->setActiveSheetIndex(0);
         $spreadsheet->getActiveSheet()->setTitle('Usuarios');
-        $spreadsheet->getProperties()->setCreator("TGS-APP");
+        $spreadsheet->getProperties()->setCreator("T-MTI VFT-APP");
 
         $datos_excel = $this->Users->find()
             ->contain(['Roles', 'Departaments', 'Branchs', 'Designations'])
@@ -232,7 +232,7 @@ class UsersController extends AppController
                 $spreadsheet = new Spreadsheet();
                 $spreadsheet->setActiveSheetIndex(0);
                 $spreadsheet->getActiveSheet()->setTitle('Usuarios');
-                $spreadsheet->getProperties()->setCreator("TGS-APP");
+                $spreadsheet->getProperties()->setCreator("T-MTI VFT-APP");
 
                 $columns = [
                     "Usuario",
@@ -387,7 +387,7 @@ class UsersController extends AppController
                 $spreadsheet = new Spreadsheet();
                 $spreadsheet->setActiveSheetIndex(0);
                 $spreadsheet->getActiveSheet()->setTitle('UsuariosError');
-                $spreadsheet->getProperties()->setCreator("TGS-APP");
+                $spreadsheet->getProperties()->setCreator("T-MTI VFT-APP");
 
                 array_unshift($error_data, array_keys($error_data[0]));
 

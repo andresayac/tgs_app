@@ -15,7 +15,7 @@
  * @var \App\View\AppView $this
  */
 
-$cakeDescription = 'TGS';
+$cakeDescription = 'VFT';
 ?>
 <!DOCTYPE html>
 <html>
@@ -74,7 +74,7 @@ $cakeDescription = 'TGS';
             <?= $this->fetch('content') ?>
             <div class="row">
                 <div class="footer-wrap pd-20 mb-20 card-box">
-                    HRM TGS - Development with the ❤️ by <a href="https://github.com/andresayac" target="_blank">Andres Aya </a>
+                    VFT APP - Development with the ❤️ by <a href="https://github.com/andresayac" target="_blank">Andres Aya </a>
                 </div>
 
             </div>
