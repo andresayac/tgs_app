@@ -107,7 +107,7 @@
                     targets: "datatable-nosort"
                 },
                 {
-                    targets: [1,4,5,6],
+                    targets: [1, 4, 5, 6],
                     className: "truncate"
                 }
             ],
