@@ -22,7 +22,7 @@ class TrainingsController extends AppController
     public function index()
     {
         $Users = $this->getTableLocator()->get('Users');
-        $users =  $Users->find()->select(['document', 'fullname'])
+        $users =  $Users->find()->select(['document', 'fullname', 'id'])
             ->disableHydration()
             ->toArray();
 
@@ -41,7 +41,7 @@ class TrainingsController extends AppController
     public function view($id = null)
     {
         $Users = $this->getTableLocator()->get('Users');
-        $users =  $Users->find()->select(['document', 'fullname'])
+        $users =  $Users->find()->select(['document', 'fullname', 'id'])
             ->disableHydration()
             ->toArray();
 
@@ -63,7 +63,7 @@ class TrainingsController extends AppController
 
         $users =  $Users->find()
             ->contain(['Designations', 'Departaments', 'Branchs'])
-            ->select(['Users.document', 'Users.fullname', 'Departaments.name', 'Designations.name','Branchs.name'])
+            ->select(['Users.document', 'Users.fullname', 'Departaments.name', 'Designations.name', 'Branchs.name'])
             ->where(['Users.active' => 1, 'Users.rol_id NOT IN' => [1]])
             ->disableHydration()
             ->toArray();

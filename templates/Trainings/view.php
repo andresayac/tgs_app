@@ -13,12 +13,17 @@ $trainers = explode(',', $training->trainer);
 $count = 1;
 
 $data = [
-    "Users" => []
+    "Users" => [],
+    "UsersID" => []
 ];
 
 foreach ($users as $user) {
     $data['Users'][$user['document']] = [
         "name" => strtoupper($user['fullname']) ?? ''
+    ];
+
+    $data['UsersID'][$user['id']] = [
+        "name" => strtoupper($user['fullname'])
     ];
 }
 
@@ -52,13 +57,19 @@ foreach ($users as $user) {
             <div class="col-md-7">
                 <h5 class="mb-15">Nombre</h5>
                 <p class="font-14 mb-5">
-                    <strong class="weight-600"> Fecha de Realización</strong> <?= $dias[$training->start_date->format('w')] ?> <?= $training->start_date->format('d') ?> <?= $meses[$training->start_date->format('n')] ?>
+                    <strong class="weight-600">Crea Capacitación</strong>
                 </p>
                 <p class="font-14 mb-5">
-                    <strong class="weight-600">ID capacitación:</strong> <?= $this->Number->format($training->id) ?>
+                    <strong class="weight-600">Fecha de Realización</strong>
+                </p>
+                <p class="font-14 mb-5">
+                    <strong class="weight-600">ID capacitación</strong>
                 </p>
                 <p class="font-14 mb-5">
                     <strong class="weight-600">Capacitador</strong>
+                </p>
+                <p class="font-14 mb-5">
+                    <strong class="weight-600">Lugar</strong>
                 </p>
                 <p class="font-14 mb-5">
                     <strong class="weight-600"> Notas: </strong>
@@ -70,14 +81,18 @@ foreach ($users as $user) {
             <div class="col-md-5">
                 <div class="text-right">
                     <p class="font-14 mb-5"><?= h($training->name) ?></p>
-                    <p class="font-14 mb-5"><?= $training->start_date->format('h:i a') ?> - <?= $training->end_date->format('h:i a') ?></p>
-                    <p class="font-14 mb-5"> <br></p>
+                    <p class="font-14 mb-5">
+                        <span class='badge badge-primary' style='margin: 1px;'><?= $data['UsersID'][$training->created_by]['name'] ?></span>
+                    </p>
+                    <p class="font-14 mb-5"><?= $dias[$training->start_date->format('w')] ?> <?= $training->start_date->format('d') ?> <?= $meses[$training->start_date->format('n')] ?> | <?= $training->start_date->format('h:i a') ?> - <?= $training->end_date->format('h:i a') ?></p>
+                    <p class="font-14 mb-5"><?= $this->Number->format($training->id) ?></p>
                     <p class="font-14 mb-5">
                         <?php foreach ($trainers as $value) : ?>
                             <?php if (empty($value)) break; ?>
                             <span class='badge badge-primary' style='margin: 1px;'><?= $data['Users'][$value]['name'] ?></span>
                         <?php endforeach; ?>
                     </p>
+                    <p class="font-14 mb-5"> <?= h($training->place) ?></p>
                 </div>
             </div>
         </div>
@@ -111,7 +126,7 @@ foreach ($users as $user) {
             </tbody>
         </table>
         <div class="invoice-desc pb-30">
-            
+
             <div class="invoice-desc-footer">
                 <div class="invoice-desc-head clearfix">
                     <div class="invoice-sub"></div>

@@ -51,11 +51,9 @@ foreach ($users as $user) {
                 <tr>
                     <th><?= $this->Paginator->sort('id') ?></th>
                     <th><?= $this->Paginator->sort('name', 'Nombre') ?></th>
-                    <th><?= $this->Paginator->sort('trainer', 'Capacitador') ?></th>
                     <th><?= $this->Paginator->sort('start_date', 'Fecha') ?></th>
                     <th><?= $this->Paginator->sort('start_date', 'Inicio') ?></th>
                     <th><?= $this->Paginator->sort('end_date', 'Fin') ?></th>
-                    <th><?= $this->Paginator->sort('created_by', 'Crea') ?></th>
                     <th class="actions datatable-nosort"><?= __('Acciones') ?></th>
                 </tr>
             </thead>
@@ -64,23 +62,9 @@ foreach ($users as $user) {
                     <tr>
                         <td><?= $this->Number->format($training->id) ?></td>
                         <td><?= h($training->name) ?></td>
-                        <td>
-                            <?php
-                            $trainers = explode(',', $training->trainer);
-                            $count = 1;
-                            foreach ($trainers as $value) {
-                                if (empty($value)) break;
-                                if ($count === 3) {
-                                    echo "<span class='badge badge-primary'>...</span>";
-                                    break;
-                                }
-                                echo "<span class='badge badge-primary' style='margin: 1px;'>{$data['Users'][$value]['name']}</span>";
-                                $count++;
-                            } ?></td>
                         <td><?= h($training->start_date->format('Y-m-d')) ?></td>
                         <td><?= h($training->start_date->format('h:i a')) ?></td>
                         <td><?= h($training->end_date->format('h:i a')) ?></td>
-                        <td><?= h($training->created_by) ?></td>
                         <td>
                             <div class="dropdown">
                                 <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
@@ -130,6 +114,10 @@ foreach ($users as $user) {
                 {
                     targets: 1,
                     className: "truncate"
+                },
+                {
+                    width: "10%",
+                    targets: [2, 3, 4]
                 }
             ],
             "lengthMenu": [
