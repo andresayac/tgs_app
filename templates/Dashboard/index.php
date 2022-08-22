@@ -54,7 +54,7 @@ foreach ($trainings_assistence_chart ?? [] as $value) {
                     <div class="widget-data">
                         <div class="weight-700 font-24 text-dark"><?php echo (!empty($trainings_month)) ? $trainings_month : 0; ?></div>
                         <div class="font-14 text-secondary weight-500">
-                            Capacitaciones del mes
+                            Capacitaciones este mes
                         </div>
                     </div>
                     <div class="widget-icon">
@@ -87,7 +87,7 @@ foreach ($trainings_assistence_chart ?? [] as $value) {
                 <div class="d-flex flex-wrap">
                     <div class="widget-data">
                         <div class="weight-700 font-24 text-dark"><?php echo (!empty($users_month)) ? $users_month : 0; ?></div>
-                        <div class="font-14 text-secondary weight-500">Usuarios creados en el mes</div>
+                        <div class="font-14 text-secondary weight-500">Usuarios este mes</div>
                     </div>
                     <div class="widget-icon">
                         <div class="icon" data-color="#09cc06">

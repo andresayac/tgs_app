@@ -29,7 +29,7 @@
         <div class="container-fluid d-flex justify-content-between align-items-center">
             <div class="brand-logo">
                 <a href="/">
-                    <img src="/img/tgs-logo-dark.png" alt="">
+                    <img src="/img/mti-logo-dark.png" alt="">
                 </a>
             </div>
         </div>
