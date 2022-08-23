@@ -71,7 +71,7 @@ class DashboardController extends AppController
                     'ASISTE_FECHA' => 'TrainingsAssistances.check_ts',
                     'ASISTE_TIPO' => 'TrainingsAssistances.type_check',
                     'ASISTENCIA_AGREGA_USER' => 'users_created.fullname',
-                    'ASISTENCIA_TOMA' => 'users_modified.name',
+                    'ASISTENCIA_TOMA' => 'users_modified.fullname',
                     'SUCURSAL' => 'Branchs.name',
                     'AREA' => 'Departaments.name',
                     'CARGO' => 'Designations.name'
