@@ -64,7 +64,7 @@ class DashboardController extends AppController
                     'FECHA' => 'DATE_FORMAT(Trainings.start_date, "%Y-%m-%d")',
                     'HORA_INICIO' => 'DATE_FORMAT(Trainings.start_date, "%h:%i %p")',
                     'HORA_FINAL' => 'DATE_FORMAT(Trainings.end_date, "%h:%i %p")',
-                    'ASISTENTE' => '(Users.fullname',
+                    'ASISTENTE' => 'Users.fullname',
                     'ASISTENTE_DOCUMENTO' => 'Users.document',
                     'ASISTENTE_ROL' => 'Roles.name',
                     'ASISTE_EVENTO' => 'if(TrainingsAssistances.checked=1,"SI","NO")',
