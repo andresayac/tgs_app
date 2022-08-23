@@ -24,14 +24,9 @@
                     <a class="dropdown-item" href="/users/profile"><i class="dw dw-user1"></i> Perfil</a>
                     <?php echo $this->Html->link('<i class="dw dw-logout"></i> Cerrar Sesion', ['controller' => 'Users', 'action' => 'logout'], ['class' => 'dropdown-item', 'escape' => false]) ?>
                 </div>
-                </li>
-                </ul>
-                </nav>
-
             </div>
         </div>
     </div>
-</div>
 </div>
 
 <div class="right-sidebar">
