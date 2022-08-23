@@ -19,11 +19,7 @@ use Cake\Http\CallbackStream; // ← Added new in this sample
  */
 class UsersController extends AppController
 {
-    /**
-     * Index method
-     *
-     * @return \Cake\Http\Response|null|void Renders view
-     */
+
     public function index()
     {
         $this->paginate = [
@@ -31,32 +27,38 @@ class UsersController extends AppController
             'maxLimit' => 5000,
             'contain' => ['Roles', 'Departaments', 'Branchs', 'Designations'],
         ];
-        $users = $this->paginate($this->Users);
+
+        $roles_permisos = (in_array($this->Auth->user('rol_id'), [1, 2])) ? [0] : [1, 2];
+        if ($this->Auth->user('rol_id') === 2) $roles_permisos = [1];
+
+        $users_paginate = $this->Users->find()->where(['rol_id NOT IN ' => $roles_permisos]);
+        $users = $this->paginate($users_paginate);
 
         $this->set(compact('users'));
     }
 
-    /**
-     * View method
-     *
-     * @param string|null $id User id.
-     * @return \Cake\Http\Response|null|void Renders view
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
     public function view($id = null)
     {
+        $roles_permisos = (in_array($this->Auth->user('rol_id'), [1, 2])) ? [0] : [1, 2];
+        if ($this->Auth->user('rol_id') === 2) $roles_permisos = [1];
+
+        $valida = $this->Users->find()
+            ->where(['id' => $id, 'rol_id NOT IN' =>  $roles_permisos])
+            ->limit(1)
+            ->count();
+
+        if (!$valida) {
+            $this->Flash->error(__('El usuario no existe o no tiene permisos'));
+            return $this->redirect(['action' => 'index']);
+        }
+
         $user = $this->Users->get($id, [
-            'contain' => ['Roles', 'Departaments', 'Branchs', 'Designations'],
+            'contain' => ['Roles', 'Departaments', 'Branchs', 'Designations']
         ]);
 
         $this->set(compact('user'));
     }
 
-    /**
-     * Add method
-     *
-     * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
-     */
     public function add()
     {
         $user = $this->Users->newEmptyEntity();
@@ -69,7 +71,8 @@ class UsersController extends AppController
             }
             $this->Flash->error(__('No se pudo guardar el usuario. Inténtalo de nuevo. '));
         }
-        $roles_permisos = (in_array($this->Auth->user('rol_id'), [1, 2])) ? [1, 2] : [1, 2, 3];
+        $roles_permisos = (in_array($this->Auth->user('rol_id'), [1, 2])) ? [0] : [1, 2, 3];
+        if ($this->Auth->user('rol_id') === 2) $roles_permisos = [1];
 
         $roles = $this->Users->Roles
             ->find('list', ['limit' => 2000])
@@ -90,18 +93,26 @@ class UsersController extends AppController
         $this->set(compact('user', 'roles', 'departaments', 'branchs', 'designations'));
     }
 
-    /**
-     * Edit method
-     *
-     * @param string|null $id User id.
-     * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
     public function edit($id = null)
     {
+
+        $roles_permisos = (in_array($this->Auth->user('rol_id'), [1, 2])) ? [0] : [1, 2];
+        if ($this->Auth->user('rol_id') === 2) $roles_permisos = [1];
+
+        $valida = $this->Users->find()
+            ->where(['id' => $id, 'rol_id NOT IN' =>  $roles_permisos])
+            ->limit(1)
+            ->count();
+
+        if (!$valida) {
+            $this->Flash->error(__('El usuario no existe o no tiene permisos'));
+            return $this->redirect(['action' => 'index']);
+        }
+
         $user = $this->Users->get($id, [
             'contain' => [],
         ]);
+
         if ($this->request->is(['patch', 'post', 'put'])) {
 
             $data = $this->request->getData();
@@ -111,14 +122,15 @@ class UsersController extends AppController
             if (empty($data['password'])) unset($user->password);
 
             if ($this->Users->save($user)) {
-                $this->Flash->success(__('The user has been saved.'));
+                $this->Flash->success(__('El usuario ha sido guardado.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The user could not be saved. Please, try again.'));
+            $this->Flash->error(__('No se pudo guardar el usuario. Inténtalo de nuevo.'));
         }
 
-        $roles_permisos = (in_array($this->Auth->user('rol_id'), [1, 2])) ? [1, 2] : [1, 2, 3];
+        $roles_permisos = (in_array($this->Auth->user('rol_id'), [1, 2])) ? [0] : [1, 2, 3];
+        if ($this->Auth->user('rol_id') === 2) $roles_permisos = [1];
 
         $roles = $this->Users->Roles
             ->find('list', ['limit' => 2000])
@@ -140,21 +152,39 @@ class UsersController extends AppController
         $this->set(compact('user', 'roles', 'departaments', 'branchs', 'designations'));
     }
 
-    /**
-     * Delete method
-     *
-     * @param string|null $id User id.
-     * @return \Cake\Http\Response|null|void Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
+
+        $roles_permisos = (in_array($this->Auth->user('rol_id'), [1, 2])) ? [1] : [1, 2];
+
+        $valida = $this->Users->find()
+            ->where(['id' => $id, 'rol_id NOT IN' =>  $roles_permisos])
+            ->limit(1)
+            ->count();
+
+        if (!$valida) {
+            $this->Flash->error(__('El usuario no existe o no tiene permisos'));
+            return $this->redirect(['action' => 'index']);
+        }
+
+        $TrainingAssistances = $this->getTableLocator()->get('TrainingsAssistances');
+        $valided_assistences = $TrainingAssistances->find()
+            ->where(['user_id' => $id])
+            ->count();
+
+
+        if ($valided_assistences > 0) {
+            $this->Flash->error(__('El usuario no se puede eliminar se encuentra vinculado a una o mas listas de asistencia.'));
+            return $this->redirect(['action' => 'index']);
+        }
+
         $user = $this->Users->get($id);
+
         if ($this->Users->delete($user)) {
-            $this->Flash->success(__('The user has been deleted.'));
+            $this->Flash->success(__('El usuario ha sido eliminado.'));
         } else {
-            $this->Flash->error(__('The user could not be deleted. Please, try again.'));
+            $this->Flash->error(__('No se pudo eliminar el usuario. Inténtalo de nuevo.'));
         }
 
         return $this->redirect(['action' => 'index']);
@@ -168,7 +198,6 @@ class UsersController extends AppController
 
     public function export()
     {
-
         $filename = 'Usuarios_' . date('Y-m-d_His');
 
         $spreadsheet = new Spreadsheet();

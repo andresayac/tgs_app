@@ -14,11 +14,8 @@ use Cake\Http\CallbackStream; // ← Added new in this sample
 
 class DashboardController extends AppController
 {
-
-
     public function index()
     {
-
         $Users = $this->getTableLocator()->get('Users');
         $Trainings = $this->getTableLocator()->get('Trainings');
 

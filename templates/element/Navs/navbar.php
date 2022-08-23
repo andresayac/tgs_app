@@ -15,10 +15,10 @@
         <div class="user-info-dropdown">
             <div class="dropdown">
                 <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-                    <span class="user-icon">
-                        <?= $this->Html->image('/img/users/default.jpg'); ?>
+                    <span class="user-icon-app">
+                        <i class="icon-copy dw dw-user"></i>
                     </span>
-                    <span class="user-name"><?= explode(' ', $_logged_user_['fullname'])[0] ?? ''  ?></span>
+                    <span class="user-name" style="vertical-align: unset;"><?= explode(' ', $_logged_user_['fullname'])[0] ?? ''  ?></span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
                     <a class="dropdown-item" href="/users/profile"><i class="dw dw-user1"></i> Perfil</a>
@@ -109,4 +109,3 @@
         </div>
     </div>
 </div>
-

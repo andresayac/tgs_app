@@ -9,20 +9,33 @@
     color: rgba(0, 0, 0, 0.54);
 }
 
-
 .form-error {
     border-color: #dc3545 !important;
     background-repeat: no-repeat;
     background-position: center right 10px;
     background-size: 14px 14px;
-}   
-
-
-
+}
 
 .truncate {
-    max-width:100px;
+    max-width: 100px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-  }
+}
+
+.user-icon-app {
+    font-size: 24px;
+    color: #1b00ff;
+    line-height: 52px;
+    text-align: center;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.user-name-app {
+    font-weight: 500;
+    display: inline-block;
+    margin-left: 5px;
+    color: #131e22;
+    font-family: 'Inter',sans-serif;
+}

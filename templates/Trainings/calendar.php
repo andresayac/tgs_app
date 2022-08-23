@@ -226,6 +226,7 @@
                     return `Mostrar ${eventCnt} eventos más`
                 },
                 noEventsText: 'No hay eventos para mostrar',
+                noEventsMessage: 'No hay eventos para mostrar',
                 navLinkHint: 'Ir al $0',
                 closeHint: 'Cerrar',
                 timeHint: 'La hora',

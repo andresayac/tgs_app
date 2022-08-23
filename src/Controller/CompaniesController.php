@@ -4,19 +4,9 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-/**
- * Companies Controller
- *
- * @property \App\Model\Table\CompaniesTable $Companies
- * @method \App\Model\Entity\Company[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
- */
 class CompaniesController extends AppController
 {
-    /**
-     * Index method
-     *
-     * @return \Cake\Http\Response|null|void Renders view
-     */
+
     public function index()
     {
         $companies = $this->paginate($this->Companies);
@@ -24,13 +14,6 @@ class CompaniesController extends AppController
         $this->set(compact('companies'));
     }
 
-    /**
-     * View method
-     *
-     * @param string|null $id Company id.
-     * @return \Cake\Http\Response|null|void Renders view
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
     public function view($id = null)
     {
         $company = $this->Companies->get($id, [
@@ -40,33 +23,21 @@ class CompaniesController extends AppController
         $this->set(compact('company'));
     }
 
-    /**
-     * Add method
-     *
-     * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
-     */
     public function add()
     {
         $company = $this->Companies->newEmptyEntity();
         if ($this->request->is('post')) {
             $company = $this->Companies->patchEntity($company, $this->request->getData());
             if ($this->Companies->save($company)) {
-                $this->Flash->success(__('The company has been saved.'));
+                $this->Flash->success(__('La empresa se ha guardado.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The company could not be saved. Please, try again.'));
+            $this->Flash->error(__('La empresa no se pudo guardar. Inténtalo de nuevo.'));
         }
         $this->set(compact('company'));
     }
 
-    /**
-     * Edit method
-     *
-     * @param string|null $id Company id.
-     * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
     public function edit($id = null)
     {
         $company = $this->Companies->get($id, [
@@ -75,34 +46,25 @@ class CompaniesController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $company = $this->Companies->patchEntity($company, $this->request->getData());
             if ($this->Companies->save($company)) {
-                $this->Flash->success(__('The company has been saved.'));
+                $this->Flash->success(__('La empresa se ha guardado.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The company could not be saved. Please, try again.'));
+            $this->Flash->error(__('La empresa no se pudo guardar. Inténtalo de nuevo.'));
         }
         $this->set(compact('company'));
     }
 
-    /**
-     * Delete method
-     *
-     * @param string|null $id Company id.
-     * @return \Cake\Http\Response|null|void Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
         $company = $this->Companies->get($id);
         if ($this->Companies->delete($company)) {
-            $this->Flash->success(__('The company has been deleted.'));
+            $this->Flash->success(__('La empresa ha sido eliminada.'));
         } else {
-            $this->Flash->error(__('The company could not be deleted. Please, try again.'));
+            $this->Flash->error(__('No se pudo eliminar la empresa. Inténtalo de nuevo.'));
         }
 
         return $this->redirect(['action' => 'index']);
     }
-
-    
 }

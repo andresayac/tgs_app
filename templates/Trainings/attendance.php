@@ -139,7 +139,7 @@ $training->set('end_hour', $training->end_date->format('H:i'));
     <div class="row justify-content-end">
         <div class="col-md-2 col-sm-12">
             <div class="form-group">
-                <?php if (!empty($training_data)) echo $this->Form->postLink('<i class="dw dw-delete-3"></i> Eliminar Asistentes', ['action' => 'attendanceDelete', 0, $training->id, 'all'], [
+                <?php if (!empty($assistances)) echo $this->Form->postLink('<i class="dw dw-delete-3"></i> Eliminar Asistentes', ['action' => 'attendanceDelete', 0, $training->id, 'all'], [
                     'class' => 'btn btn-outline-danger btn-sm',
                     'escape' => false,
                     'confirm' => __(

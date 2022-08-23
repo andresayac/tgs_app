@@ -112,6 +112,7 @@ foreach ($users as $user) {
             scrollCollapse: true,
             autoWidth: false,
             responsive: true,
+            order: [[2, 'desc']],
             columnDefs: [{
                     targets: "datatable-nosort",
                     orderable: false,

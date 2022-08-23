@@ -6,19 +6,9 @@ namespace App\Controller;
 
 use Cake\I18n\FrozenTime;
 
-/**
- * Trainings Controller
- *
- * @property \App\Model\Table\TrainingsTable $Trainings
- * @method \App\Model\Entity\Training[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
- */
 class TrainingsController extends AppController
 {
-    /**
-     * Index method
-     *
-     * @return \Cake\Http\Response|null|void Renders view
-     */
+
     public function index()
     {
         $Users = $this->getTableLocator()->get('Users');
@@ -26,18 +16,19 @@ class TrainingsController extends AppController
             ->disableHydration()
             ->toArray();
 
+            $this->paginate = [
+                'limit' => 5000,
+                'maxLimit' => 5000,
+                'contain' => [],
+                'order' => array('Trainings.start_date' => 'DESC')
+                
+            ];
+
         $trainings = $this->paginate($this->Trainings);
 
         $this->set(compact('trainings', 'users'));
     }
 
-    /**
-     * View method
-     *
-     * @param string|null $id Training id.
-     * @return \Cake\Http\Response|null|void Renders view
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
     public function view($id = null)
     {
         $Users = $this->getTableLocator()->get('Users');
@@ -52,11 +43,6 @@ class TrainingsController extends AppController
         $this->set(compact('training', 'users'));
     }
 
-    /**
-     * Add method
-     *
-     * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
-     */
     public function add()
     {
         $Users = $this->getTableLocator()->get('Users');
@@ -91,15 +77,22 @@ class TrainingsController extends AppController
         $this->set(compact('training',  'users'));
     }
 
-    /**
-     * Edit method
-     *
-     * @param string|null $id Training id.
-     * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
     public function edit($id = null)
     {
+
+        $valida = $this->Trainings->find()
+            ->where(['Trainings.id' => $id, 'Trainings.start_date >=' =>  new FrozenTime(FrozenTime::now()->i18nFormat('yyyy-MM-dd'))])
+            ->limit(1)
+            ->count();
+
+        if (!$valida) {
+            $this->Flash->error(__('No es posible editar la capacitación, la fecha actual es superior a su realización.'));
+            return $this->redirect(['action' => 'index']);
+        }
+
+        $training = $this->Trainings->get($id, [
+            'contain' => [],
+        ]);
 
         $Users = $this->getTableLocator()->get('Users');
 
@@ -111,9 +104,6 @@ class TrainingsController extends AppController
             ->toArray();
 
 
-        $training = $this->Trainings->get($id, [
-            'contain' => [],
-        ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $data = $this->request->getData();
             $date_training = $data['start_date'];
@@ -144,13 +134,6 @@ class TrainingsController extends AppController
         $this->set(compact('training', 'users'));
     }
 
-    /**
-     * Delete method
-     *
-     * @param string|null $id Training id.
-     * @return \Cake\Http\Response|null|void Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
@@ -237,9 +220,9 @@ class TrainingsController extends AppController
             $training = $TrainingAssistances->get($id);
             if ($training) {
                 $TrainingAssistances->delete($training);
-                $this->Flash->success(__('The training has been deleted.'));
+                $this->Flash->success(__('La capacitacion ha sido eliminado.'));
             } else {
-                $this->Flash->error(__('The training could not be deleted. Please, try again.'));
+                $this->Flash->error(__('No se pudo eliminar la capacitación. Inténtalo de nuevo.'));
             }
         }
         return $this->redirect(['action' => 'attendance', $training_id]);
@@ -322,6 +305,9 @@ class TrainingsController extends AppController
 
         $training->name =  $training->name . " Duplicado";
 
+        $training->start_date = new FrozenTime(FrozenTime::now()->i18nFormat('yyyy-MM-dd'));
+        $training->end_date = new FrozenTime(FrozenTime::now()->i18nFormat('yyyy-MM-dd'));
+
         if ($this->Trainings->save($training)) {
             $this->Flash->success(__('La capacitación duplicada con exito '));
 
@@ -334,7 +320,6 @@ class TrainingsController extends AppController
         $trainings = $this->paginate($this->Trainings);
         $this->set(compact('trainings'));
     }
-
 
     public function getCalendarioEvents()
     {

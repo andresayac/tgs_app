@@ -30,13 +30,6 @@ class BranchsController extends AppController
         $this->set(compact('branchs'));
     }
 
-    /**
-     * View method
-     *
-     * @param string|null $id Branch id.
-     * @return \Cake\Http\Response|null|void Renders view
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
     public function view($id = null)
     {
         $branch = $this->Branchs->get($id, [
@@ -46,34 +39,22 @@ class BranchsController extends AppController
         $this->set(compact('branch'));
     }
 
-    /**
-     * Add method
-     *
-     * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
-     */
     public function add()
     {
         $branch = $this->Branchs->newEmptyEntity();
         if ($this->request->is('post')) {
             $branch = $this->Branchs->patchEntity($branch, $this->request->getData());
             if ($this->Branchs->save($branch)) {
-                $this->Flash->success(__('The branch has been saved.'));
+                $this->Flash->success(__('La sucursal ha sido guardada.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The branch could not be saved. Please, try again.'));
+            $this->Flash->error(__('La sucursal no se pudo guardar. Inténtalo de nuevo.'));
         }
         $companies = $this->Branchs->Companies->find('list', ['limit' => 200])->all();
         $this->set(compact('branch', 'companies'));
     }
 
-    /**
-     * Edit method
-     *
-     * @param string|null $id Branch id.
-     * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
     public function edit($id = null)
     {
         $branch = $this->Branchs->get($id, [
@@ -82,31 +63,24 @@ class BranchsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $branch = $this->Branchs->patchEntity($branch, $this->request->getData());
             if ($this->Branchs->save($branch)) {
-                $this->Flash->success(__('The branch has been saved.'));
+                $this->Flash->success(__('La sucursal ha sido guardada.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The branch could not be saved. Please, try again.'));
+            $this->Flash->error(__('La sucursal no se pudo guardar. Inténtalo de nuevo.'));
         }
         $companies = $this->Branchs->Companies->find('list', ['limit' => 200])->all();
         $this->set(compact('branch', 'companies'));
     }
 
-    /**
-     * Delete method
-     *
-     * @param string|null $id Branch id.
-     * @return \Cake\Http\Response|null|void Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
         $branch = $this->Branchs->get($id);
         if ($this->Branchs->delete($branch)) {
-            $this->Flash->success(__('The branch has been deleted.'));
+            $this->Flash->success(__('La sucursal ha sido eliminada.'));
         } else {
-            $this->Flash->error(__('The branch could not be deleted. Please, try again.'));
+            $this->Flash->error(__('La sucursal no se pudo guardar. Inténtalo de nuevo.'));
         }
 
         return $this->redirect(['action' => 'index']);

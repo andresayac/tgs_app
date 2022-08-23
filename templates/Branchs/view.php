@@ -79,7 +79,7 @@
                         <tbody>
                             <?php foreach ($branch->users as $users) : ?>
                                 <tr>
-                                    <td><?= $users->has('id') ? $this->Html->link($users->id, ['controller' => 'Branchs', 'action' => 'view', $users->id]) : '' ?></td>
+                                    <td><?= $users->has('id') ? $this->Html->link($users->id, ['controller' => 'Users', 'action' => 'view', $users->id]) : '' ?></td>
                                     <td><?= h($users->username) ?></td>
                                     <td><?= h($users->fullname) ?></td>
                                     <td><?= h($users->date_birthday) ?></td>
