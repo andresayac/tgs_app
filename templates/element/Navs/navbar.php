@@ -16,7 +16,7 @@
             <div class="dropdown show">
                 <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="true">
                     <span class="user-icon">
-                        <img src="vendors/images/profile.png" alt="">
+                        <img src="vendors/images/profile-min.png" alt="">
                     </span>
                     <span class="user-name" style="vertical-align: unset;"><?= explode(' ', $_logged_user_['fullname'])[0] ?? ''  ?></span>
                 </a>
