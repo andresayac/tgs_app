@@ -274,13 +274,13 @@ class UsersController extends AppController
                 ];
 
                 $spreadsheet->getActiveSheet()
-                    ->getStyle('A1:H1')
+                    ->getStyle('A1:G1')
                     ->getFill()
                     ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
                     ->getStartColor()
                     ->setARGB('00FF7F');
 
-                foreach (range('A', 'J') as $letter) {
+                foreach (range('A', 'G') as $letter) {
                     $spreadsheet->getActiveSheet()->getColumnDimension($letter)->setAutoSize(true);
                 }
 
@@ -369,7 +369,7 @@ class UsersController extends AppController
 
             if ($file->getError()) $this->Flash->error(__('Archivo no valido o vacio'));
 
-            if (in_array($file->getClientMediaType(), $mimes) && $file->getSize() < 50235) {
+            if (in_array($file->getClientMediaType(), $mimes) && $file->getSize() < 5023500) {
                 $spreadsheet = IOFactory::load($file->getStream()->getMetadata('uri'));
 
                 $sheet        = $spreadsheet->getActiveSheet();
@@ -408,6 +408,8 @@ class UsersController extends AppController
                 } else {
                     $this->Flash->error(__('Se han identificado ' . count($error_data) . ' registros duplicados'));
                 }
+            }else{
+                $this->Flash->error(__('Archivo no valido o mayor a 5 MB'));
             }
 
             if (!empty($error_data)) {
