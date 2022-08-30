@@ -136,18 +136,16 @@ $training->set('end_hour', $training->end_date->format('H:i'));
     </div>
     <?= $this->Form->end() ?>
 
-    <div class="row justify-content-end">
-        <div class="col-md-2 col-sm-12">
-            <div class="form-group">
-                <?php if (!empty($assistances)) echo $this->Form->postLink('<i class="dw dw-delete-3"></i> Eliminar Asistentes', ['action' => 'attendanceDelete', 0, $training->id, 'all'], [
-                    'class' => 'btn btn-outline-danger btn-sm',
-                    'escape' => false,
-                    'confirm' => __(
-                        "Esta seguro que quiere eliminar los asistentes que aún no confirman asistencia."
-                    )
-                ]);
-                ?>
-            </div>
+    <div class="col-md-12 col-sm-12">
+        <div class="form-group">
+            <?php if (!empty($assistances)) echo $this->Form->postLink('<i class="dw dw-delete-3"></i> Eliminar Asistentes', ['action' => 'attendanceDelete', 0, $training->id, 'all'], [
+                'class' => 'btn btn-outline-danger btn-sm',
+                'escape' => false,
+                'confirm' => __(
+                    "Esta seguro que quiere eliminar los asistentes que aún no confirman asistencia."
+                )
+            ]);
+            ?>
         </div>
     </div>
     <div class="row">
