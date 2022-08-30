@@ -5,6 +5,7 @@
  * @var \App\Model\Entity\User $user
  */
 
+use function PHPUnit\Framework\isEmpty;
 
 $huella = $this->Text->autoParagraph(h($user->indexfinger));
 
@@ -88,15 +89,15 @@ $huella = $this->Text->autoParagraph(h($user->indexfinger));
                 <div class="tab height-100-p">
                     <ul class="nav nav-tabs customtab" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#timeline" role="tab"><?= (empty($huella)) ? 'Agregar Huella' : 'Editar Huella' ?></a>
+                            <a class="nav-link <?= (empty($huella)) ? 'active': '' ?>" data-toggle="tab" href="#enroll" role="tab"><?= (empty($huella)) ? 'Agregar Huella' : 'Editar Huella' ?></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#tasks" role="tab">Verificar Huella</a>
+                            <a class="nav-link <?= (!empty($huella)) ? 'active': '' ?>" data-toggle="tab" href="#verify" role="tab">Verificar Huella</a>
                         </li>
                     </ul>
                     <div class="tab-content">
                         <!-- Timeline Tab start -->
-                        <div class="tab-pane fade show active" id="timeline" role="tabpanel">
+                        <div class="tab-pane fade show active" id="enroll" role="tabpanel">
                             <div class="profile-setting">
                                 <form action="#" onsubmit="return false">
                                     <ul class="profile-edit-list row">
@@ -105,7 +106,7 @@ $huella = $this->Text->autoParagraph(h($user->indexfinger));
                                                 <!--Enrollment Status will be displayed Here-->
                                             </div>
                                             <h4 class="text-blue h5 mb-20">
-                                                Enrolar Empleado
+                                                <?= (empty($huella)) ? 'Enrolar' : 'Editar' ?> Empleado
                                             </h4>
                                             <div class="row">
                                                 <div class="col-md-12 col-sm-12">
@@ -185,7 +186,7 @@ $huella = $this->Text->autoParagraph(h($user->indexfinger));
                                 </form>
                             </div>
                         </div>
-                        <div class="tab-pane fade show" id="tasks" role="tabpanel">
+                        <div class="tab-pane fade show" id="verify" role="tabpanel">
 
                             <div class="profile-setting">
                                 <form action="#" onsubmit="return false">
@@ -253,7 +254,15 @@ $huella = $this->Text->autoParagraph(h($user->indexfinger));
     </div>
 </div>
 
-
+<?php if(!empty($huella)) echo "
+<script>
+iziToast.info({
+    // title: 'Hey',
+    position: 'bottomRight',
+    message: 'Este Usuario ya tiene Huella vinculada'
+});
+</script>"; 
+?>
 
 <?php echo $this->Html->script("/src/scripts/fingerprint/es6-shim.js"); ?>
 <?php echo $this->Html->script("/src/scripts/fingerprint/websdk.client.bundle.min.js"); ?>
