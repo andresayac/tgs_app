@@ -63,7 +63,6 @@ $active = ["class" => "active"];
                         <span class="micon dw dw-building1"></span><span class="mtext">Empresa</span>
                     </a>
                     <ul class="submenu">
-                        <li><?php if (isset($_permisos_user_['companies'])) echo $this->Html->link('Empresa', ['controller' => 'Companies', 'action' => 'index'], ($c === 'Companies') ? ["class" => "active"] : []); ?></li>
                         <li><?php if (isset($_permisos_user_['branchs'])) echo $this->Html->link('Sucursal', ['controller' => 'Branchs', 'action' => 'index'], ($c === 'Branchs') ? ["class" => "active"] : []); ?></li>
                         <li><?php if (isset($_permisos_user_['departaments'])) echo $this->Html->link('Areas', ['controller' => 'Departaments', 'action' => 'index'], ($c === 'Departaments') ? ["class" => "active"] : []); ?></li>
                         <li><?php if (isset($_permisos_user_['designations'])) echo $this->Html->link('Cargos', ['controller' => 'Designations', 'action' => 'index'], ($c === 'Designations') ? ["class" => "active"] : []); ?></li>
